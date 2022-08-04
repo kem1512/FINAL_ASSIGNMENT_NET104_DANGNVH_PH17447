@@ -1,0 +1,59 @@
+﻿@model List<EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.ChucVu>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row mt-3">
+    <div class="col-lg-12">
+        <div class="card">
+                <div class="card-body">
+                    <div class="card-title">Quản lý chức vụ</div>
+                <hr>
+                <form action="/chucvu/create" method="post">
+                    <div class="row">
+                            <div class="form-group col-6">
+                                <label for="input-1">Mã chức vụ</label>
+                                <input type="text" class="form-control" id="input-1" name="Ma" placeholder="Nhập mã chức vụ">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="input-2">Tên chức vụ</label>
+                                <input type="text" class="form-control" id="input-2" name="Ten" placeholder="Nhập tên chức vụ">
+                            </div>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-light px-5 mr-2">Thêm chức vụ</button>
+                        <button type="submit" class="btn btn-success px-5">Sửa chức vụ</button>
+                    </div>
+                </form>
+                <h5 class="card-title">Danh sách chức vụ</h5>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%">STT</th>
+                                <th style="width: 25%">Mã chức vụ</th>
+                                <th style="width: 25%">Tên chức vụ</th>
+                                <th style="width: 30%">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.Count; i++)
+                            {
+                                <tr>
+                                    <th>@i</th>
+                                    <td>@Model[i].Ma</td>
+                                    <td>@Model[i].Ten</td>
+                                    <td>
+                                        <a href="/chucvu/detail/id=@Model[i].Id" class="btn btn-success px-5">Sửa chức vụ</a>
+                                        <a href="/chucvu/remove/@Model[i].Id" class="btn btn-danger px-5" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa chức vụ</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

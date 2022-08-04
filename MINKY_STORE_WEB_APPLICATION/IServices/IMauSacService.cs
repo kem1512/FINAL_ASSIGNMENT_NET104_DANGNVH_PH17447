@@ -1,0 +1,18 @@
+﻿using EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace MINKY_STORE_WEB_APPLICATION.IServices
+{
+    public interface IMauSacRepository
+    {
+        bool Add(MauSac obj);
+
+        bool Update(MauSac obj);
+
+        bool Remove(MauSac obj);
+
+        List<MauSac> GetAll();
+    }
+}
