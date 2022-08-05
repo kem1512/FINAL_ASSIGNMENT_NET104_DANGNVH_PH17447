@@ -30,9 +30,9 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass
 
         public string MatKhau { get; set; }
 
-        public Guid IdCh { get; set; }
+        public Guid? IdCh { get; set; }
 
-        public Guid IdCv { get; set; }
+        public Guid? IdCv { get; set; }
 
         public Guid? IdGuiBc { get; set; }
 

@@ -4,14 +4,16 @@ using EF_CODE_FIRST_FINAL_ASSIGNMENT.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
 {
     [DbContext(typeof(FinalAssignmentContext))]
-    partial class FinalAssignmentContextModelSnapshot : ModelSnapshot
+    [Migration("20220805085728_Update_Database_050822")]
+    partial class Update_Database_050822
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

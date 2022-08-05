@@ -16,7 +16,7 @@ namespace MINKY_STORE_WEB_APPLICATION.IServices
 
         List<NhanVien> GetAll();
 
-        List<ViewNhanVien> GetViewNhanVien();
+        List<NhanVienViewModel> GetNhanVienViewModel();
 
         NhanVien GetById(Guid id);
     }

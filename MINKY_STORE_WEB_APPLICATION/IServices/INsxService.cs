@@ -14,5 +14,7 @@ namespace MINKY_STORE_WEB_APPLICATION.IServices
         bool Remove(Nsx obj);
 
         List<Nsx> GetAll();
+
+        Nsx GetById(Guid id);
     }
 }

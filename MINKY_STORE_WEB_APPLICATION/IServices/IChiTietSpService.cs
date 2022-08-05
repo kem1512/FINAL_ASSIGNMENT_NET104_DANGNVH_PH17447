@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using MINKY_STORE_WEB_APPLICATION.Models;
 
 namespace MINKY_STORE_WEB_APPLICATION.IServices
 {
@@ -14,5 +15,7 @@ namespace MINKY_STORE_WEB_APPLICATION.IServices
         bool Remove(ChiTietSp obj);
 
         List<ChiTietSp> GetAll();
+
+        List<SanPhamViewModel> GetSanPhamViewModel();
     }
 }

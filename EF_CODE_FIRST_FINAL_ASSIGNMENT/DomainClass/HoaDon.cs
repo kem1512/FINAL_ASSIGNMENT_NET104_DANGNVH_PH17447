@@ -33,9 +33,9 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass
 
         public string Sdt { get; set; }
 
-        public Guid IdKh { get; set; }
+        public Guid? IdKh { get; set; }
 
-        public Guid IdNv { get; set; }
+        public Guid? IdNv { get; set; }
 
         public KhachHang KhachHang { get; set; }
 

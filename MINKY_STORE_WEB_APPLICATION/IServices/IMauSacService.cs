@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MINKY_STORE_WEB_APPLICATION.IServices
 {
-    public interface IMauSacRepository
+    public interface IMauSacService
     {
         bool Add(MauSac obj);
 
@@ -14,5 +14,6 @@ namespace MINKY_STORE_WEB_APPLICATION.IServices
         bool Remove(MauSac obj);
 
         List<MauSac> GetAll();
+        MauSac GetById(Guid id);
     }
 }

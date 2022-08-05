@@ -14,5 +14,7 @@ namespace MINKY_STORE_WEB_APPLICATION.IServices
         bool Remove(DongSp obj);
 
         List<DongSp> GetAll();
+
+        DongSp GetById(Guid id);
     }
 }

@@ -34,7 +34,7 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
             return RedirectToAction("Index", "ChucVu");
         }
 
-        [Route("/chucvu/detail/id={id}")]
+        [Route("/chucvu/detail/{id}")]
         public IActionResult Update(Guid id)
         {
             return View(_iChucVuService.GetById(id));

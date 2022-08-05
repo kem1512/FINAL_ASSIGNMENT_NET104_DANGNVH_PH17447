@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MINKY_STORE_WEB_APPLICATION.IServices
 {
-    public interface IGioHangRepository
+    public interface IGioHangService
     {
         bool Add(GioHang obj);
 

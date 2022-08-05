@@ -37,13 +37,13 @@ namespace MINKY_STORE_WEB_APPLICATION.Services
             return _iNhanVienRepository.GetAll().FirstOrDefault(x => x.Id == id);
        }
 
-        public List<ViewNhanVien> GetViewNhanVien()
+        public List<NhanVienViewModel> GetNhanVienViewModel()
         {
-            List<ViewNhanVien> lstViewNhanVien = (from nv in _iNhanVienRepository.GetAll()
-                                      join cv in _iChucVuRepository.GetAll() on nv.IdCv equals cv.Id
-                                      join ch in _iCuaHangRepository.GetAll() on nv.IdCh equals ch.Id
-                                      select new ViewNhanVien() { NhanVien = nv, ChucVu = cv, CuaHang = ch }).ToList();
-            return lstViewNhanVien;
+            var listNhanVienViewModel = from nv in _iNhanVienRepository.GetAll()
+                join cv in _iChucVuRepository.GetAll() on nv.IdCv equals cv.Id
+                join ch in _iCuaHangRepository.GetAll() on nv.IdCh equals ch.Id
+                select new NhanVienViewModel() {NhanVien = nv, ChucVu = cv, CuaHang = ch};
+            return listNhanVienViewModel.ToList();
         }
 
         public bool Remove(NhanVien obj)

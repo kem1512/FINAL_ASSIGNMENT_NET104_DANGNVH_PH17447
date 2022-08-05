@@ -2,7 +2,7 @@
 
 namespace MINKY_STORE_WEB_APPLICATION.Models
 {
-    public class ViewNhanVien
+    public class NhanVienViewModel
     {
         public ChucVu ChucVu { get; set; }
 

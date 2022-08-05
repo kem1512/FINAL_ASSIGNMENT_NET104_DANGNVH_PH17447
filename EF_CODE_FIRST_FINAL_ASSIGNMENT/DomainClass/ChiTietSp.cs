@@ -11,19 +11,19 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass
 
         public string MoTa { get; set; }
 
-        public int? SoLuongTon { get; set; }
+        public int SoLuongTon { get; set; }
 
         public decimal GiaNhap { get; set; }
 
         public decimal GiaBan { get; set; }
 
-        public Guid IdSp { get; set; }
+        public Guid? IdSp { get; set; }
 
-        public Guid IdNsx { get; set; }
+        public Guid? IdNsx { get; set; }
 
-        public Guid IdMauSac { get; set; }
+        public Guid? IdMauSac { get; set; }
 
-        public Guid IdDongSp { get; set; }
+        public Guid? IdDongSp { get; set; }
 
         public SanPham SanPham { get; set; }
 

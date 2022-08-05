@@ -14,5 +14,7 @@ namespace MINKY_STORE_WEB_APPLICATION.IServices
         bool Remove(SanPham obj);
 
         List<SanPham> GetAll();
+
+        SanPham GetById(Guid id);
     }
 }

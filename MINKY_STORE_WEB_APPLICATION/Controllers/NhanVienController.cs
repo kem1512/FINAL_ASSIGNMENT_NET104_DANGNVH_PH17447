@@ -24,7 +24,7 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
 
         public IActionResult Index()
         {
-            var tupleModel = new Tuple<List<ViewNhanVien>, List<ChucVu>, List<CuaHang>>(_iNhanVienService.GetViewNhanVien(), _iChucVuService.GetAll(), _iCuaHangService.GetAll()); 
+            var tupleModel = new Tuple<List<NhanVienViewModel>, List<ChucVu>, List<CuaHang>>(_iNhanVienService.GetNhanVienViewModel(), _iChucVuService.GetAll(), _iCuaHangService.GetAll()); 
             return View(tupleModel);
         }
 
@@ -40,6 +40,20 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
         {
             _iNhanVienService.Remove(_iNhanVienService.GetById(id));
             return RedirectToAction("Index", "NhanVien");
+        }
+
+        [Route("/nhanvien/detail/{id}")]
+        public IActionResult Update(Guid id)
+        {
+            var tupleModel = new Tuple<NhanVienViewModel, List<ChucVu>, List<CuaHang>, List<NhanVien>>(_iNhanVienService.GetNhanVienViewModel().FirstOrDefault(c => c.NhanVien.Id == id), _iChucVuService.GetAll(), _iCuaHangService.GetAll(), _iNhanVienService.GetAll()); 
+            return View(tupleModel);
+        }
+
+        [Route("/nhanvien/update")]
+        public IActionResult Update(NhanVien cv)
+        {
+            _iNhanVienService.Update(cv);
+            return RedirectToAction("Index", "CuaHang");
         }
     }
 }

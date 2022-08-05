@@ -1,7 +1,6 @@
-﻿using EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass;
-using System;
+﻿using System;
+using EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MINKY_STORE_WEB_APPLICATION.IServices
 {
@@ -14,5 +13,7 @@ namespace MINKY_STORE_WEB_APPLICATION.IServices
         bool Remove(CuaHang obj);
 
         List<CuaHang> GetAll();
+
+        CuaHang GetById(Guid id);
     }
 }
