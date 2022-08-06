@@ -16,7 +16,7 @@
                             <div class="row">
                                 <div class="form-group col-6">
                                     <label>Mã nhân viên</label>
-                                    <input type="text" class="form-control" value="@Model.Item1.NhanVien.Id" name="Ma" placeholder="Nhập mã nhân viên">
+                                    <input type="text" class="form-control" value="@Model.Item1.NhanVien.Ma" name="Ma" placeholder="Nhập mã nhân viên">
                                 </div>
                                 <div class="form-group col-6">
                                     <label>Nhập họ nhân viên</label>
@@ -35,9 +35,15 @@
                                 <div class="form-group col-6">
                                     <label>Giới tính</label>
                                     <select class="custom-select" name="GioiTinh">
-                                        <option selected>Chọn giới tính</option>
-                                        <option value="Nam">Nam</option>
-                                        <option value="Nữ">Nữ</option>
+                                        <option>Chọn giới tính</option>
+                                        @{
+                                            string[] gioiTinh = new[] { "Nam", "Nữ" };
+                                            @foreach (var x in gioiTinh)
+                                            {
+                                                var isSelected = @Model.Item1.NhanVien.GioiTinh == x ? "selected" : "";
+                                                <option value="@x" @isSelected>@x</option>
+                                            }
+                                        }
                                     </select>
                                 </div>
                                 <div class="form-group col-6">
@@ -55,37 +61,42 @@
                                 <div class="form-group col-3">
                                     <label>Chức vụ</label>
                                     <select class="custom-select" name="IdCv">
-                                        <option selected>Chọn chức vụ</option>
                                         @foreach (var x in Model.Item2)
                                         {
-                                            <option value="@x.Id">@x.Ten</option>
+                                            var isSelected = x.Id == @Model.Item1.NhanVien.IdCv ? "selected" : "";
+                                            <option value="@x.Id" @isSelected >@x.Ten</option>
                                         }
                                     </select>
                                 </div>
                                 <div class="form-group col-3">
                                     <label>Chức vụ</label>
                                     <select class="custom-select" name="IdCh">
-                                        <option selected>Chọn cửa hàng</option>
                                         @foreach (var x in Model.Item3)
                                         {
-                                            <option value="@x.Id">@x.Ten</option>
+                                            var isSelected = x.Id == @Model.Item1.NhanVien.IdCh ? "selected" : "";
+                                            <option value="@x.Id"  @isSelected>@x.Ten</option>
                                         }
                                     </select>
                                 </div>
 
-                                <div class="form-group col-6">
+                                <div class="form-group col-3">
                                     <label>Chức vụ</label>
-                                    <select class="custom-select">
-                                        <option selected>Chọn nhân viên gửi báo cáo</option>
+                                    <select class="custom-select" name="IdGuiBc">
                                         @foreach (var x in Model.Item4)
                                         {
-                                            <option value="@x.Id">@x.Ho @x.TenDem @x.Ten</option>
+                                            var isSelected = x.Id == @Model.Item1.NhanVien.IdGuiBc ? "selected" : "";
+                                            <option value="@x.Id" @isSelected>@x.Ho @x.TenDem @x.Ten</option>
                                         }
                                     </select>
                                 </div>
+                                
+                                <div class="form-group col-3">
+                                    <label>Mật khẩu</label>
+                                    <input type="text" name="MatKhau" value="@Model.Item1.NhanVien.MatKhau" class="form-control" placeholder="Nhập mật khẩu">
+                                </div>
                             </div>
                             <div class="form-group py-2">
-                                <button type="submit" class="btn btn-success px-5 mr-2">Sửa nhân viên</button>
+                                <button value="@Model.Item1.NhanVien.Id" name="Id" type="submit" class="btn btn-success px-5 mr-2">Sửa nhân viên</button>
                             </div>
                         </form>
                     </div>

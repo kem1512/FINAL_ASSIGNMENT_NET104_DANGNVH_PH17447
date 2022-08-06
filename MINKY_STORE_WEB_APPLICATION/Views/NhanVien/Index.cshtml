@@ -32,7 +32,7 @@
                         <div class="form-group col-6">
                             <label>Giới tính</label>
                             <select class="custom-select" name="GioiTinh">
-                                <option selected>Chọn giới tính</option>
+                                <option selected value="null">Chọn giới tính</option>
                                 <option value="Nam">Nam</option>
                                 <option value="Nữ">Nữ</option>
                             </select>
@@ -43,16 +43,16 @@
                         </div>
                         <div class="form-group col-6">
                             <label>Địa chỉ nhân viên</label>
-                            <input type="text" name="DiaChi" class="form-control">
+                            <input type="text" name="DiaChi" class="form-control" placeholder="Nhập địa chỉ">
                         </div>
                         <div class="form-group col-6">
                             <label>Số điện thoại nhân viên</label>
-                            <input type="text" name="Sdt" class="form-control">
+                            <input type="text" name="Sdt" class="form-control" placeholder="Nhập số điện thoại nhân viên">
                         </div>
                         <div class="form-group col-3">
                             <label>Chức vụ</label>
                             <select class="custom-select" name="IdCv">
-                                <option selected>Chọn chức vụ</option>
+                                <option selected value="null">Chọn chức vụ</option>
                                 @foreach (var x in Model.Item2)
                                 {
                                     <option value="@x.Id">@x.Ten</option>
@@ -60,9 +60,9 @@
                             </select>
                         </div>
                         <div class="form-group col-3">
-                            <label>Chức vụ</label>
+                            <label>Cửa hàng</label>
                             <select class="custom-select" name="IdCh">
-                                <option selected>Chọn cửa hàng</option>
+                                <option selected value="null">Chọn cửa hàng</option>
                                 @foreach (var x in Model.Item3)
                                 {
                                     <option value="@x.Id">@x.Ten</option>
@@ -70,19 +70,24 @@
                             </select>
                         </div>
 
-                        <div class="form-group col-6">
-                            <label>Chức vụ</label>
-                            <select class="custom-select">
-                                <option selected>Chọn nhân viên gửi báo cáo</option>
+                        <div class="form-group col-3">
+                            <label>Nhân viên gửi báo báo</label>
+                            <select class="custom-select" name="IdGuiBC">
+                                <option selected>Chọn nhân viên</option>
                                 @foreach (var x in Model.Item1)
                                 {
                                     <option value="@x.NhanVien.Id">@x.NhanVien.Ho @x.NhanVien.TenDem @x.NhanVien.Ten</option>
                                 }
                             </select>
                         </div>
+                        
+                        <div class="form-group col-3">
+                            <label>Mật khẩu</label>
+                            <input type="text" name="MatKhau" class="form-control" placeholder="Nhập mật khẩu">
+                        </div>
                     </div>
                     <div class="form-group py-2">
-                        <button type="submit" class="btn btn-light px-5 mr-2">Thêm nhân viên</button>
+                        <button type="submit" onclick="return validateForm()" class="btn btn-light px-5 mr-2">Thêm nhân viên</button>
                         <a href="/chucvu" class="btn btn-success mr-2 px-5">Thêm chức vụ</a>
                         <a href="/cuahang" class="btn btn-warning mr-2 px-5">Thêm cửa hàng</a>
                     </div>
@@ -91,41 +96,41 @@
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
-                            <tr>
-                                <th>Mã chức vụ</th>
-                                <th>Họ và tên</th>
-                                <th>Giới tính</th>
-                                <th>Chức vụ</th>
-                                <th>Cửa hàng quản lý</th>
-                                <th>Số điện thoại</th>
-                                <th>Thao tác</th>
-                            </tr>
+                        <tr>
+                            <th>Mã chức vụ</th>
+                            <th>Họ và tên</th>
+                            <th>Giới tính</th>
+                            <th>Chức vụ</th>
+                            <th>Cửa hàng quản lý</th>
+                            <th>Số điện thoại</th>
+                            <th>Thao tác</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            @if (@Model.Item1.Count != 0)
+                        @if (@Model.Item1.Count != 0)
+                        {
+                            @for (int i = 0; i < Model.Item1.Count; i++)
                             {
-                                @for (int i = 0; i < Model.Item1.Count; i++)
-                                {
-                                    <tr>
-                                        <td class="align-middle">@Model.Item1[i].NhanVien.Ma</td>
-                                        <td class="align-middle">@Model.Item1[i].NhanVien.Ho @Model.Item1[i].NhanVien.TenDem @Model.Item1[i].NhanVien.Ten</td>
-                                        <td class="align-middle">@Model.Item1[i].NhanVien.GioiTinh</td>
-                                        <td class="align-middle">@Model.Item1[i].ChucVu.Ten</td>
-                                        <td class="align-middle">@Model.Item1[i].CuaHang.Ten</td>
-                                        <td class="align-middle">@Model.Item1[i].NhanVien.Sdt</td>
-                                        <td class="align-middle">
-                                            <a href="/nhanvien/detail/@Model.Item1[i].NhanVien.Id" class="btn btn-success px-2">Sửa nhân viên</a>
-                                            <a href="/nhanvien/delete/@Model.Item1[i].NhanVien.Id" onclick="return confirm('Bạn có chắc muốn xóa?')" class="btn btn-danger px-2">Xóa nhân viên</a>
-                                        </td>
-                                    </tr>
-                                }
-                            }
-                            else
-                            {
-                                <tr class="text-center">
-                                    <td class="pt-4" colspan="7">Không có dữ liệu</td>
+                                <tr>
+                                    <td class="align-middle">@Model.Item1[i].NhanVien.Ma</td>
+                                    <td class="align-middle">@Model.Item1[i].NhanVien.Ho @Model.Item1[i].NhanVien.TenDem @Model.Item1[i].NhanVien.Ten</td>
+                                    <td class="align-middle">@Model.Item1[i].NhanVien.GioiTinh</td>
+                                    <td class="align-middle">@Model.Item1[i].ChucVu.Ten</td>
+                                    <td class="align-middle">@Model.Item1[i].CuaHang.Ten</td>
+                                    <td class="align-middle">@Model.Item1[i].NhanVien.Sdt</td>
+                                    <td class="align-middle">
+                                        <a href="/nhanvien/detail/@Model.Item1[i].NhanVien.Id" class="btn btn-success">Sửa</a>
+                                        <a href="/nhanvien/remove/@Model.Item1[i].NhanVien.Id" onclick="return confirm('Bạn có chắc muốn xóa?')" class="btn btn-danger">Xóa</a>
+                                    </td>
                                 </tr>
                             }
+                        }
+                        else
+                        {
+                            <tr class="text-center">
+                                <td class="pt-4" colspan="7">Không có dữ liệu</td>
+                            </tr>
+                        }
                         </tbody>
                     </table>
                 </div>

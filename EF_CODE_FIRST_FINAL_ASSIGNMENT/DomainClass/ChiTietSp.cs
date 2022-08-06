@@ -17,6 +17,8 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass
 
         public decimal GiaBan { get; set; }
 
+        public string Anh { get; set; }
+
         public Guid? IdSp { get; set; }
 
         public Guid? IdNsx { get; set; }

@@ -1,4 +1,5 @@
-﻿using EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass;
+﻿using System;
+using EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass;
 using EF_CODE_FIRST_FINAL_ASSIGNMENT.IRepositories;
 using EF_CODE_FIRST_FINAL_ASSIGNMENT.Repositories;
 using MINKY_STORE_WEB_APPLICATION.IServices;
@@ -17,7 +18,7 @@ namespace MINKY_STORE_WEB_APPLICATION.Services
         private IDongSpRepository _iDongSpRepository;
         private IMauSacRepository _iMauSacRepository;
 
-        public ChiTietSpService(IMauSacRepository iMauSacRepository)
+        public ChiTietSpService()
         {
             _iMauSacRepository = new MauSacRepository();
             _iSanPhamSpRepository = new SanPhamRepository();
@@ -53,8 +54,18 @@ namespace MINKY_STORE_WEB_APPLICATION.Services
                 join nsx in _iNsxRepository.GetAll() on ctsp.IdNsx equals nsx.Id
                 join dsp in _iDongSpRepository.GetAll() on ctsp.IdDongSp equals dsp.Id
                 join ms in _iMauSacRepository.GetAll() on ctsp.IdMauSac equals ms.Id
-                select new SanPhamViewModel() {ChiTietSp = ctsp, SanPham = sp, Nsx = nsx, DongSp = dsp, MauSac = ms};
+                select new SanPhamViewModel() { ChiTietSp = ctsp, SanPham = sp, Nsx = nsx, DongSp = dsp, MauSac = ms };
             return listSanPhamViewModel.ToList();
+        }
+
+        public ChiTietSp GetById(Guid id)
+        {
+            return _iChiTietSpRepository.GetAll().FirstOrDefault(c => c.Id == id);
+        }
+
+        public bool AddSanPhamViewModel(SanPhamViewModel obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -23,6 +23,11 @@ namespace MINKY_STORE_WEB_APPLICATION
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession(c =>
+                {
+                    c.IOTimeout = TimeSpan.FromMinutes(1);
+                }
+            );
             services.AddControllersWithViews();
         }
 
@@ -40,6 +45,8 @@ namespace MINKY_STORE_WEB_APPLICATION
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseSession();
 
             app.UseAuthorization();
 

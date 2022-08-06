@@ -14,5 +14,7 @@ namespace MINKY_STORE_WEB_APPLICATION.IServices
         bool Remove(KhachHang obj);
 
         List<KhachHang> GetAll();
+
+        KhachHang GetById(Guid id);
     }
 }

@@ -35,7 +35,7 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
             return RedirectToAction("Index", "NhanVien");
         }
 
-        [Route("/nhanvien/delete/{id}")]
+        [Route("/nhanvien/remove/{id}")]
         public IActionResult Delete(Guid id)
         {
             _iNhanVienService.Remove(_iNhanVienService.GetById(id));
@@ -53,7 +53,7 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
         public IActionResult Update(NhanVien cv)
         {
             _iNhanVienService.Update(cv);
-            return RedirectToAction("Index", "CuaHang");
+            return RedirectToAction("Index", "NhanVien");
         }
     }
 }

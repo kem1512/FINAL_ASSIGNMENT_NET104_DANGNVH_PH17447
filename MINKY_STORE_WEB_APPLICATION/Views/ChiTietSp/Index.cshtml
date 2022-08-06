@@ -1,0 +1,122 @@
+﻿@model Tuple<List<MINKY_STORE_WEB_APPLICATION.Models.SanPhamViewModel>, List<EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.SanPham>, List<EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.MauSac>, List<EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.DongSp>, List<EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.Nsx>>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="row mt-3">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">Quản lý sản phẩm</div>
+                    <hr>
+                    <form action="/chitietsp/create" method="post">
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label>Chọn sản phẩm</label>
+                                <select class="custom-select" name="IdSp">\
+                                    <option>Chọn sản phẩm</option>
+                                    @foreach (var x in Model.Item2)
+                                    {
+                                        <option value="@x.Id">@x.Ten</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group col-6">
+                                <label>Nhập năm bảo hành</label>
+                                <input type="text" class="form-control" name="NamBh" placeholder="Nhập năm bảo hành">
+                            </div>
+                            <div class="form-group col-3">
+                                <label>Nhập giá nhập</label>
+                                <input type="text" class="form-control" name="GiaNhap" placeholder="Nhập tên giá nhập">
+                            </div>
+                            <div class="form-group col-3">
+                                <label>Nhập giá bán </label>
+                                <input type="text" class="form-control" name="GiaBan" placeholder="Nhập giá bán">
+                            </div>
+                            <div class="form-group col-6">
+                                <label>Nhập số lượng tồn kho </label>
+                                <input type="text" class="form-control" name="SoLuongTon" placeholder="Nhập số lượng tồn kho">
+                            </div>
+                            <div class="form-group col-6">
+                                <label>Chọn nhà sản xuất</label>
+                                <select class="custom-select" name="IdNsx">\
+                                    <option>Nhà sản xuất</option>
+                                    @foreach (var x in Model.Item5)
+                                    {
+                                        <option value="@x.Id">@x.Ten</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group col-6">
+                                <label>Chọn màu sắc</label>
+                                <select class="custom-select" name="IdMauSac">
+                                    <option>Chọn màu sắc</option>
+                                    @foreach (var x in Model.Item3)
+                                    {
+                                        <option value="@x.Id">@x.Ten</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group col-6">
+                                <label>Dòng sản phẩm</label>
+                                <select class="custom-select" name="IdDongSp">
+                                    <option>Chọn dòng sản phẩm</option>
+                                    @foreach (var x in Model.Item4)
+                                    {
+                                        <option value="@x.Id">@x.Ten</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group col-6">
+                                <label>Thêm sản phẩm</label> <br/>
+                                <button class="btn btn-success px-5 mr-2">Thêm sản phẩm</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <a href="/dongsp" class="btn btn-warning px-5">Thêm dòng sản phẩm</a>
+                            <a href="/nsx" class="btn btn-info px-5">Thêm nhà sản xuất </a>
+                            <a href="/mausac" class="btn btn-danger px-5">Thêm màu sắc </a>
+                            <a href="/sanpham" class="btn btn-dark px-5">Thêm tên sản phẩm </a>
+                        </div>
+                    </form>
+                    <h5 class="card-title">Danh sách sản phẩm</h5>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Mã sản phẩm</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Màu sắc</th>
+                                <th>Nhà sản xuất</th>
+                                <th>Giá nhập</th>
+                                <th>Giá bán</th>
+                                <th>Tồn kho</th>
+                                <th>Thao tác</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @for (int i = 0; i < Model.Item1.Count; i++)
+                            {
+                                <tr>
+                                    <td>@Model.Item1[i].SanPham.Ma</td>
+                                    <td>@Model.Item1[i].SanPham.Ten</td>
+                                    <td>@Model.Item1[i].MauSac.Ten</td>
+                                    <td>@Model.Item1[i].Nsx.Ten</td>
+                                    <td>@Model.Item1[i].ChiTietSp.GiaNhap</td>
+                                    <td>@Model.Item1[i].ChiTietSp.GiaBan</td>
+                                    <td>@Model.Item1[i].ChiTietSp.SoLuongTon</td>
+                                    <td>
+                                        <a href="/chitietsp/detail/@Model.Item1[i].ChiTietSp.Id" class="btn btn-success">Sửa sản phẩm</a>
+                                        <a href="/chitietsp/remove/@Model.Item1[i].ChiTietSp.Id" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa sản phẩm</a>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

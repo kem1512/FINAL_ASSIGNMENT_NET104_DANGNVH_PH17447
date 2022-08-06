@@ -1,0 +1,68 @@
+﻿@model EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.KhachHang
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (Model != null)
+{
+    <div class="row mt-3">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">Quản lý khách hàng</div>
+                <hr>
+                <form action="/khachhang/update" method="post">
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label>Mã khách hàng</label>
+                            <input type="text" class="form-control" value="@Model.Ma" name="Ma" placeholder="Nhập mã khách hàng">
+                        </div>
+                        <div class="form-group col-6">
+                            <label>Nhập họ khách hàng</label>
+                            <div class="row">
+                                <div class="col">
+                                    <input type="text" class="form-control" value="@Model.Ho" name="Ho" placeholder="Nhập họ khách hàng">
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="form-control" value="@Model.TenDem" name="TenDem" placeholder="Nhập tên đệm khách hàng">
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="form-control" value="@Model.Ten" name="Ten" placeholder="Nhập tên khách hàng">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-6">
+                            <label>Ngày sinh</label>
+                            <input type="date" class="form-control" name="NgaySinh" value="@Model.NgaySinh.ToString("yyyy-MM-dd")" placeholder="Nhập ngày sinh">
+                        </div>
+                        <div class="form-group col-3">
+                            <label>Số điện thoại</label>
+                            <input type="text" class="form-control" name="Sdt" value="@Model.Sdt" placeholder="Nhập số điện thoại">
+                        </div>
+                        <div class="form-group col-3">
+                            <label>Địa chỉ</label>
+                            <input type="text" class="form-control" value="@Model.DiaChi" name="DiaChi" placeholder="Nhập địa chỉ">
+                        </div>
+                        <div class="form-group col-3">
+                            <label>Thành phố</label>
+                            <input type="text" class="form-control" value="@Model.ThanhPho" name="ThanhPho" placeholder="Nhập thành phố">
+                        </div>
+                        <div class="form-group col-3">
+                            <label>Quốc gia</label>
+                            <input type="text" class="form-control" value="@Model.QuocGia" name="QuocGia" placeholder="Nhập quốc gia">
+                        </div>
+                        <div class="form-group col-3">
+                            <label>Mật khẩu</label>
+                            <input type="text" class="form-control" value="@Model.MatKhau" name="MatKhau" placeholder="Nhập mật khẩu">
+                        </div>
+                    </div>
+                    <div class="form-group py-2">
+                        <button type="submit" name="Id" value="@Model.Id" class="btn btn-light px-5 mr-2">Sửa khách hàng</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+}
+

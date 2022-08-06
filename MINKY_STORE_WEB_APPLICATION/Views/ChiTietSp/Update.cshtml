@@ -1,0 +1,87 @@
+﻿@model Tuple<EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.ChiTietSp, List<EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.SanPham>, List<EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.MauSac>, List<EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.DongSp>, List<EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.Nsx>>
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model != null)
+{
+    <div class="row mt-3">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">Quản lý sản phẩm</div>
+                <hr>
+                <form action="/chitietsp/update" method="post">
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label>Chọn sản phẩm</label>
+                            <select class="custom-select" name="IdSp">\
+                                <option>Chọn sản phẩm</option>
+                                @foreach (var x in Model.Item2)
+                                {
+                                    var isSelected = x.Id == @Model.Item1.IdSp ? "selected" : "";
+                                    <option @isSelected value="@x.Id">@x.Ten</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group col-6">
+                            <label>Nhập năm bảo hành</label>
+                            <input type="text" class="form-control" value="@Model.Item1.NamBh" name="NamBh" placeholder="Nhập năm bảo hành">
+                        </div>
+                        <div class="form-group col-6">
+                            <label>Nhập giá nhập</label>
+                            <input type="text" class="form-control" name="GiaNhap" value="@Model.Item1.GiaNhap" placeholder="Nhập tên giá nhập">
+                        </div>
+                        <div class="form-group col-6">
+                            <label>Nhập giá bán </label>
+                            <input type="text" class="form-control" name="GiaBan" value="@Model.Item1.GiaBan" placeholder="Nhập giá bán">
+                        </div>
+                        <div class="form-group col-6">
+                            <label>Nhập số lượng tồn kho </label>
+                            <input type="text" class="form-control" name="SoLuongTon" value="@Model.Item1.SoLuongTon" placeholder="Nhập số lượng tồn kho">
+                        </div>
+                        <div class="form-group col-6">
+                            <label>Chọn nhà sản xuất</label>
+                            <select class="custom-select" name="IdNsx">\
+                                <option>Nhà sản xuất</option>
+                                @foreach (var x in Model.Item5)
+                                {
+                                    var isSelected = x.Id == @Model.Item1.IdNsx ? "selected" : "";
+                                    <option @isSelected value="@x.Id">@x.Ten</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group col-6">
+                            <label>Chọn màu sắc</label>
+                            <select class="custom-select" name="IdMauSac">
+                                <option>Màu sắc</option>
+                                @foreach (var x in Model.Item3)
+                                {
+                                    var isSelected = x.Id == @Model.Item1.IdMauSac ? "selected" : "";
+                                    <option @isSelected value="@x.Id">@x.Ten</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group col-6">
+                            <label>Dòng sản phẩm</label>
+                            <select class="custom-select" name="IdDongSp">
+                                <option>Chọn dòng sản phẩm</option>
+                                @foreach (var x in Model.Item4)
+                                {
+                                    var isSelected = x.Id == @Model.Item1.IdDongSp ? "selected" : "";
+                                    <option @isSelected value="@x.Id">@x.Ten</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" value="@Model.Item1.Id" name="Id" class="btn btn-warning px-5">Sửa sản phẩm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
