@@ -54,7 +54,7 @@ namespace MINKY_STORE_WEB_APPLICATION
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=BanHang}/{action=Index}");
             });
         }
     }

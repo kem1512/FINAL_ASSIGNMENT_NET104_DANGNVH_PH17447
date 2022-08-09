@@ -1,91 +1,117 @@
-﻿@model List<MINKY_STORE_WEB_APPLICATION.Models.SanPhamViewModel>
+﻿@model Tuple<List<MINKY_STORE_WEB_APPLICATION.Models.ItemViewModel>, decimal>;
 @{
     ViewData["Title"] = "Cart";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row mt-3">
-    <div class="col-lg-12">
-        <div class="card">
-            <div class="card-body">
-                <div class="card-title">Giỏ hàng</div>
-                <hr>
-                <div class="row d-flex justify-content-center my-4">
-                    <div class="col-md-8">
-                        <div class="card mb-4">
-                            <div class="card-header py-3">
-                                <h5 class="mb-0">Cart - 2 items</h5>
-                            </div>
-                            <div class="card-body">
-                                <!-- Single item -->
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
-                                        <!-- Image -->
-                                        <div>
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/12a.webp"
-                                                 class="w-100" />
-                                        </div>
-                                        <!-- Image -->
-                                    </div>
 
-                                    <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                                        <!-- Data -->
-                                        <p><strong>Blue denim shirt</strong></p>
-                                        <p>Màu sắc: blue</p>
-                                        <button type="button" class="btn btn-primary btn-sm mb-2">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                        <!-- Data -->
-                                    </div>
+@if (Model != null)
+{
+    <div class="row mt-3">
+        <div class="col-lg-12">
+            <div class="card">
+                <form action="/hoadon/add">
+                    <div class="card-body">
+                        <div class="card-title">Giỏ hàng</div>
+                        <hr>
+                        <div class="row d-flex justify-content-center my-4">
+                            <div class="col-md-8">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <!-- Single item -->
+                                        @foreach (var x in Model.Item1)
+                                        {
+                                            <form action="/banhang/updatecart">
+                                                <div class="row p-3">
+                                                    <div class="col-lg-3 col-md-12 mb-4 mb-lg-0" style="background-color: #fff; border-radius: 30px">
+                                                        <!-- Image -->
+                                                        <div class="p-4">
+                                                            <img src="@x.SanPhamViewModel.ChiTietSp.Anh"
+                                                         class="w-100" />
+                                                        </div>
+                                                        <!-- Image -->
+                                                    </div>
 
-                                    <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                                        <!-- Quantity -->
-                                        <div class="d-flex mb-4" style="max-width: 300px">
-                                            <button class="btn btn-primary px-3">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
+                                                    <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                                        <!-- Data -->
+                                                        <p><strong>@x.SanPhamViewModel.SanPham.Ten</strong></p>
+                                                        <p>Màu sắc: @x.SanPhamViewModel.MauSac.Ten</p>
+                                                        <a href="/banhang/removecart/@x.SanPhamViewModel.ChiTietSp.Id" onclick="return confirm('Bạn có chắc muốn xóa?')" class="btn btn-danger btn-sm mb-2">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
+                                                        <!-- Data -->
+                                                    </div>
 
-                                            <div>
-                                                <input min="0" name="quantity" value="1" type="number" class="form-control" />
-                                            </div>
+                                                    <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                                                        <!-- Quantity -->
+                                                        <div class="d-flex mb-4" style="max-width: 300px">
+                                                            <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="btn btn-primary px-3">
+                                                                <i class="fa fa-minus"></i>
+                                                            </button>
 
-                                            <button class="btn btn-primary px-3">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
-                                        <!-- Quantity -->
-                                        <!-- Price -->
-                                        <p class="text-md-center">
-                                            <strong>$17.99</strong>
-                                        </p>
-                                        <!-- Price -->
+                                                            <div>
+                                                                <input min="0" name="quantity" name="quantity" value="@x.Quantity" readonly type="number" class="form-control" />
+                                                            </div>
+
+                                                            <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="btn btn-primary px-3">
+                                                                <i class="fa fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                        <!-- Quantity -->
+                                                        <!-- Price -->
+                                                        <p class="text-md-center">
+                                                            @{
+                                                                var total = Convert.ToInt32(x.SanPhamViewModel.ChiTietSp.GiaBan) * Convert.ToInt32(x.Quantity);
+                                                            }
+                                                            <strong>@string.Format("{0:0,0}", total) VNĐ</strong>
+                                                        </p>
+
+                                                        <div class="text-center mt-3">
+                                                            <button type="submit" class="btn btn-warning w-100">
+                                                                Cập nhật
+                                                            </button>
+                                                        </div>
+                                                        <!-- Price -->
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <hr class="my-4" />
+                                        }
+                                        <!-- Single item -->
+                                        <a href="/banhang" class="btn btn-success">Quay về trang bán hàng</a>
                                     </div>
                                 </div>
-                                <!-- Single item -->
-
-                                @* <hr class="my-4" /> *@
-
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5>Hóa đơn</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label>Tên người nhận</label>
+                                            <input type="text" class="form-control" name="TenNguoiNhan" placeholder="Nhập tên người nhận">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Địa chỉ</label>
+                                            <input type="text" class="form-control" name="DiaChi" placeholder="Nhập địa chỉ">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Số điện thoại</label>
+                                            <input type="text" class="form-control" name="Sdt" placeholder="Nhập số điện thoại">
+                                        </div>
+                                        <hr />
+                                        <strong>Tổng tiền: @string.Format("{0:0,0}", Model.Item2) VNĐ</strong>
+                                        <button type="submit" class="btn btn-primary btn-lg btn-block mt-3">
+                                            Thanh toán
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <h5>Summary</h5>
-                            </div>
-                            <div class="card-body">
-                                <p>Tiền sản phẩm: $100</p>
-                                <p>Tiền ship: $30</p>
-                                <hr/>
-                                <strong>Tổng tiền: $130</strong>
-                                <button type="button" class="btn btn-primary btn-lg btn-block mt-3">
-                                    Thanh toán
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
-</div>
+}
 

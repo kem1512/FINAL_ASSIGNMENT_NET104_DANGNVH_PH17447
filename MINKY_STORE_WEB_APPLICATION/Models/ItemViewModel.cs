@@ -1,6 +1,6 @@
 ﻿namespace MINKY_STORE_WEB_APPLICATION.Models
 {
-    public class Item
+    public class ItemViewModel
     {
         public SanPhamViewModel SanPhamViewModel { get; set; }
 

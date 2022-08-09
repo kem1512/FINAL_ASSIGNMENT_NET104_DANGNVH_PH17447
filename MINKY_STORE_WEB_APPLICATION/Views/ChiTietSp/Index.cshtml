@@ -68,7 +68,11 @@
                                     }
                                 </select>
                             </div>
-                            <div class="form-group col-6">
+                            <div class="form-group col-3">
+                                <label>Thêm ảnh sản phẩm</label> <br/>
+                                <input type="text" class="form-control" name="Anh" placeholder="Nhập link ảnh sản phẩm">
+                            </div>
+                            <div class="form-group col-3">
                                 <label>Thêm sản phẩm</label> <br/>
                                 <button class="btn btn-success px-5 mr-2">Thêm sản phẩm</button>
                             </div>
@@ -103,8 +107,8 @@
                                     <td>@Model.Item1[i].SanPham.Ten</td>
                                     <td>@Model.Item1[i].MauSac.Ten</td>
                                     <td>@Model.Item1[i].Nsx.Ten</td>
-                                    <td>@Model.Item1[i].ChiTietSp.GiaNhap</td>
-                                    <td>@Model.Item1[i].ChiTietSp.GiaBan</td>
+                                    <td>@string.Format("{0:0,0}", @Model.Item1[i].ChiTietSp.GiaNhap)</td>
+                                    <td>@string.Format("{0:0,0}", @Model.Item1[i].ChiTietSp.GiaBan)</td>
                                     <td>@Model.Item1[i].ChiTietSp.SoLuongTon</td>
                                     <td>
                                         <a href="/chitietsp/detail/@Model.Item1[i].ChiTietSp.Id" class="btn btn-success">Sửa sản phẩm</a>
