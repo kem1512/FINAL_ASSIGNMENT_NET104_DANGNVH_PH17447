@@ -14,10 +14,14 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
     {
         private IHoaDonService _ihoaDonService;
         private IHoaDonChiTietService _ihoaDonChiTietService;
+        private INhanVienService _iNhanVienService;
+        private IKhachHangService _iKhachHangService;
         public HoaDonController()
         {
             _ihoaDonService = new HoaDonService();
             _ihoaDonChiTietService = new HoaDonChiTietService();
+            _iKhachHangService = new KhachHangService();
+            _iNhanVienService = new NhanVienService();
         }
 
         public IActionResult Index()
@@ -36,11 +40,14 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
         {
             List<ItemViewModel> cart = SessionHelper.GetObjectFromJson<List<ItemViewModel>>(HttpContext.Session, "cart");
             hoaDon.NgayTao = DateTime.Now;
+            hoaDon.IdKh = _iKhachHangService.GetAll()[0].Id;
+            hoaDon.IdNv = _iNhanVienService.GetAll()[0].Id;
             _ihoaDonService.Add(hoaDon);
             foreach (var x in cart)
             {
                 _ihoaDonChiTietService.Add(new HoaDonChiTiet(){ IdHoaDon = hoaDon.Id, IdChiTietSp = x.SanPhamViewModel.ChiTietSp.Id, DonGia = x.SanPhamViewModel.ChiTietSp.GiaBan, SoLuong = x.Quantity});
             }
+            HttpContext.Session.Remove("cart");
             return RedirectToAction("Index", "BanHang");
         }
 

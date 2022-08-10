@@ -24,7 +24,6 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Context
 
         }
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=.\\sqlexpress;Initial Catalog=MinkyStore;Persist Security Info=True;User ID=dangnvhph17447;Password=badao1234");
@@ -43,7 +42,7 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Context
             modelBuilder.ApplyConfiguration(new MauSacConfiguration());
             modelBuilder.ApplyConfiguration(new DongSpConfiguration());
             modelBuilder.ApplyConfiguration(new ChiTietSpConfiguration());
-            modelBuilder.ApplyConfiguration(new HoaDonChiTietConfiguration());
+            modelBuilder.ApplyConfiguration(new HoaDonConfiguration());
             modelBuilder.ApplyConfiguration(new GioHangChiTietConfiguration());
         }
 

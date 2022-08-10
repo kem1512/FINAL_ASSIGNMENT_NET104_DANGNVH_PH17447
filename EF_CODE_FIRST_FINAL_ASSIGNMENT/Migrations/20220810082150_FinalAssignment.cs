@@ -12,7 +12,7 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "(newid())"),
-                    Ma = table.Column<string>(type: "VARCHAR(20)", nullable: false),
+                    Ma = table.Column<string>(type: "VARCHAR(20)", nullable: true),
                     Ten = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
@@ -25,7 +25,7 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "(newid())"),
-                    Ma = table.Column<string>(type: "VARCHAR(20)", maxLength: 20, nullable: false),
+                    Ma = table.Column<string>(type: "VARCHAR(20)", maxLength: 20, nullable: true),
                     Ten = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     DiaChi = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     ThanhPho = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
@@ -41,7 +41,7 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "(newid())"),
-                    Ma = table.Column<string>(type: "VARCHAR(20)", nullable: false),
+                    Ma = table.Column<string>(type: "VARCHAR(20)", nullable: true),
                     Ten = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
                 },
                 constraints: table =>
@@ -54,7 +54,7 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "(newid())"),
-                    Ma = table.Column<string>(type: "VARCHAR(20)", nullable: false),
+                    Ma = table.Column<string>(type: "VARCHAR(20)", nullable: true),
                     Ten = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     TenDem = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     Ho = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
@@ -75,7 +75,7 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "(newid())"),
-                    Ma = table.Column<string>(type: "VARCHAR(20)", nullable: false),
+                    Ma = table.Column<string>(type: "VARCHAR(20)", nullable: true),
                     Ten = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
                 },
                 constraints: table =>
@@ -88,7 +88,7 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "(newid())"),
-                    Ma = table.Column<string>(type: "VARCHAR(20)", nullable: false),
+                    Ma = table.Column<string>(type: "VARCHAR(20)", nullable: true),
                     Ten = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
                 },
                 constraints: table =>
@@ -101,7 +101,7 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "(newid())"),
-                    Ma = table.Column<string>(type: "VARCHAR(20)", nullable: false),
+                    Ma = table.Column<string>(type: "VARCHAR(20)", nullable: true),
                     Ten = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
                 },
                 constraints: table =>
@@ -114,7 +114,7 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "(newid())"),
-                    Ma = table.Column<string>(type: "VARCHAR(20)", nullable: false),
+                    Ma = table.Column<string>(type: "VARCHAR(20)", nullable: true),
                     Ten = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     TenDem = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     Ho = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
@@ -123,8 +123,8 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                     DiaChi = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Sdt = table.Column<string>(type: "VARCHAR(30)", maxLength: 30, nullable: true),
                     MatKhau = table.Column<string>(type: "VARCHAR(MAX)", nullable: true),
-                    IdCh = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdCv = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdCh = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IdCv = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IdGuiBc = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     TrangThai = table.Column<int>(type: "int", nullable: false, defaultValue: 0)
                 },
@@ -136,13 +136,13 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                         column: x => x.IdCv,
                         principalTable: "ChucVu",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_NhanVien_CuaHang_IdCh",
                         column: x => x.IdCh,
                         principalTable: "CuaHang",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_NhanVien_NhanVien_IdGuiBc",
                         column: x => x.IdGuiBc,
@@ -158,13 +158,14 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "(newid())"),
                     NamBh = table.Column<int>(type: "int", nullable: false),
                     MoTa = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    SoLuongTon = table.Column<int>(type: "int", nullable: true),
+                    SoLuongTon = table.Column<int>(type: "int", nullable: false),
                     GiaNhap = table.Column<decimal>(type: "DECIMAL(20,0)", nullable: false, defaultValue: 0m),
                     GiaBan = table.Column<decimal>(type: "DECIMAL(20,0)", nullable: false, defaultValue: 0m),
-                    IdSp = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdNsx = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdMauSac = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdDongSp = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Anh = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IdSp = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IdNsx = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IdMauSac = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IdDongSp = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -174,25 +175,25 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                         column: x => x.IdDongSp,
                         principalTable: "DongSP",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ChiTietSP_MauSac_IdMauSac",
                         column: x => x.IdMauSac,
                         principalTable: "MauSac",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ChiTietSP_Nsx_IdNsx",
                         column: x => x.IdNsx,
                         principalTable: "Nsx",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ChiTietSP_SanPham_IdSp",
                         column: x => x.IdSp,
                         principalTable: "SanPham",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -206,8 +207,8 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                     TenNguoiNhan = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DiaChi = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Sdt = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IdKh = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdNv = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdKh = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IdNv = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     TinhTrang = table.Column<int>(type: "int", nullable: false),
                     KhachHangId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     NhanVienId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
@@ -233,33 +234,31 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                 name: "HoaDon",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Ma = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NgayTao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NgayThanhToan = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NgayShip = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NgayNhan = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TinhTrang = table.Column<int>(type: "int", nullable: false),
-                    TenNguoiNhan = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DiaChi = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Sdt = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IdKh = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdNv = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    KhachHangId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    NhanVienId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "(newid())"),
+                    Ma = table.Column<string>(type: "VARCHAR(20)", nullable: true),
+                    NgayTao = table.Column<DateTime>(type: "DATE", nullable: false),
+                    NgayThanhToan = table.Column<DateTime>(type: "DATE", nullable: false),
+                    NgayShip = table.Column<DateTime>(type: "DATE", nullable: false),
+                    NgayNhan = table.Column<DateTime>(type: "DATE", nullable: false),
+                    TinhTrang = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    TenNguoiNhan = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    DiaChi = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Sdt = table.Column<string>(type: "VARCHAR(30)", maxLength: 30, nullable: true),
+                    IdKh = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IdNv = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HoaDon", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_HoaDon_KhachHang_KhachHangId",
-                        column: x => x.KhachHangId,
+                        name: "FK_HoaDon_KhachHang_IdKh",
+                        column: x => x.IdKh,
                         principalTable: "KhachHang",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_HoaDon_NhanVien_NhanVienId",
-                        column: x => x.NhanVienId,
+                        name: "FK_HoaDon_NhanVien_IdNv",
+                        column: x => x.IdNv,
                         principalTable: "NhanVien",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -339,24 +338,6 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                 column: "IdSp");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChucVu_Ma",
-                table: "ChucVu",
-                column: "Ma",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CuaHang_Ma",
-                table: "CuaHang",
-                column: "Ma",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DongSP_Ma",
-                table: "DongSP",
-                column: "Ma",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_GioHang_KhachHangId",
                 table: "GioHang",
                 column: "KhachHangId");
@@ -372,31 +353,19 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                 column: "IdChiTietSp");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HoaDon_KhachHangId",
+                name: "IX_HoaDon_IdKh",
                 table: "HoaDon",
-                column: "KhachHangId");
+                column: "IdKh");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HoaDon_NhanVienId",
+                name: "IX_HoaDon_IdNv",
                 table: "HoaDon",
-                column: "NhanVienId");
+                column: "IdNv");
 
             migrationBuilder.CreateIndex(
                 name: "IX_HoaDonChiTiet_IdChiTietSp",
                 table: "HoaDonChiTiet",
                 column: "IdChiTietSp");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_KhachHang_Ma",
-                table: "KhachHang",
-                column: "Ma",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MauSac_Ma",
-                table: "MauSac",
-                column: "Ma",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_NhanVien_IdCh",
@@ -412,24 +381,6 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                 name: "IX_NhanVien_IdGuiBc",
                 table: "NhanVien",
                 column: "IdGuiBc");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NhanVien_Ma",
-                table: "NhanVien",
-                column: "Ma",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Nsx_Ma",
-                table: "Nsx",
-                column: "Ma",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SanPham_Ma",
-                table: "SanPham",
-                column: "Ma",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\assets\images\user.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\assets\css\animate.css" />
     <None Include="wwwroot\assets\css\app-style.css" />
     <None Include="wwwroot\assets\css\bootstrap.css" />
@@ -44,6 +48,7 @@
     <None Include="wwwroot\assets\images\bg-themes\1.png" />
     <None Include="wwwroot\assets\images\favicon.ico" />
     <None Include="wwwroot\assets\images\logo-icon.png" />
+    <None Include="wwwroot\assets\images\user.png" />
     <None Include="wwwroot\assets\js\app-script.js" />
     <None Include="wwwroot\assets\js\bootstrap.js" />
     <None Include="wwwroot\assets\js\bootstrap.min.js" />

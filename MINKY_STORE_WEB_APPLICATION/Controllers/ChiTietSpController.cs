@@ -28,14 +28,22 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
 
         public IActionResult Index()
         {
-            var tupleModel = new Tuple<List<SanPhamViewModel>, List<SanPham>, List<MauSac>, List<DongSp>, List<Nsx>>(_iChiTietSpService.GetSanPhamViewModel(), _iSanPhamService.GetAll(), _iMauSacService.GetAll(), _iDongSpService.GetAll(), _iNsxService.GetAll()); 
+            var tupleModel = new Tuple<List<SanPhamViewModel>, List<SanPham>, List<MauSac>, List<DongSp>, List<Nsx>>(_iChiTietSpService.GetSanPhamViewModel(), _iSanPhamService.GetAll(), _iMauSacService.GetAll(), _iDongSpService.GetAll(), _iNsxService.GetAll());
             return View(tupleModel);
         }
 
         [Route("/chitietsp/create")]
-        public IActionResult Add(ChiTietSp nv)
+        public IActionResult Add(ChiTietSp ctsp)
         {
-            _iChiTietSpService.Add(nv);
+            foreach (var x in _iChiTietSpService.GetAll())
+            {
+                if (ctsp.IdDongSp == x.IdDongSp && ctsp.IdMauSac == x.IdMauSac &&
+                    ctsp.IdSp == x.IdSp && ctsp.IdNsx == x.IdNsx)
+                {
+                    return Content("Đã tồn tại!");
+                }
+            }
+            _iChiTietSpService.Add(ctsp);
             return RedirectToAction("Index", "ChiTietSp");
         }
 

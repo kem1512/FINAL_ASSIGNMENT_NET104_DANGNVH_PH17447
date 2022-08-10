@@ -4,149 +4,123 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <div class="row mt-3">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title">Quản lý sản phẩm</div>
-                    <hr>
-                    <form action="/chitietsp/create" onsubmit="return validate(event)">
-                        <div class="row">
-                            <div class="form-group col-6">
-                                <label>Chọn sản phẩm</label>
-                                <select class="custom-select" name="IdSp" id="IdSp">
-                                    <option disabled hidden selected value="null">Chọn sản phẩm</option>
-                                    @foreach (var x in Model.Item2)
-                                    {
-                                        <option value="@x.Id">@x.Ten</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="form-group col-6">
-                                <label>Nhập năm bảo hành</label>
-                                <input type="number" class="form-control" name="NamBh" placeholder="Nhập năm bảo hành" required>
-                            </div>
-                            <div class="form-group col-3">
-                                <label>Nhập giá nhập</label>
-                                <input type="number" class="form-control" name="GiaNhap" placeholder="Nhập tên giá nhập" required>
-                            </div>
-                            <div class="form-group col-3">
-                                <label>Nhập giá bán </label>
-                                <input type="number" class="form-control" name="GiaBan" placeholder="Nhập giá bán" required>
-                            </div>
-                            <div class="form-group col-6">
-                                <label>Nhập số lượng tồn kho </label>
-                                <input type="number" class="form-control" name="SoLuongTon" placeholder="Nhập số lượng tồn kho" required>
-                            </div>
-                            <div class="form-group col-6">
-                                <label>Chọn nhà sản xuất</label>
-                                <select class="custom-select" name="IdNsx" id="IdNsx">
-                                    <option disabled hidden selected>Nhà sản xuất</option>
-                                    @foreach (var x in Model.Item5)
-                                    {
-                                        <option value="@x.Id">@x.Ten</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="form-group col-6">
-                                <label>Chọn màu sắc</label>
-                                <select class="custom-select" name="IdMauSac" id="IdMauSac">
-                                    <option disabled hidden selected>Chọn màu sắc</option>
-                                    @foreach (var x in Model.Item3)
-                                    {
-                                        <option value="@x.Id">@x.Ten</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="form-group col-6">
-                                <label>Dòng sản phẩm</label>
-                                <select class="custom-select" name="IdDongSp" id="IdDongSp">
-                                    <option disabled hidden selected>Chọn dòng sản phẩm</option>
-                                    @foreach (var x in Model.Item4)
-                                    {
-                                        <option value="@x.Id">@x.Ten</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="form-group col-3">
-                                <label>Thêm ảnh sản phẩm</label> <br/>
-                                <input type="text" class="form-control" name="Anh" placeholder="Nhập link ảnh sản phẩm" required>
-                            </div>
-                            <div class="form-group col-3">
-                                <label>Thêm sản phẩm</label> <br/>
-                                <button type="submit" class="btn btn-success px-5 mr-2">Thêm sản phẩm</button>
-                            </div>
+<div class="row mt-3">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">Quản lý sản phẩm</div>
+                <h1>@ViewBag.Error</h1>
+                <hr>
+                <form action="/chitietsp/create" onsubmit="return validate(event)">
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label>Chọn sản phẩm</label>
+                            <select class="custom-select" name="IdSp" id="IdSp">
+                                <option disabled hidden selected value="null">Chọn sản phẩm</option>
+                                @foreach (var x in Model.Item2)
+                                {
+                                    <option value="@x.Id">@x.Ten</option>
+                                }
+                            </select>
                         </div>
-                        <div class="form-group">
-                            <a href="/dongsp" class="btn btn-warning px-5">Thêm dòng sản phẩm</a>
-                            <a href="/nsx" class="btn btn-info px-5">Thêm nhà sản xuất </a>
-                            <a href="/mausac" class="btn btn-danger px-5">Thêm màu sắc </a>
-                            <a href="/sanpham" class="btn btn-dark px-5">Thêm tên sản phẩm </a>
+                        <div class="form-group col-6">
+                            <label>Nhập năm bảo hành</label>
+                            <input type="number" class="form-control" name="NamBh" placeholder="Nhập năm bảo hành" required>
                         </div>
-                    </form>
-                    <h5 class="card-title">Danh sách sản phẩm</h5>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>Mã sản phẩm</th>
-                                <th>Tên sản phẩm</th>
-                                <th>Màu sắc</th>
-                                <th>Nhà sản xuất</th>
-                                <th>Giá nhập</th>
-                                <th>Giá bán</th>
-                                <th>Tồn kho</th>
-                                <th>Thao tác</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @for (int i = 0; i < Model.Item1.Count; i++)
-                            {
-                                <tr>
-                                    <td>@Model.Item1[i].SanPham.Ma</td>
-                                    <td>@Model.Item1[i].SanPham.Ten</td>
-                                    <td>@Model.Item1[i].MauSac.Ten</td>
-                                    <td>@Model.Item1[i].Nsx.Ten</td>
-                                    <td>@string.Format("{0:0,0}", @Model.Item1[i].ChiTietSp.GiaNhap)</td>
-                                    <td>@string.Format("{0:0,0}", @Model.Item1[i].ChiTietSp.GiaBan)</td>
-                                    <td>@Model.Item1[i].ChiTietSp.SoLuongTon</td>
-                                    <td>
-                                        <a href="/chitietsp/detail/@Model.Item1[i].ChiTietSp.Id" class="btn btn-success">Sửa sản phẩm</a>
-                                        <a href="/chitietsp/remove/@Model.Item1[i].ChiTietSp.Id" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa sản phẩm</a>
-                                    </td>
-                                </tr>
-                            }
-                            </tbody>
-                        </table>
+                        <div class="form-group col-3">
+                            <label>Nhập giá nhập</label>
+                            <input type="number" class="form-control" name="GiaNhap" placeholder="Nhập tên giá nhập" required>
+                        </div>
+                        <div class="form-group col-3">
+                            <label>Nhập giá bán </label>
+                            <input type="number" class="form-control" name="GiaBan" placeholder="Nhập giá bán" required>
+                        </div>
+                        <div class="form-group col-6">
+                            <label>Nhập số lượng tồn kho </label>
+                            <input type="number" class="form-control" name="SoLuongTon" placeholder="Nhập số lượng tồn kho" required>
+                        </div>
+                        <div class="form-group col-6">
+                            <label>Chọn nhà sản xuất</label>
+                            <select class="custom-select" name="IdNsx" id="IdNsx">
+                                <option disabled hidden selected>Nhà sản xuất</option>
+                                @foreach (var x in Model.Item5)
+                                {
+                                    <option value="@x.Id">@x.Ten</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group col-6">
+                            <label>Chọn màu sắc</label>
+                            <select class="custom-select" name="IdMauSac" id="IdMauSac">
+                                <option disabled hidden selected>Chọn màu sắc</option>
+                                @foreach (var x in Model.Item3)
+                                {
+                                    <option value="@x.Id">@x.Ten</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group col-6">
+                            <label>Dòng sản phẩm</label>
+                            <select class="custom-select" name="IdDongSp" id="IdDongSp">
+                                <option disabled hidden selected>Chọn dòng sản phẩm</option>
+                                @foreach (var x in Model.Item4)
+                                {
+                                    <option value="@x.Id">@x.Ten</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group col-3">
+                            <label>Thêm ảnh sản phẩm</label> <br/>
+                            <input type="text" class="form-control" name="Anh" id="Anh" onkeyup="removeSpace()" placeholder="Nhập link ảnh sản phẩm" required>
+                        </div>
+                        <div class="form-group col-3">
+                            <label>Thêm sản phẩm</label> <br/>
+                            <button type="submit" class="btn btn-success px-5 mr-2">Thêm sản phẩm</button>
+                        </div>
                     </div>
+                    <div class="form-group">
+                        <a href="/dongsp" class="btn btn-warning px-5">Thêm dòng sản phẩm</a>
+                        <a href="/nsx" class="btn btn-info px-5">Thêm nhà sản xuất </a>
+                        <a href="/mausac" class="btn btn-danger px-5">Thêm màu sắc </a>
+                        <a href="/sanpham" class="btn btn-dark px-5">Thêm tên sản phẩm </a>
+                    </div>
+                </form>
+                <h5 class="card-title">Danh sách sản phẩm</h5>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Màu sắc</th>
+                            <th>Nhà sản xuất</th>
+                            <th>Giá nhập</th>
+                            <th>Giá bán</th>
+                            <th>Tồn kho</th>
+                            <th>Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @for (int i = 0; i < Model.Item1.Count; i++)
+                        {
+                            <tr>
+                                <td>@( i + 1 )</td>
+                                <td>@Model.Item1[i].SanPham.Ten</td>
+                                <td>@Model.Item1[i].MauSac.Ten</td>
+                                <td>@Model.Item1[i].Nsx.Ten</td>
+                                <td>@string.Format("{0:0,0}", @Model.Item1[i].ChiTietSp.GiaNhap)</td>
+                                <td>@string.Format("{0:0,0}", @Model.Item1[i].ChiTietSp.GiaBan)</td>
+                                <td>@Model.Item1[i].ChiTietSp.SoLuongTon</td>
+                                <td>
+                                    <a href="/chitietsp/detail/@Model.Item1[i].ChiTietSp.Id" class="btn btn-success">Sửa</a>
+                                    <a href="/chitietsp/remove/@Model.Item1[i].ChiTietSp.Id" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</a>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-<script>
-    function validate($event) {
-        if (document.getElementById('IdSp').selectedIndex === 0) {
-            alert('Bạn chưa chọn sản phẩm!');
-            $event.preventDefault();
-            return false;
-        }
-
-        if (document.getElementById('IdNsx').selectedIndex === 0) {
-            alert('Bạn chưa chọn nhà sản xuất!');
-            $event.preventDefault();
-            return false;
-        }
-
-        if (document.getElementById('IdMauSac').selectedIndex === 0) {
-            alert('Bạn chưa chọn màu sắc!');
-            $event.preventDefault();
-            return false;
-        }
-        if (document.getElementById('IdDongSp').selectedIndex === 0) {
-            alert('Bạn chưa chọn dòng sản phẩm!');
-            $event.preventDefault();
-            return false;
-        }
-        return true;
-    }
-</script>
+</div>

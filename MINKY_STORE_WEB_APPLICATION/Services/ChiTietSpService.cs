@@ -49,12 +49,27 @@ namespace MINKY_STORE_WEB_APPLICATION.Services
 
         public List<SanPhamViewModel> GetSanPhamViewModel()
         {
-            var listSanPhamViewModel = from ctsp in _iChiTietSpRepository.GetAll()
-                join sp in _iSanPhamSpRepository.GetAll() on ctsp.IdSp equals sp.Id
-                join nsx in _iNsxRepository.GetAll() on ctsp.IdNsx equals nsx.Id
-                join dsp in _iDongSpRepository.GetAll() on ctsp.IdDongSp equals dsp.Id
-                join ms in _iMauSacRepository.GetAll() on ctsp.IdMauSac equals ms.Id
-                select new SanPhamViewModel() { ChiTietSp = ctsp, SanPham = sp, Nsx = nsx, DongSp = dsp, MauSac = ms };
+            #region Joint Linq
+
+            // var listSanPhamViewModel = from ctsp in _iChiTietSpRepository.GetAll()
+            //     join sp in _iSanPhamSpRepository.GetAll() on ctsp.IdSp equals sp.Id
+            //     join nsx in _iNsxRepository.GetAll() on ctsp.IdNsx equals nsx.Id
+            //     join dsp in _iDongSpRepository.GetAll() on ctsp.IdDongSp equals dsp.Id
+            //     join ms in _iMauSacRepository.GetAll() on ctsp.IdMauSac equals ms.Id
+            //     select new SanPhamViewModel() { ChiTietSp = ctsp, SanPham = sp, Nsx = nsx, DongSp = dsp, MauSac = ms 
+
+            #endregion};
+
+            #region Join Lambda
+
+            var listSanPhamViewModel = _iChiTietSpRepository.GetAll()
+                .Join(_iSanPhamSpRepository.GetAll(), ctsp => ctsp.IdSp, sp => sp.Id, (ctsp, sp) => new {ctsp, sp})
+                .Join(_iNsxRepository.GetAll(), c => c.ctsp.IdNsx, nsx => nsx.Id, (c, nsx) => new {c, nsx})
+                .Join(_iDongSpRepository.GetAll(), c => c.c.ctsp.IdDongSp, dsp => dsp.Id, (c, dsp) => new {c, dsp})
+                .Join(_iMauSacRepository.GetAll(), c => c.c.c.ctsp.IdMauSac, ms => ms.Id, (c, ms) => new {c, ms})
+                .Select(c => new SanPhamViewModel() { ChiTietSp = c.c.c.c.ctsp, SanPham = c.c.c.c.sp, Nsx = c.c.c.nsx, DongSp = c.c.dsp, MauSac = c.ms });
+
+            #endregion
             return listSanPhamViewModel.ToList();
         }
 

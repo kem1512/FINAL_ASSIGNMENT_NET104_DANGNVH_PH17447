@@ -17,9 +17,7 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Configurations
 
             builder.Property(c => c.Id).HasDefaultValueSql("(newid())");
 
-            builder.Property(c => c.Ma).HasColumnType("VARCHAR(20)").IsRequired();
-
-            builder.HasIndex(c => c.Ma).IsUnique();
+            builder.Property(c => c.Ma).HasColumnType("VARCHAR(20)");
 
             builder.Property(c => c.Ten).HasMaxLength(50).HasDefaultValue(null);
         }

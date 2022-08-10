@@ -33,7 +33,7 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
         public IActionResult Update(HoaDonChiTiet hoaDonChiTiet)
         {
             _iHoaDonChiTietService.Update(hoaDonChiTiet);
-            return RedirectToAction("Index", "BanHang");
+            return RedirectToAction("Index", "HoaDon");
         }
 
         [Route("/hoadonchitiet/add")]

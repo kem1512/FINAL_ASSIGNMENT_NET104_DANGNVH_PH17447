@@ -74,6 +74,16 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("/banhang/filer")]
+        public IActionResult Filter(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return View("Index", _iChiTietSpService.GetSanPhamViewModel());
+            }
+            return View("Index", _iChiTietSpService.GetSanPhamViewModel().Where(c => c.SanPham.Ten.ToUpper().Contains(name.ToUpper().Trim())).ToList());
+        }
+
 
         [Route("/banhang/updatecart")]
         public IActionResult UpdateCart(ItemViewModel itemViewModel)

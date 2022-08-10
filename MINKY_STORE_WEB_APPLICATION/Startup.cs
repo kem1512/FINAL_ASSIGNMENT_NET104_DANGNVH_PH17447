@@ -23,6 +23,7 @@ namespace MINKY_STORE_WEB_APPLICATION
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // services.AddDbContext<EF_CODE_FIRST_FINAL_ASSIGNMENT.Context.FinalAssignmentContext>(options => options.UseSqlServer("Data Source=.\\sqlexpress;Initial Catalog=MinkyStore;Persist Security Info=True;User ID=dangnvhph17447;Password=badao1234"));
             services.AddSession(c =>
                 {
                     c.IOTimeout = TimeSpan.FromMinutes(1);

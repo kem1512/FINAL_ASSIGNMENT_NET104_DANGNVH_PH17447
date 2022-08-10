@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
 {
     [DbContext(typeof(FinalAssignmentContext))]
-    [Migration("20220805085728_Update_Database_050822")]
-    partial class Update_Database_050822
+    [Migration("20220810082150_FinalAssignment")]
+    partial class FinalAssignment
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,6 +27,9 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("(newid())");
+
+                    b.Property<string>("Anh")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("GiaBan")
                         .ValueGeneratedOnAdd()
@@ -81,7 +84,6 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                         .HasDefaultValueSql("(newid())");
 
                     b.Property<string>("Ma")
-                        .IsRequired()
                         .HasColumnType("VARCHAR(20)");
 
                     b.Property<string>("Ten")
@@ -89,9 +91,6 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Ma")
-                        .IsUnique();
 
                     b.ToTable("ChucVu");
                 });
@@ -108,7 +107,6 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Ma")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("VARCHAR(20)");
 
@@ -126,9 +124,6 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Ma")
-                        .IsUnique();
-
                     b.ToTable("CuaHang");
                 });
 
@@ -140,7 +135,6 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                         .HasDefaultValueSql("(newid())");
 
                     b.Property<string>("Ma")
-                        .IsRequired()
                         .HasColumnType("VARCHAR(20)");
 
                     b.Property<string>("Ten")
@@ -148,9 +142,6 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Ma")
-                        .IsUnique();
 
                     b.ToTable("DongSP");
                 });
@@ -235,10 +226,12 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("(newid())");
 
                     b.Property<string>("DiaChi")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<Guid?>("IdKh")
                         .HasColumnType("uniqueidentifier");
@@ -246,41 +239,39 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                     b.Property<Guid?>("IdNv")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("KhachHangId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Ma")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("VARCHAR(20)");
 
                     b.Property<DateTime>("NgayNhan")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("DATE");
 
                     b.Property<DateTime>("NgayShip")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("DATE");
 
                     b.Property<DateTime>("NgayTao")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("DATE");
 
                     b.Property<DateTime>("NgayThanhToan")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("NhanVienId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("DATE");
 
                     b.Property<string>("Sdt")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("VARCHAR(30)");
 
                     b.Property<string>("TenNguoiNhan")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("TinhTrang")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("KhachHangId");
+                    b.HasIndex("IdKh");
 
-                    b.HasIndex("NhanVienId");
+                    b.HasIndex("IdNv");
 
                     b.ToTable("HoaDon");
                 });
@@ -324,7 +315,6 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Ma")
-                        .IsRequired()
                         .HasColumnType("VARCHAR(20)");
 
                     b.Property<string>("MatKhau")
@@ -355,9 +345,6 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Ma")
-                        .IsUnique();
-
                     b.ToTable("KhachHang");
                 });
 
@@ -369,7 +356,6 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                         .HasDefaultValueSql("(newid())");
 
                     b.Property<string>("Ma")
-                        .IsRequired()
                         .HasColumnType("VARCHAR(20)");
 
                     b.Property<string>("Ten")
@@ -377,9 +363,6 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Ma")
-                        .IsUnique();
 
                     b.ToTable("MauSac");
                 });
@@ -413,7 +396,6 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Ma")
-                        .IsRequired()
                         .HasColumnType("VARCHAR(20)");
 
                     b.Property<string>("MatKhau")
@@ -447,9 +429,6 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
 
                     b.HasIndex("IdGuiBc");
 
-                    b.HasIndex("Ma")
-                        .IsUnique();
-
                     b.ToTable("NhanVien");
                 });
 
@@ -461,7 +440,6 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                         .HasDefaultValueSql("(newid())");
 
                     b.Property<string>("Ma")
-                        .IsRequired()
                         .HasColumnType("VARCHAR(20)");
 
                     b.Property<string>("Ten")
@@ -469,9 +447,6 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Ma")
-                        .IsUnique();
 
                     b.ToTable("Nsx");
                 });
@@ -484,7 +459,6 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                         .HasDefaultValueSql("(newid())");
 
                     b.Property<string>("Ma")
-                        .IsRequired()
                         .HasColumnType("VARCHAR(20)");
 
                     b.Property<string>("Ten")
@@ -492,9 +466,6 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Ma")
-                        .IsUnique();
 
                     b.ToTable("SanPham");
                 });
@@ -564,11 +535,11 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                 {
                     b.HasOne("EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.KhachHang", "KhachHang")
                         .WithMany("HoaDons")
-                        .HasForeignKey("KhachHangId");
+                        .HasForeignKey("IdKh");
 
                     b.HasOne("EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.NhanVien", "NhanVien")
                         .WithMany("HoaDons")
-                        .HasForeignKey("NhanVienId");
+                        .HasForeignKey("IdNv");
 
                     b.Navigation("KhachHang");
 
