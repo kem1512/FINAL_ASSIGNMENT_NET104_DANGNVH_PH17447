@@ -52,7 +52,7 @@
                                 }
                             </select>
                         </div>
-                        <div class="form-group col-6">
+                        <div class="form-group col-3">
                             <label>Chọn màu sắc</label>
                             <select class="custom-select" name="IdMauSac">
                                 <option>Màu sắc</option>
@@ -63,7 +63,7 @@
                                 }
                             </select>
                         </div>
-                        <div class="form-group col-6">
+                        <div class="form-group col-3">
                             <label>Dòng sản phẩm</label>
                             <select class="custom-select" name="IdDongSp">
                                 <option>Chọn dòng sản phẩm</option>
@@ -73,6 +73,10 @@
                                     <option @isSelected value="@x.Id">@x.Ten</option>
                                 }
                             </select>
+                        </div>
+                        <div class="form-group col-6">
+                            <label>Thêm ảnh sản phẩm</label> <br/>
+                            <input type="text" class="form-control" name="Anh" value="@Model.Item1.Anh" placeholder="Nhập link ảnh sản phẩm" required>
                         </div>
                     </div>
                     <div class="form-group">

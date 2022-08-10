@@ -39,10 +39,23 @@ namespace MINKY_STORE_WEB_APPLICATION.Services
 
         public List<NhanVienViewModel> GetNhanVienViewModel()
         {
-            var listNhanVienViewModel = from nv in _iNhanVienRepository.GetAll()
-                join cv in _iChucVuRepository.GetAll() on nv.IdCv equals cv.Id
-                join ch in _iCuaHangRepository.GetAll() on nv.IdCh equals ch.Id
-                select new NhanVienViewModel() {NhanVien = nv, ChucVu = cv, CuaHang = ch};
+            #region Join Linq
+
+            // var listNhanVienViewModel = from nv in _iNhanVienRepository.GetAll()
+            //     join cv in _iChucVuRepository.GetAll() on nv.IdCv equals cv.Id
+            //     join ch in _iCuaHangRepository.GetAll() on nv.IdCh equals ch.Id
+            //     select new NhanVienViewModel() {NhanVien = nv, ChucVu = cv, CuaHang = ch};
+
+            #endregion
+
+            #region JoinLambda
+
+            var listNhanVienViewModel = _iNhanVienRepository.GetAll()
+                .Join(_iChucVuRepository.GetAll(), nv => nv.IdCv, cv => cv.Id, (nv, cv) => new { nv, cv })
+                .Join(_iCuaHangRepository.GetAll(), c => c.nv.IdCh, ch => ch.Id, (c, ch) => new { ch, c })
+                .Select(c => new NhanVienViewModel() { NhanVien = c.c.nv, ChucVu = c.c.cv, CuaHang = c.ch });
+
+            #endregion
             return listNhanVienViewModel.ToList();
         }
 

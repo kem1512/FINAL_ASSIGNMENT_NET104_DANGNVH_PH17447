@@ -74,16 +74,18 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
             return RedirectToAction("Index");
         }
 
-        // [Route("/banhang/updatecart/{id}/")]
+
+        [Route("/banhang/updatecart")]
         public IActionResult UpdateCart(ItemViewModel itemViewModel)
         {
-            // List<ItemViewModel> cart = SessionHelper.GetObjectFromJson<List<ItemViewModel>>(HttpContext.Session, "cart");
-            // int index = IsExist(id);
-            // if (index != -1)
-            // {
-            //     cart[index].Quantity++;
-            // }
-            return Conflict(itemViewModel);
+            List<ItemViewModel> cart = SessionHelper.GetObjectFromJson<List<ItemViewModel>>(HttpContext.Session, "cart");
+            int index = IsExist(itemViewModel.SanPhamViewModel.ChiTietSp.Id);
+            if (index != -1)
+            {
+                cart[index].Quantity = itemViewModel.Quantity;
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+            }
+            return RedirectToAction("Cart", "BanHang");
         }
 
         [Route("/banhang/removecart/{id}")]

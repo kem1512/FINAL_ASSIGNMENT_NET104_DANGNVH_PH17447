@@ -20,6 +20,18 @@
                             <label>Tên cửa hàng</label>
                             <input type="text" class="form-control" name="Ten" placeholder="Nhập tên cửa hàng">
                         </div>
+                        <div class="form-group col-6">
+                            <label>Địa chỉ</label>
+                            <input type="text" class="form-control" name="DiaChi" placeholder="Nhập địa chỉ">
+                        </div>
+                        <div class="form-group col-3">
+                            <label>Thành phố</label>
+                            <input type="text" class="form-control" name="ThanhPho" placeholder="Nhập thành phố">
+                        </div>
+                        <div class="form-group col-3">
+                            <label>Quốc gia</label>
+                            <input type="text" class="form-control" name="QuocGia" placeholder="Nhập quốc gia">
+                        </div>
                     </div>
                     <div class="form-group">
                         <button class="btn btn-light px-5 mr-2">Thêm cửa hàng</button>
@@ -31,19 +43,23 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th style="width: 20%">STT</th>
-                                <th style="width: 25%">Mã cửa hàng</th>
-                                <th style="width: 25%">Tên cửa hàng</th>
-                                <th style="width: 30%">Thao tác</th>
+                                <th>Mã cửa hàng</th>
+                                <th>Tên cửa hàng</th>
+                                <th>Địa chỉ</th>
+                                <th>Thành phố</th>
+                                <th>Quốc gia</th>
+                                <th>Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
                             @for (int i = 0; i < Model.Count; i++)
                             {
                                 <tr>
-                                    <th>@i</th>
                                     <td>@Model[i].Ma</td>
                                     <td>@Model[i].Ten</td>
+                                    <td>@Model[i].DiaChi</td>
+                                    <td>@Model[i].ThanhPho</td>
+                                    <td>@Model[i].QuocGia</td>
                                     <td>
                                         <a href="/cuahang/detail/@Model[i].Id" class="btn btn-success px-5">Sửa cửa hàng</a>
                                         <a href="/cuahang/remove/@Model[i].Id" class="btn btn-danger px-5" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa cửa hàng</a>

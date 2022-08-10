@@ -48,7 +48,10 @@
                                         @tinhtrang</td>
                                     <td>
                                         <a class="btn btn-primary" href="/hoadonchitiet/@x.First().HoaDon.Id">Xem chi tiết</a>
-                                        <a onclick="return confirm('Bạn có chắc muốn thanh toán?')" class="btn btn-danger" href="/hoadon/thanhtoan/@x.First().HoaDon.Id">Thanh toán</a>
+                                        @if (@x.First().HoaDon.TinhTrang == 0)
+                                        {
+                                            <a onclick="return confirm('Bạn có chắc muốn thanh toán?')" class="btn btn-danger" href="/hoadon/thanhtoan/@x.First().HoaDon.Id">Thanh toán</a>
+                                        }
                                     </td>
                                 </tr>
                             }
