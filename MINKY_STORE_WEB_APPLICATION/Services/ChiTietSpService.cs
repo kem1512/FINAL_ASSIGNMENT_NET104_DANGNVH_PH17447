@@ -27,6 +27,8 @@ namespace MINKY_STORE_WEB_APPLICATION.Services
             _iChiTietSpRepository = new ChiTietSpRepository();
         }
 
+        public int CurrentPage { get; set; }
+
         public bool Add(ChiTietSp obj)
         {
             return _iChiTietSpRepository.Add(obj);

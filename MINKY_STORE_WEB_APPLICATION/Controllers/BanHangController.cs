@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using MINKY_STORE_WEB_APPLICATION.IServices;
 using MINKY_STORE_WEB_APPLICATION.Models;
 using MINKY_STORE_WEB_APPLICATION.Services;
@@ -18,9 +19,24 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
             _iChiTietSpService = new ChiTietSpService();
         }
 
+        private List<SanPhamViewModel> ProductPaging(int currentPage)
+        {
+            int maxRows = 4;
+            var productPaging = _iChiTietSpService.GetSanPhamViewModel().Skip((currentPage - 1) * maxRows).Take(maxRows).ToList();
+            ViewBag.PageCount = (int)Math.Ceiling(_iChiTietSpService.GetSanPhamViewModel().Count / (decimal) maxRows);
+            ViewBag.CurrentPageIndex = _iChiTietSpService.CurrentPage = currentPage;
+            return productPaging;
+        }
+
         public IActionResult Index()
         {
-            return View(_iChiTietSpService.GetSanPhamViewModel());
+            return View(ProductPaging(1));
+        }
+
+        [Route("/banhang/page={currentPage}")]
+        public IActionResult Index(int currentPage)
+        {
+            return View(ProductPaging(currentPage));
         }
 
         [NonAction]

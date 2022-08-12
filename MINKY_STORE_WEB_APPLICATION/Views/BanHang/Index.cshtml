@@ -9,7 +9,6 @@
         <div class="card">
             <div class="card-body px-5">
                 <div class="card-title">Danh sách sản phẩm</div>
-
                 <hr>
                 <div class="row">
                     @foreach (var x in @Model)
@@ -29,6 +28,18 @@
                             </div>
                         </div>
                     }
+                </div>
+                <div class="store-filter clearfix">
+                    <ul class="store-pagination">
+                        @{
+                            <li><a href="/banhang/page=@(ViewBag.CurrentPageIndex <= 1 ? ViewBag.PageCount : ViewBag.CurrentPageIndex - 1)"><i class="fa fa-angle-left"></i></a></li> 
+                            for (int i = 0; i < ViewBag.PageCount; i++)
+                            {
+                                <li><a href="/banhang/page=@(i + 1)">@(i + 1)</a></li>
+                            }
+                            <li><a href="/banhang/page=@(ViewBag.CurrentPageIndex < ViewBag.PageCount ? ViewBag.CurrentPageIndex + 1  : 1)"><i class="fa fa-angle-right"></i></a></li>
+                        }
+                    </ul>
                 </div>
             </div>
         </div>

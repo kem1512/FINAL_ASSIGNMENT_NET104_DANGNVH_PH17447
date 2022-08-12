@@ -43,8 +43,12 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
         [Route("/chucvu/update")]
         public IActionResult Update(ChucVu cv)
         {
-            _iChucVuService.Update(cv);
-            return RedirectToAction("Index", "ChucVu");
+            if (ModelState.IsValid)
+            {
+                _iChucVuService.Update(cv);
+                return RedirectToAction("Index", "ChucVu");
+            }
+            return View("Update");
         }
     }
 }

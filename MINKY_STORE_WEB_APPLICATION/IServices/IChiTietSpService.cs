@@ -21,5 +21,7 @@ namespace MINKY_STORE_WEB_APPLICATION.IServices
         ChiTietSp GetById(Guid id);
 
         bool AddSanPhamViewModel(SanPhamViewModel obj);
+
+        int CurrentPage { get; set; }
     }
 }
