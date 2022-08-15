@@ -10,10 +10,10 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Repositories
 {
     public class GioHangChiTietRepository : IGioHangChiTietRepository
     {
-        private FinalAssignmentContext _context = new FinalAssignmentContext();
-        public GioHangChiTietRepository()
+        private readonly FinalAssignmentContext _context;
+        public GioHangChiTietRepository(FinalAssignmentContext context)
         {
-            _context = new FinalAssignmentContext();
+            _context = context;
         }
 
         public bool Add(GioHangChiTiet obj)

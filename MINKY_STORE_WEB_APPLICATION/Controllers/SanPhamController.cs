@@ -1,4 +1,5 @@
 ﻿using System;
+using EF_CODE_FIRST_FINAL_ASSIGNMENT.Context;
 using EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass;
 using Microsoft.AspNetCore.Mvc;
 using MINKY_STORE_WEB_APPLICATION.IServices;
@@ -10,27 +11,31 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
     {
         private ISanPhamService _iSanPhamService;
 
-        public SanPhamController()
+        public SanPhamController(FinalAssignmentContext context)
         {
-            _iSanPhamService = new SanPhamService();
+            _iSanPhamService = new SanPhamService(context);
         }
 
         public IActionResult Index()
         {
+            if (TempData["Message"] != null)
+            {
+                ViewBag.Message = TempData["Message"];
+            }
             return View(_iSanPhamService.GetAll());
         }
 
         [Route("/sanpham/create")]
         public IActionResult Add(SanPham obj)
         {
-            _iSanPhamService.Add(obj);
+            TempData["Message"] = _iSanPhamService.Add(obj) ? "Thêm thành công" : "Thêm thất bại";
             return RedirectToAction("Index", "SanPham");
         }
 
         [Route("/sanpham/remove/{id}")]
         public IActionResult Remove(Guid id)
         {
-            _iSanPhamService.Remove(_iSanPhamService.GetById(id));
+            TempData["Message"] = _iSanPhamService.Remove(_iSanPhamService.GetById(id)) ? "Xóa thành công" : "Xóa thất bại";
             return RedirectToAction("Index", "SanPham");
         }
 
@@ -41,9 +46,9 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
         }
 
         [Route("/sanpham/update")]
-        public IActionResult Update(SanPham cv)
+        public IActionResult Update(SanPham obj)
         {
-            _iSanPhamService.Update(cv);
+            TempData["Message"] = _iSanPhamService.Update(obj) ? "Sửa thành công" : "Sửa thất bại";
             return RedirectToAction("Index", "SanPham");
         }
     }

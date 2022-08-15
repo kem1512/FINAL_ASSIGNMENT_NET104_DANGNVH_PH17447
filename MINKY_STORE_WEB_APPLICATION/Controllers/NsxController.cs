@@ -1,4 +1,5 @@
 ﻿using System;
+using EF_CODE_FIRST_FINAL_ASSIGNMENT.Context;
 using EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass;
 using Microsoft.AspNetCore.Mvc;
 using MINKY_STORE_WEB_APPLICATION.IServices;
@@ -10,27 +11,31 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
     {
         private INsxService _iNsxService;
 
-        public NsxController()
+        public NsxController(FinalAssignmentContext context)
         {
-            _iNsxService = new NsxService();
+            _iNsxService = new NsxService(context);
         }
 
         public IActionResult Index()
         {
+            if (TempData["Message"] != null)
+            {
+                ViewBag.Message = TempData["Message"];
+            }
             return View(_iNsxService.GetAll());
         }
 
         [Route("/nsx/create")]
         public IActionResult Add(Nsx obj)
         {
-            _iNsxService.Add(obj);
+            TempData["Message"] = _iNsxService.Add(obj) ? "Thêm thành công" : "Thêm thất bại";
             return RedirectToAction("Index", "Nsx");
         }
 
         [Route("/nsx/remove/{id}")]
         public IActionResult Remove(Guid id)
         {
-            _iNsxService.Remove(_iNsxService.GetById(id));
+            TempData["Message"] = _iNsxService.Remove(_iNsxService.GetById(id)) ? "Xóa thành công" : "Xóa thất bại";
             return RedirectToAction("Index", "Nsx");
         }
 
@@ -41,9 +46,9 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
         }
 
         [Route("/nsx/update")]
-        public IActionResult Update(Nsx cv)
+        public IActionResult Update(Nsx obj)
         {
-            _iNsxService.Update(cv);
+            TempData["Message"] = _iNsxService.Update(obj) ? "Sửa thành công" : "Sửa thất bại";
             return RedirectToAction("Index", "Nsx");
         }
     }

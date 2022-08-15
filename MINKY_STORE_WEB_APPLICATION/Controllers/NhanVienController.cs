@@ -5,6 +5,7 @@ using MINKY_STORE_WEB_APPLICATION.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EF_CODE_FIRST_FINAL_ASSIGNMENT.Context;
 using EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass;
 
 namespace MINKY_STORE_WEB_APPLICATION.Controllers
@@ -15,44 +16,51 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
         private IChucVuService _iChucVuService;
         private ICuaHangService _iCuaHangService;
 
-        public NhanVienController()
+        public NhanVienController(FinalAssignmentContext context)
         {
-            _iNhanVienService = new NhanVienService();
-            _iChucVuService = new ChucVuService();
-            _iCuaHangService = new CuaHangService();
+            _iNhanVienService = new NhanVienService(context);
+            _iChucVuService = new ChucVuService(context);
+            _iCuaHangService = new CuaHangService(context);
         }
 
         public IActionResult Index()
         {
+            if (TempData["Message"] != null)
+            {
+                ViewBag.Message = TempData["Message"];
+            }
             var tupleModel = new Tuple<List<NhanVienViewModel>, List<ChucVu>, List<CuaHang>>(_iNhanVienService.GetNhanVienViewModel(), _iChucVuService.GetAll(), _iCuaHangService.GetAll()); 
             return View(tupleModel);
         }
 
         [Route("/nhanvien/create")]
-        public IActionResult Add(NhanVien nv)
+        public IActionResult Add(NhanVien obj)
         {
-            _iNhanVienService.Add(nv);
+            TempData["Message"] = _iNhanVienService.Add(obj) ? "Thêm thành công" : "Thêm thất bại";
             return RedirectToAction("Index", "NhanVien");
         }
 
         [Route("/nhanvien/remove/{id}")]
         public IActionResult Delete(Guid id)
         {
-            _iNhanVienService.Remove(_iNhanVienService.GetById(id));
+            TempData["Message"] = _iNhanVienService.Remove(_iNhanVienService.GetById(id)) ? "Xóa thành công" : "Xóa thất bại";
             return RedirectToAction("Index", "NhanVien");
         }
 
         [Route("/nhanvien/detail/{id}")]
         public IActionResult Update(Guid id)
         {
-            var tupleModel = new Tuple<NhanVienViewModel, List<ChucVu>, List<CuaHang>, List<NhanVien>>(_iNhanVienService.GetNhanVienViewModel().FirstOrDefault(c => c.NhanVien.Id == id), _iChucVuService.GetAll(), _iCuaHangService.GetAll(), _iNhanVienService.GetAll()); 
-            return View(tupleModel);
+            ViewBag.CuaHang = _iCuaHangService.GetAll();
+            ViewBag.ChucVu = _iChucVuService.GetAll();
+            ViewBag.NhanVien = _iNhanVienService.GetAll();
+            return View(_iNhanVienService.GetById(id));
         }
 
+        [HttpPost]
         [Route("/nhanvien/update")]
-        public IActionResult Update(NhanVien cv)
+        public IActionResult Update(NhanVien obj)
         {
-            _iNhanVienService.Update(cv);
+            TempData["Message"] = _iNhanVienService.Update(obj) ? "Sửa thành công" : "Sửa thất bại";
             return RedirectToAction("Index", "NhanVien");
         }
     }

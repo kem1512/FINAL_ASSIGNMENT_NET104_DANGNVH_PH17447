@@ -10,10 +10,10 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Repositories
 {
     public class MauSacRepository : IMauSacRepository
     {
-        private FinalAssignmentContext _context = new FinalAssignmentContext();
-        public MauSacRepository()
+        private readonly FinalAssignmentContext _context;
+        public MauSacRepository(FinalAssignmentContext context)
         {
-            _context = new FinalAssignmentContext();
+            _context = context;
         }
 
         public bool Add(MauSac obj)

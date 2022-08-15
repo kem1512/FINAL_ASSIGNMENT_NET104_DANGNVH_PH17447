@@ -3,6 +3,7 @@ using EF_CODE_FIRST_FINAL_ASSIGNMENT.IRepositories;
 using EF_CODE_FIRST_FINAL_ASSIGNMENT.Repositories;
 using MINKY_STORE_WEB_APPLICATION.IServices;
 using System.Collections.Generic;
+using EF_CODE_FIRST_FINAL_ASSIGNMENT.Context;
 
 namespace MINKY_STORE_WEB_APPLICATION.Services
 {
@@ -10,9 +11,9 @@ namespace MINKY_STORE_WEB_APPLICATION.Services
     {
         private IGioHangChiTietRepository _iGioHangChiTietRepository;
 
-        public GioHangChiTietService()
+        public GioHangChiTietService(FinalAssignmentContext context)
         {
-            _iGioHangChiTietRepository = new GioHangChiTietRepository();
+            _iGioHangChiTietRepository = new GioHangChiTietRepository(context);
         }
 
         public bool Add(GioHangChiTiet obj)

@@ -5,6 +5,7 @@ using MINKY_STORE_WEB_APPLICATION.IServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EF_CODE_FIRST_FINAL_ASSIGNMENT.Context;
 
 namespace MINKY_STORE_WEB_APPLICATION.Services
 {
@@ -12,9 +13,9 @@ namespace MINKY_STORE_WEB_APPLICATION.Services
     {
         private ISanPhamRepository _iSanPhamRepository;
 
-        public SanPhamService()
+        public SanPhamService(FinalAssignmentContext context)
         {
-            _iSanPhamRepository = new SanPhamRepository();
+            _iSanPhamRepository = new SanPhamRepository(context);
         }
 
         public bool Add(SanPham obj)

@@ -5,6 +5,7 @@ using EF_CODE_FIRST_FINAL_ASSIGNMENT.Repositories;
 using MINKY_STORE_WEB_APPLICATION.IServices;
 using System.Collections.Generic;
 using System.Linq;
+using EF_CODE_FIRST_FINAL_ASSIGNMENT.Context;
 
 namespace MINKY_STORE_WEB_APPLICATION.Services
 {
@@ -12,9 +13,9 @@ namespace MINKY_STORE_WEB_APPLICATION.Services
     {
         private ICuaHangRepository _iCuaHangRepository;
 
-        public CuaHangService()
+        public CuaHangService(FinalAssignmentContext context)
         {
-            _iCuaHangRepository = new CuaHangRepository();
+            _iCuaHangRepository = new CuaHangRepository(context);
         }
 
         public bool Add(CuaHang obj)

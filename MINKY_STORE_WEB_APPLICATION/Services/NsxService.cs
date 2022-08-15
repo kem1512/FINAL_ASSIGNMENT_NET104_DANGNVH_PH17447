@@ -5,6 +5,7 @@ using MINKY_STORE_WEB_APPLICATION.IServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EF_CODE_FIRST_FINAL_ASSIGNMENT.Context;
 
 namespace MINKY_STORE_WEB_APPLICATION.Services
 {
@@ -12,9 +13,9 @@ namespace MINKY_STORE_WEB_APPLICATION.Services
     {
         private INsxRepository _iNsxRepository;
 
-        public NsxService()
+        public NsxService(FinalAssignmentContext context)
         {
-            _iNsxRepository = new NsxRepository();
+            _iNsxRepository = new NsxRepository(context);
         }
 
         public bool Add(Nsx obj)

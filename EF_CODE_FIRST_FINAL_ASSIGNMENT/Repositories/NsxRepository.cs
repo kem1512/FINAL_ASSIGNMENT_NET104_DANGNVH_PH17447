@@ -10,10 +10,10 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Repositories
 {
     public class NsxRepository : INsxRepository
     {
-        private FinalAssignmentContext _context = new FinalAssignmentContext();
-        public NsxRepository()
+        private readonly FinalAssignmentContext _context;
+        public NsxRepository(FinalAssignmentContext context)
         {
-            _context = new FinalAssignmentContext();
+            _context = context;
         }
 
         public bool Add(Nsx obj)

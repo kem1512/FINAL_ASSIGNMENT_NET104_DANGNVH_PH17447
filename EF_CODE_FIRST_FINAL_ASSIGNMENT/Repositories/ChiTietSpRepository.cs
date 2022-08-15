@@ -10,10 +10,10 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Repositories
 {
     public class ChiTietSpRepository : IChiTietSpRepository
     {
-        private FinalAssignmentContext _context = new FinalAssignmentContext();
-        public ChiTietSpRepository()
+        private readonly FinalAssignmentContext _context;
+        public ChiTietSpRepository(FinalAssignmentContext context)
         {
-            _context = new FinalAssignmentContext();
+            _context = context;
         }
 
         public bool Add(ChiTietSp obj)

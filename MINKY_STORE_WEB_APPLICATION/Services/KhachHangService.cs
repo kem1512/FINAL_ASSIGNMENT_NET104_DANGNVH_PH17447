@@ -5,6 +5,7 @@ using EF_CODE_FIRST_FINAL_ASSIGNMENT.Repositories;
 using MINKY_STORE_WEB_APPLICATION.IServices;
 using System.Collections.Generic;
 using System.Linq;
+using EF_CODE_FIRST_FINAL_ASSIGNMENT.Context;
 
 namespace MINKY_STORE_WEB_APPLICATION.Services
 {
@@ -12,9 +13,9 @@ namespace MINKY_STORE_WEB_APPLICATION.Services
     {
         private IKhachHangRepository _iKhachHangRepository;
 
-        public KhachHangService()
+        public KhachHangService(FinalAssignmentContext context)
         {
-            _iKhachHangRepository = new KhachHangRepository();
+            _iKhachHangRepository = new KhachHangRepository(context);
         }
 
         public bool Add(KhachHang obj)

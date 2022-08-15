@@ -10,10 +10,10 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Repositories
 {
     public class NhanVienRepository : INhanVienRepository
     {
-        private FinalAssignmentContext _context = new FinalAssignmentContext();
-        public NhanVienRepository()
+        private readonly FinalAssignmentContext _context;
+        public NhanVienRepository(FinalAssignmentContext context)
         {
-            _context = new FinalAssignmentContext();
+            _context = context;
         }
 
         public bool Add(NhanVien obj)

@@ -10,10 +10,10 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Repositories
 {
     public class DongSpRepository : IDongSpRepository
     {
-        private FinalAssignmentContext _context = new FinalAssignmentContext();
-        public DongSpRepository()
+        private readonly FinalAssignmentContext _context;
+        public DongSpRepository(FinalAssignmentContext context)
         {
-            _context = new FinalAssignmentContext();
+            _context = context;
         }
 
         public bool Add(DongSp obj)

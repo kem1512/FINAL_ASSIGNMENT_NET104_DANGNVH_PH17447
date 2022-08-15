@@ -5,15 +5,16 @@ using MINKY_STORE_WEB_APPLICATION.IServices;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using EF_CODE_FIRST_FINAL_ASSIGNMENT.Context;
 
 namespace MINKY_STORE_WEB_APPLICATION.Services
 {
     public class ChucVuService : IChucVuService
     {
         private IChucVuRepository _iChucVuRepository;
-        public ChucVuService()
+        public ChucVuService(FinalAssignmentContext context)
         {
-            _iChucVuRepository = new ChucVuRepository();
+            _iChucVuRepository = new ChucVuRepository(context);
         }
 
         public bool Add(ChucVu obj)

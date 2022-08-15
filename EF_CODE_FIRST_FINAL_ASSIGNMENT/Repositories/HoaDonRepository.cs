@@ -10,10 +10,10 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Repositories
 {
     public class HoaDonRepository : IHoaDonRepository
     {
-        private FinalAssignmentContext _context = new FinalAssignmentContext();
-        public HoaDonRepository()
+        private readonly FinalAssignmentContext _context;
+        public HoaDonRepository(FinalAssignmentContext context)
         {
-            _context = new FinalAssignmentContext();
+            _context = context;
         }
 
         public bool Add(HoaDon obj)

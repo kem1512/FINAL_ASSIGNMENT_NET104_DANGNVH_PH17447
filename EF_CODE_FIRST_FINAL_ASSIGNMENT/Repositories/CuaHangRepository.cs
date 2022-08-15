@@ -10,10 +10,10 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Repositories
 {
     public class CuaHangRepository : ICuaHangRepository
     {
-        private FinalAssignmentContext _context = new FinalAssignmentContext();
-        public CuaHangRepository()
+        private readonly FinalAssignmentContext _context;
+        public CuaHangRepository(FinalAssignmentContext context)
         {
-            _context = new FinalAssignmentContext();
+            _context = context;
         }
 
         public bool Add(CuaHang obj)

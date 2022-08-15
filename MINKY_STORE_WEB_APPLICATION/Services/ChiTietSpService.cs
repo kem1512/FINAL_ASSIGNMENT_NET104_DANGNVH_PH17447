@@ -5,6 +5,7 @@ using EF_CODE_FIRST_FINAL_ASSIGNMENT.Repositories;
 using MINKY_STORE_WEB_APPLICATION.IServices;
 using System.Collections.Generic;
 using System.Linq;
+using EF_CODE_FIRST_FINAL_ASSIGNMENT.Context;
 using Microsoft.CodeAnalysis.FlowAnalysis;
 using MINKY_STORE_WEB_APPLICATION.Models;
 
@@ -18,13 +19,13 @@ namespace MINKY_STORE_WEB_APPLICATION.Services
         private IDongSpRepository _iDongSpRepository;
         private IMauSacRepository _iMauSacRepository;
 
-        public ChiTietSpService()
+        public ChiTietSpService(FinalAssignmentContext context)
         {
-            _iMauSacRepository = new MauSacRepository();
-            _iSanPhamSpRepository = new SanPhamRepository();
-            _iNsxRepository = new NsxRepository();
-            _iDongSpRepository = new DongSpRepository();
-            _iChiTietSpRepository = new ChiTietSpRepository();
+            _iMauSacRepository = new MauSacRepository(context);
+            _iSanPhamSpRepository = new SanPhamRepository(context);
+            _iNsxRepository = new NsxRepository(context);
+            _iDongSpRepository = new DongSpRepository(context);
+            _iChiTietSpRepository = new ChiTietSpRepository(context);
         }
 
         public int CurrentPage { get; set; }
@@ -78,11 +79,6 @@ namespace MINKY_STORE_WEB_APPLICATION.Services
         public ChiTietSp GetById(Guid id)
         {
             return _iChiTietSpRepository.GetAll().FirstOrDefault(c => c.Id == id);
-        }
-
-        public bool AddSanPhamViewModel(SanPhamViewModel obj)
-        {
-            throw new NotImplementedException();
         }
     }
 }

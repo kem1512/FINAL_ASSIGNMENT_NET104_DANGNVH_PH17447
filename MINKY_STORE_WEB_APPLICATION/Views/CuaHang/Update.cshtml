@@ -1,4 +1,5 @@
 ﻿@model EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.CuaHang
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Update";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -16,23 +17,23 @@
                         <div class="row">
                             <div class="form-group col-6">
                                 <label>Mã cửa hàng</label>
-                                <input type="text" class="form-control" value="@Model.Ma" name="Ma" placeholder="Nhập mã cửa hàng">
+                                <input type="text" class="form-control" asp-for="Ma" placeholder="Nhập mã cửa hàng">
                             </div>
                             <div class="form-group col-6">
                                 <label>Tên cửa hàng</label>
-                                <input type="text" class="form-control" value="@Model.Ten" name="Ten" placeholder="Nhập tên cửa hàng">
+                                <input type="text" class="form-control" asp-for="Ten" placeholder="Nhập tên cửa hàng">
                             </div>
                             <div class="form-group col-6">
                                 <label>Địa chỉ</label>
-                                <input type="text" class="form-control" value="@Model.DiaChi" name="DiaChi" placeholder="Nhập địa chỉ">
+                                <input type="text" class="form-control" asp-for="DiaChi" placeholder="Nhập địa chỉ">
                             </div>
                             <div class="form-group col-3">
                                 <label>Thành phố</label>
-                                <input type="text" class="form-control" name="ThanhPho" value="@Model.ThanhPho" placeholder="Nhập thành phố">
+                                <input type="text" class="form-control" asp-for="ThanhPho" placeholder="Nhập thành phố">
                             </div>
                             <div class="form-group col-3">
                                 <label>Quốc gia</label>
-                                <input type="text" class="form-control" name="QuocGia" value="@Model.QuocGia" placeholder="Nhập quốc gia">
+                                <input type="text" class="form-control" asp-for="QuocGia" placeholder="Nhập quốc gia">
                             </div>
                         </div>
                         <div class="form-group">

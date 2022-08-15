@@ -10,10 +10,10 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Repositories
 {
     public class ChucVuRepository : IChucVuRepository
     {
-        private FinalAssignmentContext _context = new FinalAssignmentContext();
-        public ChucVuRepository()
+        private readonly FinalAssignmentContext _context;
+        public ChucVuRepository(FinalAssignmentContext context)
         {
-            _context = new FinalAssignmentContext();
+            _context = context;
         }
 
         public bool Add(ChucVu obj)

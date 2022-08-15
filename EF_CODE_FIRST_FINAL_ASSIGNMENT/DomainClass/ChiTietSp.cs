@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass
 {
@@ -17,14 +18,20 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass
 
         public decimal GiaBan { get; set; }
 
+        [Required( AllowEmptyStrings = false, ErrorMessage = "Thêm đường dẫn ảnh vào bạn ơi")]
+        [Url(ErrorMessage = "Sai đường dẫn rồi bạn ơi")]
         public string Anh { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Bạn chưa chọn sản phẩm" )]
         public Guid? IdSp { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Bạn chưa chọn nhà sản xuất")]
         public Guid? IdNsx { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Bạn chưa chọn màu sắc")]
         public Guid? IdMauSac { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Bạn chưa chọn dòng sản phẩm")]
         public Guid? IdDongSp { get; set; }
 
         public SanPham SanPham { get; set; }

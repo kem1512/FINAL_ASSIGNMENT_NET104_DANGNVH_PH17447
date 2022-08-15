@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EF_CODE_FIRST_FINAL_ASSIGNMENT.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace MINKY_STORE_WEB_APPLICATION
@@ -23,7 +24,7 @@ namespace MINKY_STORE_WEB_APPLICATION
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddDbContext<EF_CODE_FIRST_FINAL_ASSIGNMENT.Context.FinalAssignmentContext>(options => options.UseSqlServer("Data Source=.\\sqlexpress;Initial Catalog=MinkyStore;Persist Security Info=True;User ID=dangnvhph17447;Password=badao1234"));
+            services.AddDbContext<FinalAssignmentContext>(c => c.UseSqlServer(Configuration.GetConnectionString("FinalAssignment")));
             services.AddSession(c =>
                 {
                     c.IOTimeout = TimeSpan.FromMinutes(1);

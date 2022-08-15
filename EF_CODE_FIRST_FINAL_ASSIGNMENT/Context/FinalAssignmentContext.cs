@@ -19,15 +19,15 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Context
 
         }
 
-        public FinalAssignmentContext()
-        {
-
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Data Source=.\\sqlexpress;Initial Catalog=MinkyStore;Persist Security Info=True;User ID=dangnvhph17447;Password=badao1234");
-        }
+        // public FinalAssignmentContext()
+        // {
+        //
+        // }
+        //
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // {
+        //     optionsBuilder.UseSqlServer("Data Source=.\\sqlexpress;Initial Catalog=MinkyStore;Persist Security Info=True;User ID=dangnvhph17447;Password=badao1234");
+        // }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

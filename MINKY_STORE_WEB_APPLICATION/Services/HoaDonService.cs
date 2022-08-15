@@ -4,6 +4,7 @@ using EF_CODE_FIRST_FINAL_ASSIGNMENT.Repositories;
 using MINKY_STORE_WEB_APPLICATION.IServices;
 using System.Collections.Generic;
 using System.Linq;
+using EF_CODE_FIRST_FINAL_ASSIGNMENT.Context;
 using MINKY_STORE_WEB_APPLICATION.Models;
 
 namespace MINKY_STORE_WEB_APPLICATION.Services
@@ -13,10 +14,10 @@ namespace MINKY_STORE_WEB_APPLICATION.Services
         private IHoaDonRepository _iHoaDonRepository;
         private IHoaDonChiTietRepository _iHoaDonChiTietRepository;
 
-        public HoaDonService()
+        public HoaDonService(FinalAssignmentContext context)
         {
-            _iHoaDonRepository = new HoaDonRepository();
-            _iHoaDonChiTietRepository = new HoaDonChiTietRepository();
+            _iHoaDonRepository = new HoaDonRepository(context);
+            _iHoaDonChiTietRepository = new HoaDonChiTietRepository(context);
         }
 
         public bool Add(HoaDon obj)

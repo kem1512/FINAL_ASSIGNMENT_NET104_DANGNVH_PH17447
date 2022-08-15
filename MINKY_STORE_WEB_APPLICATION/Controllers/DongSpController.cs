@@ -1,4 +1,5 @@
 ﻿using System;
+using EF_CODE_FIRST_FINAL_ASSIGNMENT.Context;
 using EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass;
 using Microsoft.AspNetCore.Mvc;
 using MINKY_STORE_WEB_APPLICATION.IServices;
@@ -10,27 +11,31 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
     {
         private IDongSpService _iDongSpService;
 
-        public DongSpController()
+        public DongSpController(FinalAssignmentContext context)
         {
-            _iDongSpService = new DongSpService();
+            _iDongSpService = new DongSpService(context);
         }
 
         public IActionResult Index()
         {
+            if (TempData["Message"] != null)
+            {
+                ViewBag.Message = TempData["Message"];
+            }
             return View(_iDongSpService.GetAll());
         }
 
         [Route("/dongsp/create")]
         public IActionResult Add(DongSp obj)
         {
-            _iDongSpService.Add(obj);
+            TempData["Message"] = _iDongSpService.Add(obj) ? "Thêm thành công" : "Thêm thất bại";
             return RedirectToAction("Index", "DongSp");
         }
 
         [Route("/dongsp/remove/{id}")]
         public IActionResult Remove(Guid id)
         {
-            _iDongSpService.Remove(_iDongSpService.GetById(id));
+            TempData["Message"] = _iDongSpService.Remove(_iDongSpService.GetById(id)) ? "Xóa thành công" : "Xóa thất bại";
             return RedirectToAction("Index", "DongSp");
         }
 
@@ -41,9 +46,9 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
         }
 
         [Route("/dongsp/update")]
-        public IActionResult Update(DongSp cv)
+        public IActionResult Update(DongSp obj)
         {
-            _iDongSpService.Update(cv);
+            TempData["Message"] = _iDongSpService.Update(obj) ? "Sửa thành công" : "Sửa thất bại";
             return RedirectToAction("Index", "DongSp");
         }
     }

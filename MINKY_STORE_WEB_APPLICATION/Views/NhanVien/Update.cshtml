@@ -1,4 +1,6 @@
-﻿@model Tuple<MINKY_STORE_WEB_APPLICATION.Models.NhanVienViewModel, List<EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.ChucVu>, List<EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.CuaHang>, List<EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.NhanVien>>
+﻿@using EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass
+@model EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.NhanVien
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Update";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -16,19 +18,19 @@
                             <div class="row">
                                 <div class="form-group col-6">
                                     <label>Mã nhân viên</label>
-                                    <input type="text" class="form-control" value="@Model.Item1.NhanVien.Ma" name="Ma" placeholder="Nhập mã nhân viên">
+                                    <input type="text" class="form-control" asp-for="Ma" placeholder="Nhập mã nhân viên">
                                 </div>
                                 <div class="form-group col-6">
                                     <label>Nhập họ nhân viên</label>
                                     <div class="row">
                                         <div class="col">
-                                            <input type="text" class="form-control" value="@Model.Item1.NhanVien.Ho" name="Ho" placeholder="Nhập họ nhân viên">
+                                            <input type="text" class="form-control" asp-for="Ho" placeholder="Nhập họ nhân viên">
                                         </div>
                                         <div class="col">
-                                            <input type="text" class="form-control" value="@Model.Item1.NhanVien.TenDem" name="TenDem" placeholder="Nhập tên đệm nhân viên">
+                                            <input type="text" class="form-control" asp-for="TenDem" name="TenDem" placeholder="Nhập tên đệm nhân viên">
                                         </div>
                                         <div class="col">
-                                            <input type="text" class="form-control" value="@Model.Item1.NhanVien.Ten" name="Ten" placeholder="Nhập tên nhân viên">
+                                            <input type="text" class="form-control" asp-for="Ten" placeholder="Nhập tên nhân viên">
                                         </div>
                                     </div>
                                 </div>
@@ -40,41 +42,41 @@
                                             string[] gioiTinh = new[] { "Nam", "Nữ" };
                                             @foreach (var x in gioiTinh)
                                             {
-                                                var isSelected = @Model.Item1.NhanVien.GioiTinh == x ? "selected" : "";
-                                                <option value="@x" @isSelected>@x</option>
+                                                var isSelected = @Model.GioiTinh == x ? "selected" : "";
+                                                <!option value="@x" @isSelected>@x</!option>
                                             }
                                         }
                                     </select>
                                 </div>
                                 <div class="form-group col-6">
                                     <label>Ngày sinh nhân viên</label>
-                                    <input type="date" name="NgaySinh" value="@Model.Item1.NhanVien.NgaySinh.ToString("yyyy-MM-dd")" class="form-control">
+                                    <input type="date" name="NgaySinh" asp-for="NgaySinh" class="form-control">
                                 </div>
                                 <div class="form-group col-6">
                                     <label>Địa chỉ nhân viên</label>
-                                    <input type="text" name="DiaChi" value="@Model.Item1.NhanVien.DiaChi" class="form-control">
+                                    <input type="text" name="DiaChi" asp-for="DiaChi" class="form-control">
                                 </div>
                                 <div class="form-group col-6">
                                     <label>Số điện thoại nhân viên</label>
-                                    <input type="text" name="Sdt" value="@Model.Item1.NhanVien.Sdt" class="form-control">
+                                    <input type="text" asp-for="Sdt" class="form-control">
                                 </div>
                                 <div class="form-group col-3">
                                     <label>Chức vụ</label>
                                     <select class="custom-select" name="IdCv">
-                                        @foreach (var x in Model.Item2)
+                                        @foreach (ChucVu x in ViewBag.ChucVu)
                                         {
-                                            var isSelected = x.Id == @Model.Item1.NhanVien.IdCv ? "selected" : "";
-                                            <option value="@x.Id" @isSelected >@x.Ten</option>
+                                            var isSelected = x.Id == Model.IdCv ? "selected" : "";
+                                            <!option value="@x.Id" @isSelected >@x.Ten</!option>
                                         }
                                     </select>
                                 </div>
                                 <div class="form-group col-3">
                                     <label>Chức vụ</label>
                                     <select class="custom-select" name="IdCh">
-                                        @foreach (var x in Model.Item3)
+                                        @foreach (CuaHang x in ViewBag.CuaHang)
                                         {
-                                            var isSelected = x.Id == @Model.Item1.NhanVien.IdCh ? "selected" : "";
-                                            <option value="@x.Id"  @isSelected>@x.Ten</option>
+                                            var isSelected = x.Id == Model.IdCh ? "selected" : "";
+                                            <!option value="@x.Id"  @isSelected>@x.Ten</!option>
                                         }
                                     </select>
                                 </div>
@@ -82,21 +84,21 @@
                                 <div class="form-group col-3">
                                     <label>Chức vụ</label>
                                     <select class="custom-select" name="IdGuiBc">
-                                        @foreach (var x in Model.Item4)
+                                        @foreach (NhanVien x in ViewBag.NhanVien)
                                         {
-                                            var isSelected = x.Id == @Model.Item1.NhanVien.IdGuiBc ? "selected" : "";
-                                            <option value="@x.Id" @isSelected>@x.Ho @x.TenDem @x.Ten</option>
+                                            var isSelected = x.Id == Model.IdGuiBc ? "selected" : "";
+                                            <!option value="@x.Id" @isSelected>@x.Ho @x.TenDem @x.Ten</!option>
                                         }
                                     </select>
                                 </div>
                                 
                                 <div class="form-group col-3">
                                     <label>Mật khẩu</label>
-                                    <input type="text" name="MatKhau" value="@Model.Item1.NhanVien.MatKhau" class="form-control" placeholder="Nhập mật khẩu">
+                                    <input type="text" asp-for="MatKhau" class="form-control" placeholder="Nhập mật khẩu">
                                 </div>
                             </div>
                             <div class="form-group py-2">
-                                <button value="@Model.Item1.NhanVien.Id" name="Id" type="submit" class="btn btn-success px-5 mr-2">Sửa nhân viên</button>
+                                <button value="@Model.Id" name="Id" type="submit" class="btn btn-success px-5 mr-2">Sửa nhân viên</button>
                             </div>
                         </form>
                     </div>

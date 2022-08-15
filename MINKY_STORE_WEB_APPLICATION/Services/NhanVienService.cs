@@ -6,6 +6,7 @@ using MINKY_STORE_WEB_APPLICATION.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EF_CODE_FIRST_FINAL_ASSIGNMENT.Context;
 
 namespace MINKY_STORE_WEB_APPLICATION.Services
 {
@@ -15,11 +16,11 @@ namespace MINKY_STORE_WEB_APPLICATION.Services
         private IChucVuRepository _iChucVuRepository;
         private ICuaHangRepository _iCuaHangRepository;
 
-        public NhanVienService()
+        public NhanVienService(FinalAssignmentContext context)
         {
-            _iNhanVienRepository = new NhanVienRepository();
-            _iChucVuRepository = new ChucVuRepository();
-            _iCuaHangRepository = new CuaHangRepository();
+            _iNhanVienRepository = new NhanVienRepository(context);
+            _iChucVuRepository = new ChucVuRepository(context);
+            _iCuaHangRepository = new CuaHangRepository(context);
         }
 
         public bool Add(NhanVien obj)

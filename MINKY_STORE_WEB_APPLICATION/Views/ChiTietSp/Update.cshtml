@@ -1,91 +1,106 @@
-﻿@model Tuple<EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.ChiTietSp, List<EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.SanPham>, List<EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.MauSac>, List<EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.DongSp>, List<EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.Nsx>>
+﻿@using EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass
+@model EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.ChiTietSp
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Update";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-@if (Model != null)
-{
-    <div class="row mt-3">
+<div class="row mt-3">
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
                 <div class="card-title">Quản lý sản phẩm</div>
-                <hr>
                 <form action="/chitietsp/update" method="post">
                     <div class="row">
                         <div class="form-group col-6">
-                            <label>Chọn sản phẩm</label>
-                            <select class="custom-select" name="IdSp">\
-                                <option>Chọn sản phẩm</option>
-                                @foreach (var x in Model.Item2)
+                            <div class="d-flex justify-content-between">
+                                <label>Sản phẩm</label>
+                                <span asp-validation-for="IdSp" class="text-warning font-weight-bold"></span>
+                            </div>
+                            <select class="custom-select" asp-for="IdSp">
+                                <!option value="">Chọn sản phẩm</!option>
+                                @foreach (SanPham x in ViewBag.SanPham)
                                 {
-                                    var isSelected = x.Id == @Model.Item1.IdSp ? "selected" : "";
-                                    <option @isSelected value="@x.Id">@x.Ten</option>
+                                    var isSelected = x.Id == Model.IdSp ? "selected" : ""; 
+                                    <!option @isSelected value="@x.Id">@x.Ten</!option> 
                                 }
                             </select>
                         </div>
                         <div class="form-group col-6">
                             <label>Nhập năm bảo hành</label>
-                            <input type="text" class="form-control" value="@Model.Item1.NamBh" name="NamBh" placeholder="Nhập năm bảo hành">
+                            <input type="text" class="form-control" asp-for="NamBh" placeholder="Nhập năm bảo hành">
                         </div>
                         <div class="form-group col-6">
                             <label>Nhập giá nhập</label>
-                            <input type="text" class="form-control" name="GiaNhap" value="@Model.Item1.GiaNhap" placeholder="Nhập tên giá nhập">
+                            <input type="text" class="form-control" asp-for="GiaNhap" placeholder="Nhập tên giá nhập">
                         </div>
                         <div class="form-group col-6">
                             <label>Nhập giá bán </label>
-                            <input type="text" class="form-control" name="GiaBan" value="@Model.Item1.GiaBan" placeholder="Nhập giá bán">
+                            <input type="text" class="form-control" asp-for="GiaBan" placeholder="Nhập giá bán">
                         </div>
                         <div class="form-group col-6">
                             <label>Nhập số lượng tồn kho </label>
-                            <input type="text" class="form-control" name="SoLuongTon" value="@Model.Item1.SoLuongTon" placeholder="Nhập số lượng tồn kho">
+                            <input type="text" class="form-control" asp-for="SoLuongTon" placeholder="Nhập số lượng tồn kho">
                         </div>
                         <div class="form-group col-6">
-                            <label>Chọn nhà sản xuất</label>
-                            <select class="custom-select" name="IdNsx">\
-                                <option>Nhà sản xuất</option>
-                                @foreach (var x in Model.Item5)
+                            <div class="d-flex justify-content-between">
+                                <label>Nhà sản xuất</label>
+                                <span asp-validation-for="IdNsx" class="text-warning font-weight-bold"></span>
+                            </div>
+                            <select class="custom-select" asp-for="IdNsx">\
+                                <!option value="">Nhà sản xuất</!option>
+                                @foreach (Nsx x in ViewBag.Nsx)
                                 {
-                                    var isSelected = x.Id == @Model.Item1.IdNsx ? "selected" : "";
-                                    <option @isSelected value="@x.Id">@x.Ten</option>
+                                    var isSelected = x.Id == Model.IdNsx ? "selected" : "";
+                                    <!option @isSelected value="@x.Id">@x.Ten</!option>
                                 }
                             </select>
                         </div>
                         <div class="form-group col-3">
-                            <label>Chọn màu sắc</label>
+                            <div class="d-flex justify-content-between">
+                                <label>Màu sắc</label>
+                                <span asp-validation-for="IdMauSac" class="text-warning font-weight-bold"></span>
+                            </div>
                             <select class="custom-select" name="IdMauSac">
-                                <option>Màu sắc</option>
-                                @foreach (var x in Model.Item3)
+                                <!option value="">Màu sắc</!option>
+                                @foreach (MauSac x in ViewBag.MauSac)
                                 {
-                                    var isSelected = x.Id == @Model.Item1.IdMauSac ? "selected" : "";
-                                    <option @isSelected value="@x.Id">@x.Ten</option>
+                                    var isSelected = x.Id == Model.IdMauSac ? "selected" : "";
+                                    <!option @isSelected value="@x.Id">@x.Ten</!option>
                                 }
                             </select>
                         </div>
                         <div class="form-group col-3">
-                            <label>Dòng sản phẩm</label>
+                            <div class="d-flex justify-content-between">
+                                <label>Dòng sản phẩm</label>
+                                <span asp-validation-for="IdDongSp" class="text-warning font-weight-bold"></span>
+                            </div>
                             <select class="custom-select" name="IdDongSp">
-                                <option>Chọn dòng sản phẩm</option>
-                                @foreach (var x in Model.Item4)
+                                <!option value="">Chọn dòng sản phẩm</!option>
+                                @foreach (DongSp x in ViewBag.DongSp)
                                 {
-                                    var isSelected = x.Id == @Model.Item1.IdDongSp ? "selected" : "";
-                                    <option @isSelected value="@x.Id">@x.Ten</option>
+                                    var isSelected = x.Id == Model.IdDongSp ? "selected" : "";
+                                    <!option @isSelected value="@x.Id">@x.Ten</!option>
                                 }
                             </select>
                         </div>
                         <div class="form-group col-6">
-                            <label>Thêm ảnh sản phẩm</label> <br/>
-                            <input type="text" class="form-control" name="Anh" value="@Model.Item1.Anh" placeholder="Nhập link ảnh sản phẩm" required>
+                            <div class="d-flex justify-content-between">
+                                <label>Ảnh sản phẩm</label>
+                                <span asp-validation-for="Anh" class="text-warning font-weight-bold"></span>
+                            </div>
+                            <input type="text" class="form-control" asp-for="Anh" placeholder="Nhập link ảnh sản phẩm">
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="submit" value="@Model.Item1.Id" name="Id" class="btn btn-warning px-5">Sửa sản phẩm</button>
+                        <button type="submit" name="Id" value="@Model.Id" class="btn btn-warning px-5">Sửa sản phẩm</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 

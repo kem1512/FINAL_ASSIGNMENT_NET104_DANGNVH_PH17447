@@ -19,10 +19,8 @@
     <link href="~/assets/css/app-style.css" rel="stylesheet"/>
 
     <link rel="stylesheet" href="~/assets/css/sell.css" />
-    
-    <link rel="stylesheet" href="~/assets/css/toast.css"/>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+    <link rel="stylesheet" href="~/assets/css/toastr.css" />
 </head>
 <body class="bg-theme bg-theme1">
 
@@ -119,7 +117,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <form class="search-bar" action="/banhang/filer">
+                <form class="search-bar" action="/banhang/filter">
                     <input type="text" class="form-control" name="name" placeholder="Nhập từ khóa">
                     <a href="#">
                         <i class="icon-magnifier"></i>
@@ -220,7 +218,18 @@
 <!-- Custom scripts -->
 <script src="~/assets/js/app-script.js"></script>
 
+<!-- Validate Form-->
 <script src="~/assets/js/validateForm.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<!-- Toastr -->
+<script src="~/assets/js/toastr.min.js"></script>
+
+@if (ViewBag.Message != null)
+{
+    <script>
+        toastr.success('@ViewBag.Message');
+    </script>
+}
+@RenderSection("Scripts", required: false)
 </body>
 </html>

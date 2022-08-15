@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using EF_CODE_FIRST_FINAL_ASSIGNMENT.Context;
 using EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass;
 using Microsoft.AspNetCore.Mvc;
 using MINKY_STORE_WEB_APPLICATION.IServices;
+using MINKY_STORE_WEB_APPLICATION.Models;
 using MINKY_STORE_WEB_APPLICATION.Services;
 
 namespace MINKY_STORE_WEB_APPLICATION.Controllers
@@ -10,27 +13,31 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
     {
         private IMauSacService _iMauSacService;
 
-        public MauSacController()
+        public MauSacController(FinalAssignmentContext context)
         {
-            _iMauSacService = new MauSacService();
+            _iMauSacService = new MauSacService(context);
         }
 
         public IActionResult Index()
         {
+            if (TempData["Message"] != null)
+            {
+                ViewBag.Message = TempData["Message"];
+            }
             return View(_iMauSacService.GetAll());
         }
 
         [Route("/mausac/create")]
         public IActionResult Add(MauSac obj)
         {
-            _iMauSacService.Add(obj);
+            TempData["Message"] = _iMauSacService.Add(obj) ? "Thêm thành công" : "Thêm thất bại";
             return RedirectToAction("Index", "MauSac");
         }
 
         [Route("/mausac/remove/{id}")]
         public IActionResult Remove(Guid id)
         {
-            _iMauSacService.Remove(_iMauSacService.GetById(id));
+            TempData["Message"] = _iMauSacService.Remove(_iMauSacService.GetById(id)) ? "Xóa thành công" : "Xóa thất bại";
             return RedirectToAction("Index", "MauSac");
         }
 
@@ -41,9 +48,9 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
         }
 
         [Route("/mausac/update")]
-        public IActionResult Update(MauSac cv)
+        public IActionResult Update(MauSac obj)
         {
-            _iMauSacService.Update(cv);
+            TempData["Message"] = _iMauSacService.Update(obj) ? "Sửa thành công" : "Sửa thất bại";
             return RedirectToAction("Index", "MauSac");
         }
     }

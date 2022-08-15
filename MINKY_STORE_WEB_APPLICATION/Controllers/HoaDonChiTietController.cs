@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using EF_CODE_FIRST_FINAL_ASSIGNMENT.Context;
 using EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass;
 using Microsoft.AspNetCore.Mvc;
 using MINKY_STORE_WEB_APPLICATION.IServices;
@@ -15,49 +16,40 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
         private IHoaDonService _iHoaDonService;
         private IHoaDonChiTietService _iHoaDonChiTietService;
 
-        public HoaDonChiTietController()
+        public HoaDonChiTietController(FinalAssignmentContext context)
         {
-            _iChiTietSpService = new ChiTietSpService();
-            _iHoaDonService = new HoaDonService();
-            _iHoaDonChiTietService = new HoaDonChiTietService();
+            _iChiTietSpService = new ChiTietSpService(context);
+            _iHoaDonService = new HoaDonService(context);
+            _iHoaDonChiTietService = new HoaDonChiTietService(context);
         }
 
         [Route("/hoadonchitiet/{id}")]
         public IActionResult Index(Guid id)
         {
+            if (TempData["Message"] != null)
+            {
+                ViewBag.Message = TempData["Message"];
+            }
             var tuple = new Tuple<List<HoaDonViewModel>, List<SanPhamViewModel>>(_iHoaDonService.GetHoaDonViewModel().Where(c => c.HoaDon.Id == id).ToList(), _iChiTietSpService.GetSanPhamViewModel());
             return View(tuple);
         }
 
         [Route("/hoadonchitiet/update")]
-        public IActionResult Update(HoaDonChiTiet hoaDonChiTiet)
+        public IActionResult Update(HoaDonChiTiet obj)
         {
-            _iHoaDonChiTietService.Update(hoaDonChiTiet);
-            return RedirectToAction("Index", "HoaDon");
+            TempData["Message"] = _iHoaDonChiTietService.Update(obj) ? "Sửa thành công" : "Sửa thất bại";
+            return View("Index",new Tuple<List<HoaDonViewModel>, List<SanPhamViewModel>>(
+                _iHoaDonService.GetHoaDonViewModel().Where(c => c.HoaDon.Id == obj.HoaDon.Id).ToList(),
+                _iChiTietSpService.GetSanPhamViewModel()));
         }
 
         [Route("/hoadonchitiet/add")]
-        public IActionResult Add(HoaDonChiTiet hoaDonChiTiet)
+        public IActionResult Add(HoaDonChiTiet obj)
         {
-            hoaDonChiTiet.DonGia = _iChiTietSpService.GetById(hoaDonChiTiet.IdChiTietSp).GiaBan;
-            _iHoaDonChiTietService.Add(hoaDonChiTiet);
+
+            obj.DonGia = _iChiTietSpService.GetById(obj.IdChiTietSp).GiaBan;
+            TempData["Message"] = _iHoaDonChiTietService.Add(obj) ? "Thêm thành công" : "Thêm thất bại";
             return RedirectToAction("Index", "BanHang");
         }
-
-        // [Route("hoadon/thanhtoan/{id}")]
-        // public IActionResult ThanhToan(Guid id)
-        // {
-        //     var result = _iHoaDonService.GetAll().FirstOrDefault(c => c.Id == id);
-        //     result.TinhTrang = 1;
-        //     _iHoaDonService.Update(result);
-        //     return RedirectToAction("Index", "BanHang");
-        // }
-        //
-        // [Route("hoadonchitiet/update/id={id},soluong={soluong}")]
-        // public IActionResult Update(HoaDonChiTiet hoaDonChiTiet)
-        // {
-        //     _iHoaDonChiTietService.Update(hoaDonChiTiet);
-        //     return View();
-        // }
     }
 }

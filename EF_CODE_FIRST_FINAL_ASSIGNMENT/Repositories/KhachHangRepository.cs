@@ -10,10 +10,10 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Repositories
 {
     public class KhachHangRepository : IKhachHangRepository
     {
-        private FinalAssignmentContext _context = new FinalAssignmentContext();
-        public KhachHangRepository()
+        private readonly FinalAssignmentContext _context;
+        public KhachHangRepository(FinalAssignmentContext context)
         {
-            _context = new FinalAssignmentContext();
+            _context = context;
         }
 
         public bool Add(KhachHang obj)

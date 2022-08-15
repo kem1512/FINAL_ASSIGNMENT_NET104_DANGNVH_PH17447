@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using EF_CODE_FIRST_FINAL_ASSIGNMENT.Context;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -14,9 +15,9 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
     public class BanHangController : Controller
     {
         private IChiTietSpService _iChiTietSpService;
-        public BanHangController()
+        public BanHangController(FinalAssignmentContext context)
         {
-            _iChiTietSpService = new ChiTietSpService();
+            _iChiTietSpService = new ChiTietSpService(context);
         }
 
         private List<SanPhamViewModel> ProductPaging(int currentPage)
@@ -30,6 +31,10 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
 
         public IActionResult Index()
         {
+            if (TempData["Message"] != null)
+            {
+                ViewBag.Message = TempData["Message"];
+            }
             return View(ProductPaging(1));
         }
 
@@ -76,11 +81,16 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
                 }
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
-            return RedirectToAction("Cart");
+            TempData["Message"] = "Thêm thành công";
+            return RedirectToAction("Index");
         }
 
         public IActionResult Cart()
         {
+            if (TempData["Message"] != null)
+            {
+                ViewBag.Message = TempData["Message"];
+            }
             List<ItemViewModel> cart = SessionHelper.GetObjectFromJson<List<ItemViewModel>>(HttpContext.Session, "cart");
             if (cart != null)
             {
@@ -90,7 +100,7 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
             return RedirectToAction("Index");
         }
 
-        [Route("/banhang/filer")]
+        [Route("/banhang/filter")]
         public IActionResult Filter(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -102,26 +112,39 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
 
 
         [Route("/banhang/updatecart")]
-        public IActionResult UpdateCart(ItemViewModel itemViewModel)
+        public IActionResult UpdateCart(ItemViewModel obj)
         {
             List<ItemViewModel> cart = SessionHelper.GetObjectFromJson<List<ItemViewModel>>(HttpContext.Session, "cart");
-            int index = IsExist(itemViewModel.SanPhamViewModel.ChiTietSp.Id);
+            int index = IsExist(obj.SanPhamViewModel.ChiTietSp.Id);
             if (index != -1)
             {
-                cart[index].Quantity = itemViewModel.Quantity;
+                cart[index].Quantity = obj.Quantity;
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                TempData["Message"] = "Sửa thành công";
+            }
+            else
+            {
+                TempData["Message"] = "Sửa thất bại";
             }
             return RedirectToAction("Cart", "BanHang");
         }
 
         [Route("/banhang/removecart/{id}")]
-        public IActionResult Remove(Guid id)
+        public IActionResult RemoveCart(Guid id)
         {
 
             List<ItemViewModel> cart = SessionHelper.GetObjectFromJson<List<ItemViewModel>>(HttpContext.Session, "cart");
             int index = IsExist(id);
-            cart.RemoveAt(index);
-            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+            if (index != -1)
+            {
+                cart.RemoveAt(index);
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                TempData["Message"] = "Xóa thành công";
+            }
+            else
+            {
+                TempData["Message"] = "Xóa thất bại";
+            }
             return RedirectToAction("Cart");
         }
     }
