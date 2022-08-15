@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
 {
-    public partial class FinalAssignment : Migration
+    public partial class FinalDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,7 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "(newid())"),
-                    Ma = table.Column<string>(type: "VARCHAR(20)", nullable: true),
+                    Ma = table.Column<string>(type: "VARCHAR(10)", maxLength: 10, nullable: false),
                     Ten = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
@@ -161,11 +161,11 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                     SoLuongTon = table.Column<int>(type: "int", nullable: false),
                     GiaNhap = table.Column<decimal>(type: "DECIMAL(20,0)", nullable: false, defaultValue: 0m),
                     GiaBan = table.Column<decimal>(type: "DECIMAL(20,0)", nullable: false, defaultValue: 0m),
-                    Anh = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IdSp = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    IdNsx = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    IdMauSac = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    IdDongSp = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Anh = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdSp = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdNsx = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdMauSac = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdDongSp = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -175,25 +175,25 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                         column: x => x.IdDongSp,
                         principalTable: "DongSP",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ChiTietSP_MauSac_IdMauSac",
                         column: x => x.IdMauSac,
                         principalTable: "MauSac",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ChiTietSP_Nsx_IdNsx",
                         column: x => x.IdNsx,
                         principalTable: "Nsx",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ChiTietSP_SanPham_IdSp",
                         column: x => x.IdSp,
                         principalTable: "SanPham",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -316,6 +316,66 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "ChucVu",
+                columns: new[] { "Id", "Ma", "Ten" },
+                values: new object[] { new Guid("b29ceea6-16a5-4171-9486-621650b569a7"), "NV1", "Trần Nam" });
+
+            migrationBuilder.InsertData(
+                table: "CuaHang",
+                columns: new[] { "Id", "DiaChi", "Ma", "QuocGia", "Ten", "ThanhPho" },
+                values: new object[] { new Guid("b29ceea6-16a5-4171-9486-621650b569a8"), null, "CH1", null, "Minky Store", null });
+
+            migrationBuilder.InsertData(
+                table: "DongSP",
+                columns: new[] { "Id", "Ma", "Ten" },
+                values: new object[] { new Guid("b29ceea6-16a5-4171-9486-621650b569a1"), "DSP1", "Iphone" });
+
+            migrationBuilder.InsertData(
+                table: "KhachHang",
+                columns: new[] { "Id", "DiaChi", "Ho", "Ma", "MatKhau", "NgaySinh", "QuocGia", "Sdt", "Ten", "TenDem", "ThanhPho" },
+                values: new object[] { new Guid("5018e9f5-42bd-456b-8ba8-2e29d42a5115"), null, null, "KH1", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, "Ánh", null, null });
+
+            migrationBuilder.InsertData(
+                table: "MauSac",
+                columns: new[] { "Id", "Ma", "Ten" },
+                values: new object[,]
+                {
+                    { new Guid("b29ceea6-16a5-4171-9486-621650b569a2"), "MS1", "Đỏ" },
+                    { new Guid("b29ceea6-16a5-4171-9486-621650b569a8"), "MS1", "Vàng" },
+                    { new Guid("b29ceea6-16a5-4171-9486-621650b569a9"), "MS1", "Tím" },
+                    { new Guid("b29ceea6-16a5-4171-9486-621650b569a5"), "MS1", "Trắng" },
+                    { new Guid("b29ceea6-16a5-4171-9486-621650b569a6"), "MS1", "Đen" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Nsx",
+                columns: new[] { "Id", "Ma", "Ten" },
+                values: new object[] { new Guid("b29ceea6-16a5-4171-9486-621650b569a3"), "DSP1", "Apple" });
+
+            migrationBuilder.InsertData(
+                table: "SanPham",
+                columns: new[] { "Id", "Ma", "Ten" },
+                values: new object[] { new Guid("b29ceea6-16a5-4171-9486-621650b569a4"), "SP1", "Iphone 13 Promax" });
+
+            migrationBuilder.InsertData(
+                table: "ChiTietSP",
+                columns: new[] { "Id", "Anh", "GiaBan", "GiaNhap", "IdDongSp", "IdMauSac", "IdNsx", "IdSp", "MoTa", "NamBh", "SoLuongTon" },
+                values: new object[,]
+                {
+                    { new Guid("8d79adf9-5af8-400b-b002-de9c77e91715"), "https://cdn.tgdd.vn/Products/Images/42/247364/samsung-galaxy-m53-nau-thumb-600x600.jpg", 200000m, 900000m, new Guid("b29ceea6-16a5-4171-9486-621650b569a1"), new Guid("b29ceea6-16a5-4171-9486-621650b569a2"), new Guid("b29ceea6-16a5-4171-9486-621650b569a3"), new Guid("b29ceea6-16a5-4171-9486-621650b569a4"), "", 2002, 50 },
+                    { new Guid("0ae9ee50-64d7-4693-b989-d9d72422cb4c"), "https://cdn.tgdd.vn/Products/Images/42/230529/TimerThumb/iphone-13-pro-max-(18).jpg", 200000m, 900000m, new Guid("b29ceea6-16a5-4171-9486-621650b569a1"), new Guid("b29ceea6-16a5-4171-9486-621650b569a8"), new Guid("b29ceea6-16a5-4171-9486-621650b569a3"), new Guid("b29ceea6-16a5-4171-9486-621650b569a4"), "", 2002, 50 },
+                    { new Guid("5bc44e58-77ae-49b8-8bf2-242c4a0296fc"), "https://cdn.tgdd.vn/Products/Images/42/251703/oppo-a95-4g-bac-2-600x600.jpg", 200000m, 900000m, new Guid("b29ceea6-16a5-4171-9486-621650b569a1"), new Guid("b29ceea6-16a5-4171-9486-621650b569a9"), new Guid("b29ceea6-16a5-4171-9486-621650b569a3"), new Guid("b29ceea6-16a5-4171-9486-621650b569a4"), "", 2002, 50 },
+                    { new Guid("0216511a-4656-400f-8f3a-1c013bf179bd"), "https://cdn.tgdd.vn/Products/Images/42/253402/realme-c21-y-blue-600x600.jpg", 200000m, 900000m, new Guid("b29ceea6-16a5-4171-9486-621650b569a1"), new Guid("b29ceea6-16a5-4171-9486-621650b569a9"), new Guid("b29ceea6-16a5-4171-9486-621650b569a3"), new Guid("b29ceea6-16a5-4171-9486-621650b569a4"), "", 2002, 50 },
+                    { new Guid("c6103363-29ab-438f-9d7d-d9fc9ba4cdc9"), "https://cdn.tgdd.vn/Products/Images/42/247364/samsung-galaxy-m53-nau-thumb-600x600.jpg", 200000m, 900000m, new Guid("b29ceea6-16a5-4171-9486-621650b569a1"), new Guid("b29ceea6-16a5-4171-9486-621650b569a5"), new Guid("b29ceea6-16a5-4171-9486-621650b569a3"), new Guid("b29ceea6-16a5-4171-9486-621650b569a4"), "", 2002, 50 },
+                    { new Guid("fbfd3d45-a92a-49bd-a2e4-aabeac6be899"), "https://cdn.tgdd.vn/Products/Images/42/247364/samsung-galaxy-m53-nau-thumb-600x600.jpg", 200000m, 900000m, new Guid("b29ceea6-16a5-4171-9486-621650b569a1"), new Guid("b29ceea6-16a5-4171-9486-621650b569a6"), new Guid("b29ceea6-16a5-4171-9486-621650b569a3"), new Guid("b29ceea6-16a5-4171-9486-621650b569a4"), "", 2002, 50 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "NhanVien",
+                columns: new[] { "Id", "DiaChi", "GioiTinh", "Ho", "IdCh", "IdCv", "IdGuiBc", "Ma", "MatKhau", "NgaySinh", "Sdt", "Ten", "TenDem" },
+                values: new object[] { new Guid("e6931724-bc54-4d27-a720-88d972f1e5f2"), "Hà Nội", "Nam", "Nguyễn", new Guid("b29ceea6-16a5-4171-9486-621650b569a8"), new Guid("b29ceea6-16a5-4171-9486-621650b569a7"), null, "NV1", "1234", new DateTime(2022, 8, 15, 16, 7, 49, 963, DateTimeKind.Local).AddTicks(914), "1234", "Đăng", "Viết Hải" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ChiTietSP_IdDongSp",

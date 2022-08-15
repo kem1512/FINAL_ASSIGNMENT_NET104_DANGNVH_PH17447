@@ -46,10 +46,17 @@ namespace MINKY_STORE_WEB_APPLICATION.Controllers
         [Route("/hoadonchitiet/add")]
         public IActionResult Add(HoaDonChiTiet obj)
         {
-
-            obj.DonGia = _iChiTietSpService.GetById(obj.IdChiTietSp).GiaBan;
-            TempData["Message"] = _iHoaDonChiTietService.Add(obj) ? "Thêm thành công" : "Thêm thất bại";
-            return RedirectToAction("Index", "BanHang");
+            if (_iHoaDonChiTietService.GetAll().Exists(c => c.IdChiTietSp == obj.IdChiTietSp))
+            {
+                TempData["Message"] = "Sản phẩm đã tồn tại";
+                RedirectToAction("Index", "HoaDon");
+            }
+            else
+            {
+                obj.DonGia = _iChiTietSpService.GetById(obj.IdChiTietSp).GiaBan;
+                TempData["Message"] = _iHoaDonChiTietService.Add(obj) ? "Thêm thành công" : "Thêm thất bại";
+            }
+            return RedirectToAction("Index", "HoaDon");
         }
     }
 }

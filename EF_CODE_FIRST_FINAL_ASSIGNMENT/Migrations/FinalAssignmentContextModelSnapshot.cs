@@ -27,6 +27,7 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                         .HasDefaultValueSql("(newid())");
 
                     b.Property<string>("Anh")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("GiaBan")
@@ -40,15 +41,19 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                         .HasDefaultValue(0m);
 
                     b.Property<Guid?>("IdDongSp")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("IdMauSac")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("IdNsx")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("IdSp")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("MoTa")
@@ -72,6 +77,92 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                     b.HasIndex("IdSp");
 
                     b.ToTable("ChiTietSP");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("8d79adf9-5af8-400b-b002-de9c77e91715"),
+                            Anh = "https://cdn.tgdd.vn/Products/Images/42/247364/samsung-galaxy-m53-nau-thumb-600x600.jpg",
+                            GiaBan = 200000m,
+                            GiaNhap = 900000m,
+                            IdDongSp = new Guid("b29ceea6-16a5-4171-9486-621650b569a1"),
+                            IdMauSac = new Guid("b29ceea6-16a5-4171-9486-621650b569a2"),
+                            IdNsx = new Guid("b29ceea6-16a5-4171-9486-621650b569a3"),
+                            IdSp = new Guid("b29ceea6-16a5-4171-9486-621650b569a4"),
+                            MoTa = "",
+                            NamBh = 2002,
+                            SoLuongTon = 50
+                        },
+                        new
+                        {
+                            Id = new Guid("0ae9ee50-64d7-4693-b989-d9d72422cb4c"),
+                            Anh = "https://cdn.tgdd.vn/Products/Images/42/230529/TimerThumb/iphone-13-pro-max-(18).jpg",
+                            GiaBan = 200000m,
+                            GiaNhap = 900000m,
+                            IdDongSp = new Guid("b29ceea6-16a5-4171-9486-621650b569a1"),
+                            IdMauSac = new Guid("b29ceea6-16a5-4171-9486-621650b569a8"),
+                            IdNsx = new Guid("b29ceea6-16a5-4171-9486-621650b569a3"),
+                            IdSp = new Guid("b29ceea6-16a5-4171-9486-621650b569a4"),
+                            MoTa = "",
+                            NamBh = 2002,
+                            SoLuongTon = 50
+                        },
+                        new
+                        {
+                            Id = new Guid("5bc44e58-77ae-49b8-8bf2-242c4a0296fc"),
+                            Anh = "https://cdn.tgdd.vn/Products/Images/42/251703/oppo-a95-4g-bac-2-600x600.jpg",
+                            GiaBan = 200000m,
+                            GiaNhap = 900000m,
+                            IdDongSp = new Guid("b29ceea6-16a5-4171-9486-621650b569a1"),
+                            IdMauSac = new Guid("b29ceea6-16a5-4171-9486-621650b569a9"),
+                            IdNsx = new Guid("b29ceea6-16a5-4171-9486-621650b569a3"),
+                            IdSp = new Guid("b29ceea6-16a5-4171-9486-621650b569a4"),
+                            MoTa = "",
+                            NamBh = 2002,
+                            SoLuongTon = 50
+                        },
+                        new
+                        {
+                            Id = new Guid("0216511a-4656-400f-8f3a-1c013bf179bd"),
+                            Anh = "https://cdn.tgdd.vn/Products/Images/42/253402/realme-c21-y-blue-600x600.jpg",
+                            GiaBan = 200000m,
+                            GiaNhap = 900000m,
+                            IdDongSp = new Guid("b29ceea6-16a5-4171-9486-621650b569a1"),
+                            IdMauSac = new Guid("b29ceea6-16a5-4171-9486-621650b569a9"),
+                            IdNsx = new Guid("b29ceea6-16a5-4171-9486-621650b569a3"),
+                            IdSp = new Guid("b29ceea6-16a5-4171-9486-621650b569a4"),
+                            MoTa = "",
+                            NamBh = 2002,
+                            SoLuongTon = 50
+                        },
+                        new
+                        {
+                            Id = new Guid("c6103363-29ab-438f-9d7d-d9fc9ba4cdc9"),
+                            Anh = "https://cdn.tgdd.vn/Products/Images/42/247364/samsung-galaxy-m53-nau-thumb-600x600.jpg",
+                            GiaBan = 200000m,
+                            GiaNhap = 900000m,
+                            IdDongSp = new Guid("b29ceea6-16a5-4171-9486-621650b569a1"),
+                            IdMauSac = new Guid("b29ceea6-16a5-4171-9486-621650b569a5"),
+                            IdNsx = new Guid("b29ceea6-16a5-4171-9486-621650b569a3"),
+                            IdSp = new Guid("b29ceea6-16a5-4171-9486-621650b569a4"),
+                            MoTa = "",
+                            NamBh = 2002,
+                            SoLuongTon = 50
+                        },
+                        new
+                        {
+                            Id = new Guid("fbfd3d45-a92a-49bd-a2e4-aabeac6be899"),
+                            Anh = "https://cdn.tgdd.vn/Products/Images/42/247364/samsung-galaxy-m53-nau-thumb-600x600.jpg",
+                            GiaBan = 200000m,
+                            GiaNhap = 900000m,
+                            IdDongSp = new Guid("b29ceea6-16a5-4171-9486-621650b569a1"),
+                            IdMauSac = new Guid("b29ceea6-16a5-4171-9486-621650b569a6"),
+                            IdNsx = new Guid("b29ceea6-16a5-4171-9486-621650b569a3"),
+                            IdSp = new Guid("b29ceea6-16a5-4171-9486-621650b569a4"),
+                            MoTa = "",
+                            NamBh = 2002,
+                            SoLuongTon = 50
+                        });
                 });
 
             modelBuilder.Entity("EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.ChucVu", b =>
@@ -82,7 +173,9 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                         .HasDefaultValueSql("(newid())");
 
                     b.Property<string>("Ma")
-                        .HasColumnType("VARCHAR(20)");
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("VARCHAR(10)");
 
                     b.Property<string>("Ten")
                         .HasMaxLength(50)
@@ -91,6 +184,14 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ChucVu");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("b29ceea6-16a5-4171-9486-621650b569a7"),
+                            Ma = "NV1",
+                            Ten = "Trần Nam"
+                        });
                 });
 
             modelBuilder.Entity("EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.CuaHang", b =>
@@ -123,6 +224,14 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CuaHang");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("b29ceea6-16a5-4171-9486-621650b569a8"),
+                            Ma = "CH1",
+                            Ten = "Minky Store"
+                        });
                 });
 
             modelBuilder.Entity("EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.DongSp", b =>
@@ -142,6 +251,14 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DongSP");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("b29ceea6-16a5-4171-9486-621650b569a1"),
+                            Ma = "DSP1",
+                            Ten = "Iphone"
+                        });
                 });
 
             modelBuilder.Entity("EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.GioHang", b =>
@@ -344,6 +461,15 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("KhachHang");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("5018e9f5-42bd-456b-8ba8-2e29d42a5115"),
+                            Ma = "KH1",
+                            NgaySinh = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ten = "Ánh"
+                        });
                 });
 
             modelBuilder.Entity("EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.MauSac", b =>
@@ -363,6 +489,38 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MauSac");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("b29ceea6-16a5-4171-9486-621650b569a2"),
+                            Ma = "MS1",
+                            Ten = "Đỏ"
+                        },
+                        new
+                        {
+                            Id = new Guid("b29ceea6-16a5-4171-9486-621650b569a8"),
+                            Ma = "MS1",
+                            Ten = "Vàng"
+                        },
+                        new
+                        {
+                            Id = new Guid("b29ceea6-16a5-4171-9486-621650b569a9"),
+                            Ma = "MS1",
+                            Ten = "Tím"
+                        },
+                        new
+                        {
+                            Id = new Guid("b29ceea6-16a5-4171-9486-621650b569a5"),
+                            Ma = "MS1",
+                            Ten = "Trắng"
+                        },
+                        new
+                        {
+                            Id = new Guid("b29ceea6-16a5-4171-9486-621650b569a6"),
+                            Ma = "MS1",
+                            Ten = "Đen"
+                        });
                 });
 
             modelBuilder.Entity("EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.NhanVien", b =>
@@ -428,6 +586,24 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                     b.HasIndex("IdGuiBc");
 
                     b.ToTable("NhanVien");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("e6931724-bc54-4d27-a720-88d972f1e5f2"),
+                            DiaChi = "Hà Nội",
+                            GioiTinh = "Nam",
+                            Ho = "Nguyễn",
+                            IdCh = new Guid("b29ceea6-16a5-4171-9486-621650b569a8"),
+                            IdCv = new Guid("b29ceea6-16a5-4171-9486-621650b569a7"),
+                            Ma = "NV1",
+                            MatKhau = "1234",
+                            NgaySinh = new DateTime(2022, 8, 15, 16, 7, 49, 963, DateTimeKind.Local).AddTicks(914),
+                            Sdt = "1234",
+                            Ten = "Đăng",
+                            TenDem = "Viết Hải",
+                            TrangThai = 0
+                        });
                 });
 
             modelBuilder.Entity("EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.Nsx", b =>
@@ -447,6 +623,14 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Nsx");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("b29ceea6-16a5-4171-9486-621650b569a3"),
+                            Ma = "DSP1",
+                            Ten = "Apple"
+                        });
                 });
 
             modelBuilder.Entity("EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.SanPham", b =>
@@ -466,25 +650,41 @@ namespace EF_CODE_FIRST_FINAL_ASSIGNMENT.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SanPham");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("b29ceea6-16a5-4171-9486-621650b569a4"),
+                            Ma = "SP1",
+                            Ten = "Iphone 13 Promax"
+                        });
                 });
 
             modelBuilder.Entity("EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.ChiTietSp", b =>
                 {
                     b.HasOne("EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.DongSp", "DongSp")
                         .WithMany("ChiTietSps")
-                        .HasForeignKey("IdDongSp");
+                        .HasForeignKey("IdDongSp")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.MauSac", "MauSac")
                         .WithMany("ChiTietSps")
-                        .HasForeignKey("IdMauSac");
+                        .HasForeignKey("IdMauSac")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.Nsx", "Nsx")
                         .WithMany("ChiTietSps")
-                        .HasForeignKey("IdNsx");
+                        .HasForeignKey("IdNsx")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("EF_CODE_FIRST_FINAL_ASSIGNMENT.DomainClass.SanPham", "SanPham")
                         .WithMany("ChiTietSps")
-                        .HasForeignKey("IdSp");
+                        .HasForeignKey("IdSp")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("DongSp");
 
