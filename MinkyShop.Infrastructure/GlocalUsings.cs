@@ -1,0 +1,11 @@
+﻿global using System;
+global using Microsoft.EntityFrameworkCore;
+global using MinkyShop.Infrastructure.Data.Entities;
+global using System.Collections.Generic;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using System.ComponentModel.DataAnnotations;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using MinkyShop.Infrastructure.Data;
+global using System.Linq;
+global using MinkyShop.Infrastructure.Common.Interfaces;

@@ -1,0 +1,85 @@
+﻿@model List<MINKY_STORE_WEB_APPLICATION.Models.HoaDonViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row mt-3">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title d-flex justify-content-between">
+                    Quản lý hóa đơn
+                    <div class="d-flex">
+                        <form class="search-bar mr-3">
+                            <input type="text" onkeyup="myFunction()" class="form-control" id="myInput" placeholder="Nhập từ khóa">
+                            <a href="#">
+                                <i class="icon-magnifier"></i>
+                            </a>
+                        </form>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Lọc hóa đơn
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="/hoadon">Tất cả hóa đơn</a>
+                                <a class="dropdown-item" href="/hoadon/status=1">Hóa đơn hoàn thành</a>
+                                <a class="dropdown-item" href="/hoadon/status=0">Hóa đơn chưa hoàn thành</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table" id="myTable">
+                        <thead>
+                        <tr>
+                            <th>Mã hóa đơn</th>
+                            <th>Tên người nhận</th>
+                            <th>Địa chỉ</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                if (Model == null || !Model.Any())
+                                {
+                                    <tr>
+                                        <td colspan="6" class="text-center">Không có gì ở đây cả</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    foreach (var item in Model.GroupBy(c => c.HoaDon.Id).Select((group, index) => new { group, index }))
+                                    {
+                                        <tr>
+                                            <td>@(item.index + 1)</td>
+                                            <td>@item.group.First().HoaDon.TenNguoiNhan</td>
+                                            <td>@item.group.First().HoaDon.DiaChi</td>
+                                            <td>@(string.Format("{0:0,0}", item.group.Sum(c => c.HoaDonChiTiet.DonGia * c.HoaDonChiTiet.SoLuong))) VNĐ</td>
+                                            <td>
+                                                @{
+                                                    var tinhtrang = item.group.First().HoaDon.TinhTrang == 0 ? "Chưa hoàn thành" : "Hoàn thành";
+                                                }
+                                                @tinhtrang
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-primary" href="/hoadonchitiet/@item.group.First().HoaDon.Id">Xem chi tiết</a>
+                                                @if (item.group.First().HoaDon.TinhTrang == 0)
+                                                {
+                                                    <a onclick="return confirm('Bạn có chắc muốn thanh toán?')" class="btn btn-danger" href="/hoadon/thanhtoan/@item.group.First().HoaDon.Id">Thanh toán</a>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
