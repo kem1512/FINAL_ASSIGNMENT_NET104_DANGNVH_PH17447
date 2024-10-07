@@ -13,7 +13,7 @@
 
         public abstract bool Update(T obj);
 
-        public abstract bool Remove(T obj);
+        public abstract bool Remove(Guid id);
 
         public abstract IEnumerable<T> Fetch();
 

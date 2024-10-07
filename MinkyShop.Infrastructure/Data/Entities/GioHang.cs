@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
-
-namespace MinkyShop.Infrastructure.Data.Entities
+﻿namespace MinkyShop.Infrastructure.Data.Entities
 {
     public class GioHang
     {
@@ -30,8 +23,6 @@ namespace MinkyShop.Infrastructure.Data.Entities
         public int TinhTrang { get; set; }
 
         public KhachHang KhachHang { get; set; }
-
-        public NhanVien NhanVien { get; set; }
 
         public List<GioHangChiTiet> GioHangChiTiets { get; set; }
     }

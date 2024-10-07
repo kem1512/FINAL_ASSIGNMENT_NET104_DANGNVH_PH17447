@@ -30,11 +30,15 @@
             return _context.HoaDon.Find(id);
         }
 
-        public override bool Remove(HoaDon obj)
+        public override bool Remove(Guid id)
         {
             try
             {
-                _context.HoaDon.Remove(obj);
+                var hoaDon = _context.HoaDon.Find(id);
+
+                if (hoaDon == null) return false;
+
+                _context.HoaDon.Remove(hoaDon);
                 _context.SaveChanges();
                 return true;
             }

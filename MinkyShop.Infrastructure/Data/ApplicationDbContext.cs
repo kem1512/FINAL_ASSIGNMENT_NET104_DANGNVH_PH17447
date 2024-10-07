@@ -1,15 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using MinkyShop.Infrastructure.Common.Extensions;
 using System.Reflection;
-using System.Text;
-using MinkyShop.Data.Configurations;
-using MinkyShop.Data.DomainClass;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Microsoft.VisualBasic;
-using MinkyShop.Infrastructure.Common.Extensions;
 
 namespace MinkyShop.Infrastructure.Data
 {
@@ -22,27 +12,9 @@ namespace MinkyShop.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new ChucVuConfiguration());
-            modelBuilder.ApplyConfiguration(new CuaHangConfiguration());
-            modelBuilder.ApplyConfiguration(new NhanVienConfiguration());
-            modelBuilder.ApplyConfiguration(new KhachHangConfiguration());
-            modelBuilder.ApplyConfiguration(new HoaDonChiTietConfiguration());
-            modelBuilder.ApplyConfiguration(new GioHangChiTietConfiguration());
-            modelBuilder.ApplyConfiguration(new SanPhamConfiguration());
-            modelBuilder.ApplyConfiguration(new NsxConfiguration());
-            modelBuilder.ApplyConfiguration(new MauSacConfiguration());
-            modelBuilder.ApplyConfiguration(new DongSpConfiguration());
-            modelBuilder.ApplyConfiguration(new ChiTietSpConfiguration());
-            modelBuilder.ApplyConfiguration(new HoaDonConfiguration());
-            modelBuilder.ApplyConfiguration(new GioHangChiTietConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             modelBuilder.SeedData();
         }
-
-        public DbSet<ChucVu> ChucVu { get; set; }
-
-        public DbSet<CuaHang> CuaHang { get; set; }
-
-        public DbSet<NhanVien> NhanVien { get; set; }
 
         public DbSet<KhachHang> KhachHang { get; set; }
 

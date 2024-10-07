@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
-
-namespace MinkyShop.Infrastructure.Data.Entities
+﻿namespace MinkyShop.Infrastructure.Data.Entities
 {
     public class HoaDon
     {
@@ -13,15 +6,11 @@ namespace MinkyShop.Infrastructure.Data.Entities
 
         public string Ma { get; set; }
 
-
         public DateTime NgayTao { get; set; }
-
 
         public DateTime NgayThanhToan { get; set; }
 
-
         public DateTime NgayShip { get; set; }
-
 
         public DateTime NgayNhan { get; set; }
 
@@ -35,11 +24,7 @@ namespace MinkyShop.Infrastructure.Data.Entities
 
         public Guid? IdKh { get; set; }
 
-        public Guid? IdNv { get; set; }
-
         public KhachHang KhachHang { get; set; }
-
-        public NhanVien NhanVien { get; set; }
 
         public List<HoaDonChiTiet> HoaDonChiTiets { get; set; }
     }

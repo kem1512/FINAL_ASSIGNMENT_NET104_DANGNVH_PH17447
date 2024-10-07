@@ -30,11 +30,15 @@
             return _context.MauSac.Find(id);
         }
 
-        public override bool Remove(MauSac obj)
+        public override bool Remove(Guid id)
         {
             try
             {
-                _context.MauSac.Remove(obj);
+                var mauSac = _context.MauSac.Find(id);
+
+                if (mauSac == null) return false;
+
+                _context.MauSac.Remove(mauSac);
                 _context.SaveChanges();
                 return true;
             }

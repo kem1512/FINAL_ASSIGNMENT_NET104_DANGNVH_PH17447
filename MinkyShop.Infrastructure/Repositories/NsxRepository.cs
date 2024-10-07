@@ -30,11 +30,15 @@
             return _context.Nsx.Find(id);
         }
 
-        public override bool Remove(Nsx obj)
+        public override bool Remove(Guid id)
         {
             try
             {
-                _context.Nsx.Remove(obj);
+                var nsx = _context.Nsx.Find(id);
+
+                if (nsx == null) return false;
+
+                _context.Nsx.Remove(nsx);
                 _context.SaveChanges();
                 return true;
             }

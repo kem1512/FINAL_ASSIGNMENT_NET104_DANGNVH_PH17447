@@ -30,12 +30,17 @@
             return _context.DongSp.Find(id);
         }
 
-        public override bool Remove(DongSp obj)
+        public override bool Remove(Guid id)
         {
             try
             {
-                _context.DongSp.Remove(obj);
+                var dongSp = _context.DongSp.Find(id);
+
+                if (dongSp == null) return false;
+
+                _context.DongSp.Remove(dongSp);
                 _context.SaveChanges();
+
                 return true;
             }
             catch (Exception)

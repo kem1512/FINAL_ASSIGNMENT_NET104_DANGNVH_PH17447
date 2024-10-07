@@ -27,8 +27,6 @@
             builder.Property(c => c.Sdt).HasColumnType("VARCHAR").HasMaxLength(30).HasDefaultValue(null);
 
             builder.HasOne(c => c.KhachHang).WithMany(c => c.HoaDons).HasForeignKey(c => c.IdKh);
-
-            builder.HasOne(c => c.NhanVien).WithMany(c => c.HoaDons).HasForeignKey(c => c.IdNv);
         }
     }
 }

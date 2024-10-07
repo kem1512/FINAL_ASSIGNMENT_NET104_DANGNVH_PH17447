@@ -1,4 +1,6 @@
-﻿namespace MinkyShop.Data.Repositories
+﻿using MinkyShop.Infrastructure.Data.Entities;
+
+namespace MinkyShop.Data.Repositories
 {
     public class HoaDonChiTietRepository : IApplicationRepository<HoaDonChiTiet>
     {
@@ -30,11 +32,15 @@
             return _context.HoaDonChiTiet.Find(id);
         }
 
-        public override bool Remove(HoaDonChiTiet obj)
+        public override bool Remove(Guid id)
         {
             try
             {
-                _context.HoaDonChiTiet.Remove(obj);
+                var hoaDonChiTiet = _context.HoaDonChiTiet.Find(id);
+
+                if (hoaDonChiTiet == null) return false;
+
+                _context.HoaDonChiTiet.Remove(hoaDonChiTiet);
                 _context.SaveChanges();
                 return true;
             }

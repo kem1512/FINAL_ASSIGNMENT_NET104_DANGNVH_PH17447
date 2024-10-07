@@ -30,11 +30,15 @@
             return _context.GioHangChiTiet.Find(id);
         }
 
-        public override bool Remove(GioHangChiTiet obj)
+        public override bool Remove(Guid id)
         {
             try
             {
-                _context.GioHangChiTiet.Remove(obj);
+                var gioHangChiTiet = _context.GioHangChiTiet.Find(id);
+
+                if (gioHangChiTiet == null) return false;
+
+                _context.GioHangChiTiet.Remove(gioHangChiTiet);
                 _context.SaveChanges();
                 return true;
             }

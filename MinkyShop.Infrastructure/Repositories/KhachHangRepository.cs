@@ -30,11 +30,15 @@
             return _context.KhachHang.Find(id);
         }
 
-        public override bool Remove(KhachHang obj)
+        public override bool Remove(Guid id)
         {
             try
             {
-                _context.KhachHang.Remove(obj);
+                var khachHang = _context.KhachHang.Find(id);
+
+                if (khachHang == null) return false;
+
+                _context.KhachHang.Remove(khachHang);
                 _context.SaveChanges();
                 return true;
             }

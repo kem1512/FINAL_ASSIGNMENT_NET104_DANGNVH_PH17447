@@ -30,12 +30,18 @@
             return _context.ChiTietSp.Find(id);
         }
 
-        public override bool Remove(ChiTietSp obj)
+        public override bool Remove(Guid id)
         {
             try
             {
-                _context.ChiTietSp.Remove(obj);
+                var chiTietSp = _context.ChiTietSp.Find(id);
+
+                if (chiTietSp == null) return false;
+
+                _context.ChiTietSp.Remove(chiTietSp);
+
                 _context.SaveChanges();
+
                 return true;
             }
             catch (Exception)

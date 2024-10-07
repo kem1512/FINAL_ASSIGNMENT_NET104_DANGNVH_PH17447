@@ -30,11 +30,15 @@
             return _context.SanPham.Find(id);
         }
 
-        public override bool Remove(SanPham obj)
+        public override bool Remove(Guid id)
         {
             try
             {
-                _context.SanPham.Remove(obj);
+                var sanPham = _context.SanPham.Find(id);
+
+                if (sanPham == null) return false;
+
+                _context.SanPham.Remove(sanPham);
                 _context.SaveChanges();
                 return true;
             }

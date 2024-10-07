@@ -23,8 +23,6 @@
             builder.Property(c => c.TinhTrang).HasDefaultValue(0);
 
             builder.HasOne(c => c.KhachHang).WithMany(c => c.GioHangs).HasForeignKey(c => c.IdKh);
-
-            builder.HasOne(c => c.NhanVien).WithMany(c => c.GioHangs).HasForeignKey(c => c.IdNv);
         }
     }
 }

@@ -30,11 +30,15 @@
             return _context.GioHang.Find(id);
         }
 
-        public override bool Remove(GioHang obj)
+        public override bool Remove(Guid id)
         {
             try
             {
-                _context.GioHang.Remove(obj);
+                var gioHang = _context.GioHang.Find(id);
+
+                if (gioHang == null) return false;
+
+                _context.GioHang.Remove(gioHang);
                 _context.SaveChanges();
                 return true;
             }
