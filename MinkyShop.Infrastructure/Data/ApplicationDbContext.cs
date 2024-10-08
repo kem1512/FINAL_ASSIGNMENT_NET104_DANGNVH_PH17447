@@ -16,7 +16,7 @@ namespace MinkyShop.Infrastructure.Data
             modelBuilder.SeedData();
         }
 
-        public DbSet<KhachHang> KhachHang { get; set; }
+        public DbSet<NguoiDung> KhachHang { get; set; }
 
         public DbSet<HoaDon> HoaDon { get; set; }
 

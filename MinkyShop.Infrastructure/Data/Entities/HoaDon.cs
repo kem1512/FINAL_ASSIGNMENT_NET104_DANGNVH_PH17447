@@ -9,8 +9,6 @@
     {
         public Guid Id { get; set; }
 
-        public string Ma { get; set; }
-
         public DateTime NgayTao { get; set; }
 
         public DateTime NgayThanhToan { get; set; }
@@ -21,11 +19,11 @@
 
         public int TinhTrang { get; set; }
 
-        public string TenNguoiNhan { get; set; }
+        public string TenNguoiNhan { get; set; } = default!;
 
-        public string DiaChi { get; set; }
+        public string DiaChi { get; set; } = default!;
 
-        public string Sdt { get; set; }
+        public string Sdt { get; set; } = default!;
 
         public decimal TongTien { get; set; }
 
@@ -33,8 +31,8 @@
 
         public Guid? IdKh { get; set; }
 
-        public KhachHang KhachHang { get; set; }
+        public virtual NguoiDung KhachHang { get; set; } = default!;
 
-        public List<HoaDonChiTiet> HoaDonChiTiets { get; set; }
+        public virtual ICollection<HoaDonChiTiet> HoaDonChiTiets { get; set; } = new List<HoaDonChiTiet>();
     }
 }

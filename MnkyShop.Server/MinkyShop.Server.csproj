@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-WebApplication1-1d404295-356e-446e-a3ee-773974ee57e1</UserSecretsId>
+    <UserSecretsId>aspnet-MinkyShop.Server-1d404295-356e-446e-a3ee-773974ee57e1</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

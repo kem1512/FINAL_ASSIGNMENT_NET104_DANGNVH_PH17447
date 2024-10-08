@@ -5,7 +5,7 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinkyShop.Infrastructure", "MinkyShop.Infrastructure\MinkyShop.Infrastructure.csproj", "{223933D0-94A7-440D-9A57-83A4D9CB6B7B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinkyShop.Server", "WebApplication1\MinkyShop.Server.csproj", "{31756FC6-FA44-43FC-BB63-124AB84AB48C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinkyShop.Server", "MnkyShop.Server\MinkyShop.Server.csproj", "{7E2A1E47-C943-4368-A65A-1F8025CE1C13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{223933D0-94A7-440D-9A57-83A4D9CB6B7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{223933D0-94A7-440D-9A57-83A4D9CB6B7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{223933D0-94A7-440D-9A57-83A4D9CB6B7B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{31756FC6-FA44-43FC-BB63-124AB84AB48C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{31756FC6-FA44-43FC-BB63-124AB84AB48C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{31756FC6-FA44-43FC-BB63-124AB84AB48C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{31756FC6-FA44-43FC-BB63-124AB84AB48C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E2A1E47-C943-4368-A65A-1F8025CE1C13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E2A1E47-C943-4368-A65A-1F8025CE1C13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E2A1E47-C943-4368-A65A-1F8025CE1C13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E2A1E47-C943-4368-A65A-1F8025CE1C13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -12,3 +12,4 @@ global using MinkyShop.Infrastructure.Common.Interfaces;
 global using Microsoft.AspNetCore.Http;
 global using System.Text;
 global using Newtonsoft.Json;
+global using Microsoft.AspNetCore.Identity;

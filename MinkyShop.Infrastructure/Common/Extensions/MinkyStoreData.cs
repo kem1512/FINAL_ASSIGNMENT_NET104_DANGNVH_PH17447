@@ -146,8 +146,8 @@
                     GiaNhap = 900000,
                 }
             );
-            modelBuilder.Entity<KhachHang>().HasData(
-                new KhachHang()
+            modelBuilder.Entity<NguoiDung>().HasData(
+                new NguoiDung()
                 {
                     Id = Guid.NewGuid(),
                     Ma = "KH1",

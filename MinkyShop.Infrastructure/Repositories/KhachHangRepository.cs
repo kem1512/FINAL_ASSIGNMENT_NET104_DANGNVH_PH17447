@@ -1,12 +1,12 @@
 ﻿namespace MinkyShop.Data.Repositories
 {
-    public class KhachHangRepository : IApplicationRepository<KhachHang>
+    public class KhachHangRepository : IApplicationRepository<NguoiDung>
     {
         public KhachHangRepository(ApplicationDbContext context) : base(context)
         {
         }
 
-        public override bool Add(KhachHang obj)
+        public override bool Add(NguoiDung obj)
         {
             try
             {
@@ -20,12 +20,12 @@
             }
         }
 
-        public override IEnumerable<KhachHang> Fetch()
+        public override IEnumerable<NguoiDung> Fetch()
         {
             return _context.KhachHang.ToList();
         }
 
-        public override KhachHang Fetch(Guid id)
+        public override NguoiDung Fetch(Guid id)
         {
             return _context.KhachHang.Find(id);
         }
@@ -48,7 +48,7 @@
             }
         }
 
-        public override bool Update(KhachHang obj)
+        public override bool Update(NguoiDung obj)
         {
             try
             {

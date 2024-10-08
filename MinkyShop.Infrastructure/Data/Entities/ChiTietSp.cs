@@ -4,9 +4,7 @@
     {
         public Guid Id { get; set; }
 
-        public int NamBh { get; set; }
-
-        public string MoTa { get; set; }
+        public string MoTa { get; set; } = default!;
 
         public int SoLuongTon { get; set; }
 
@@ -14,12 +12,11 @@
 
         public decimal GiaBan { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Thêm đường dẫn ảnh vào bạn ơi")]
         [Url(ErrorMessage = "Sai đường dẫn rồi bạn ơi")]
-        public string Anh { get; set; }
+        public string? Anh { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Bạn chưa chọn sản phẩm")]
-        public Guid? IdSp { get; set; }
+        public Guid IdSp { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Bạn chưa chọn nhà sản xuất")]
         public Guid? IdNsx { get; set; }
@@ -30,16 +27,14 @@
         [Required(AllowEmptyStrings = false, ErrorMessage = "Bạn chưa chọn dòng sản phẩm")]
         public Guid? IdDongSp { get; set; }
 
-        public SanPham SanPham { get; set; }
+        public virtual SanPham SanPham { get; set; } = default!;
 
-        public Nsx Nsx { get; set; }
+        public virtual Nsx Nsx { get; set; } = default!;
 
-        public MauSac MauSac { get; set; }
+        public virtual MauSac MauSac { get; set; } = default!;
 
-        public DongSp DongSp { get; set; }
+        public virtual DongSp DongSp { get; set; } = default!;
 
-        public List<GioHangChiTiet> GioHangChiTiets { get; set; }
-
-        public List<HoaDonChiTiet> HoaDonChiTiets { get; set; }
+        public virtual ICollection<HoaDonChiTiet> HoaDonChiTiets { get; set; } = new List<HoaDonChiTiet>();
     }
 }

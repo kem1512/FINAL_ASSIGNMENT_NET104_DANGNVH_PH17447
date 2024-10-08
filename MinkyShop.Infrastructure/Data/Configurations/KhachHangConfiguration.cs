@@ -1,8 +1,8 @@
 ﻿namespace MinkyShop.Infrastructure.Data.Configurations
 {
-    public class KhachHangConfiguration : IEntityTypeConfiguration<KhachHang>
+    public class KhachHangConfiguration : IEntityTypeConfiguration<NguoiDung>
     {
-        public void Configure(EntityTypeBuilder<KhachHang> builder)
+        public void Configure(EntityTypeBuilder<NguoiDung> builder)
         {
             builder.HasKey(c => c.Id);
 

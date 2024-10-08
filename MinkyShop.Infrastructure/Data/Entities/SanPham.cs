@@ -4,10 +4,8 @@
     {
         public Guid Id { get; set; }
 
-        public string Ma { get; set; }
+        public string Ten { get; set; } = default!;
 
-        public string Ten { get; set; }
-
-        public List<ChiTietSp> ChiTietSps { get; set; }
+        public virtual ICollection<ChiTietSp> ChiTietSps { get; set; } = new List<ChiTietSp>();
     }
 }

@@ -19,7 +19,7 @@
         }
 
         [Route("/khachhang/create")]
-        public IActionResult Add(KhachHang obj)
+        public IActionResult Add(NguoiDung obj)
         {
             TempData["Message"] = _khachHangRepository.Add(obj) ? "Thêm thành công" : "Thêm thất bại";
             return RedirectToAction("Index", "KhachHang");
@@ -39,7 +39,7 @@
         }
 
         [Route("/khachhang/update")]
-        public IActionResult Update(KhachHang obj)
+        public IActionResult Update(NguoiDung obj)
         {
             TempData["Message"] = _iKhachHangService.Update(obj) ? "Sửa thành công" : "Sửa thất bại";
             return RedirectToAction("Index", "KhachHang");
