@@ -1,5 +1,10 @@
 ﻿namespace MinkyShop.Infrastructure.Data.Entities
 {
+    public enum TrangThaiHoaDon
+    {
+        GioHang, ChoXacNhan, DangChuanBiHang, DangShip, ChuaHoanThanh, DaHoanThanh
+    }
+
     public class HoaDon
     {
         public Guid Id { get; set; }
@@ -21,6 +26,10 @@
         public string DiaChi { get; set; }
 
         public string Sdt { get; set; }
+
+        public decimal TongTien { get; set; }
+
+        public string? GhiChu { get; set; } = default!;
 
         public Guid? IdKh { get; set; }
 

@@ -9,3 +9,6 @@ global using Microsoft.Extensions.DependencyInjection;
 global using MinkyShop.Infrastructure.Data;
 global using System.Linq;
 global using MinkyShop.Infrastructure.Common.Interfaces;
+global using Microsoft.AspNetCore.Http;
+global using System.Text;
+global using Newtonsoft.Json;

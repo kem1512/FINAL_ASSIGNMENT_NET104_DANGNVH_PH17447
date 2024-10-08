@@ -2,20 +2,22 @@
 {
     public class BanHangController : Controller
     {
-        private readonly ChiTietSpRepository _chiTietSpRepository;
+        private readonly DongSpRepository _dongSpRepository;
 
-        public BanHangController(ChiTietSpRepository chiTietSpRepository)
+        public BanHangController(DongSpRepository dongSpRepository)
         {
-            _chiTietSpRepository = chiTietSpRepository;
+            _dongSpRepository = dongSpRepository;
         }
 
-        private List<SanPham> ProductPaging(int currentPage)
+        private IEnumerable<DongSp> ProductPaging(int currentPage, int maxRows = 4)
         {
-            int maxRows = 4;
-            var productPaging = _chiTietSpRepository.GetSanPhamViewModel().Skip((currentPage - 1) * maxRows).Take(maxRows).ToList();
-            ViewBag.PageCount = (int)Math.Ceiling(_iChiTietSpService.GetSanPhamViewModel().Count / (decimal)maxRows);
-            ViewBag.CurrentPageIndex = _iChiTietSpService.CurrentPage = currentPage;
-            return productPaging;
+            var dongSps = _dongSpRepository.Fetch();
+            var productPaging = _dongSpRepository.Fetch().Skip((currentPage - 1) * maxRows).Take(maxRows).ToList();
+
+            ViewBag.PageCount = (int)Math.Ceiling(dongSps.Count() / (decimal)maxRows);
+            ViewBag.CurrentPageIndex = currentPage;
+
+            return dongSps;
         }
 
         public IActionResult Index()
@@ -24,10 +26,11 @@
             {
                 ViewBag.Message = TempData["Message"];
             }
+
             return View(ProductPaging(1));
         }
 
-        [Route("/banhang/page={currentPage}")]
+        [Route("/banHang/page={currentPage}")]
         public IActionResult Index(int currentPage)
         {
             return View(ProductPaging(currentPage));
@@ -36,41 +39,78 @@
         [NonAction]
         private int IsExist(Guid id)
         {
-            List<ItemViewModel> cart = SessionHelper.GetObjectFromJson<List<ItemViewModel>>(HttpContext.Session, "cart");
-            for (int i = 0; i < cart.Count; i++)
+            var cart = SessionHelper.GetObjectFromJson<GioHang>(HttpContext.Session, "cart");
+
+            for (int i = 0; i < cart.GioHangChiTiets.Count(); i++)
             {
-                if (cart[i].SanPhamViewModel.ChiTietSp.Id.Equals(id))
+                if (cart.GioHangChiTiets[i].IdChiTietSp.Equals(id))
                 {
                     return i;
                 }
             }
+
             return -1;
         }
 
-        [Route("/banhang/addcart/{id}")]
+        [Route("/banHang/addCart/{id}")]
         public IActionResult AddCart(Guid id)
         {
-            if (HttpContext.Session.GetObjectFromJson<List<ItemViewModel>>("cart") == null)
+            var chiTietSp = _dongSpRepository.Fetch().SelectMany(c => c.ChiTietSps).FirstOrDefault(c => c.Id == id);
+
+            if(chiTietSp != null)
             {
-                List<ItemViewModel> cart = new List<ItemViewModel>();
-                cart.Add(new ItemViewModel() { SanPhamViewModel = _iChiTietSpService.GetSanPhamViewModel().FirstOrDefault(c => c.ChiTietSp.Id == id), Quantity = 1 });
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-            }
-            else
-            {
-                List<ItemViewModel> cart = SessionHelper.GetObjectFromJson<List<ItemViewModel>>(HttpContext.Session, "cart");
-                int index = IsExist(id);
-                if (index != -1)
+                if (HttpContext.Session.GetObjectFromJson<List<SanPham>>("cart") == null)
                 {
-                    cart[index].Quantity++;
+                    var cart = new GioHang()
+                    {
+                        GioHangChiTiets = new List<GioHangChiTiet>()
+                        {
+                            new GioHangChiTiet()
+                            {
+                                IdChiTietSp = chiTietSp.Id,
+                                DonGia = chiTietSp.GiaNhap,
+                                DonGiaKhiGiam = chiTietSp.GiaBan,
+                                SoLuong = 1,
+                            }
+                        }
+                    };
+
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
                 }
                 else
                 {
-                    cart.Add(new ItemViewModel { SanPhamViewModel = _iChiTietSpService.GetSanPhamViewModel().FirstOrDefault(c => c.ChiTietSp.Id == id), Quantity = 1 });
+                    var cart = SessionHelper.GetObjectFromJson<GioHang>(HttpContext.Session, "cart");
+
+                    // Kiểm tra sản phẩm trên session
+                    int index = IsExist(id);
+
+                    if (index != -1)
+                    {
+                        cart.GioHangChiTiets[index].SoLuong++;
+                    }
+                    else
+                    {
+                        cart = new GioHang()
+                        {
+                            GioHangChiTiets = new List<GioHangChiTiet>()
+                            {
+                                new GioHangChiTiet()
+                                {
+                                    IdChiTietSp = chiTietSp.Id,
+                                    DonGia = chiTietSp.GiaNhap,
+                                    DonGiaKhiGiam = chiTietSp.GiaBan,
+                                    SoLuong = 1,
+                                }
+                            }
+                        };
+                    }
+
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
                 }
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
-            TempData["Message"] = "Thêm thành công";
+
+            TempData["Message"] = chiTietSp != null ? "Thêm Thất Bại" : "Thêm Thành Công";
+
             return RedirectToAction("Index");
         }
 
@@ -80,61 +120,64 @@
             {
                 ViewBag.Message = TempData["Message"];
             }
-            List<ItemViewModel> cart = SessionHelper.GetObjectFromJson<List<ItemViewModel>>(HttpContext.Session, "cart");
+
+            var cart = SessionHelper.GetObjectFromJson<GioHang>(HttpContext.Session, "cart");
+
             if (cart != null)
             {
-                var total = cart.Sum(c => c.SanPhamViewModel.ChiTietSp.GiaBan * c.Quantity);
-                return View(new Tuple<List<ItemViewModel>, decimal>(cart, total));
+                var total = cart.GioHangChiTiets.Sum(c => c.DonGiaKhiGiam * c.SoLuong);
+                return View(cart);
             }
+
             return RedirectToAction("Index");
         }
 
-        [Route("/banhang/filter")]
-        public IActionResult Filter(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                return View("Index", _iChiTietSpService.GetSanPhamViewModel());
-            }
-            return View("Index", _iChiTietSpService.GetSanPhamViewModel().Where(c => c.SanPham.Ten.ToUpper().Contains(name.ToUpper().Trim())).ToList());
-        }
+        //[Route("/banhang/filter")]
+        //public IActionResult Filter(string name)
+        //{
+        //    if (string.IsNullOrEmpty(name))
+        //    {
+        //        return View("Index", _iChiTietSpService.GetSanPhamViewModel());
+        //    }
+        //    return View("Index", _iChiTietSpService.GetSanPhamViewModel().Where(c => c.SanPham.Ten.ToUpper().Contains(name.ToUpper().Trim())).ToList());
+        //}
 
 
-        [Route("/banhang/updatecart")]
-        public IActionResult UpdateCart(ItemViewModel obj)
-        {
-            List<ItemViewModel> cart = SessionHelper.GetObjectFromJson<List<ItemViewModel>>(HttpContext.Session, "cart");
-            int index = IsExist(obj.SanPhamViewModel.ChiTietSp.Id);
-            if (index != -1)
-            {
-                cart[index].Quantity = obj.Quantity;
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-                TempData["Message"] = "Sửa thành công";
-            }
-            else
-            {
-                TempData["Message"] = "Sửa thất bại";
-            }
-            return RedirectToAction("Cart", "BanHang");
-        }
+        //[Route("/banhang/updatecart")]
+        //public IActionResult UpdateCart(ItemViewModel obj)
+        //{
+        //    List<ItemViewModel> cart = SessionHelper.GetObjectFromJson<List<ItemViewModel>>(HttpContext.Session, "cart");
+        //    int index = IsExist(obj.SanPhamViewModel.ChiTietSp.Id);
+        //    if (index != -1)
+        //    {
+        //        cart[index].Quantity = obj.Quantity;
+        //        SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+        //        TempData["Message"] = "Sửa thành công";
+        //    }
+        //    else
+        //    {
+        //        TempData["Message"] = "Sửa thất bại";
+        //    }
+        //    return RedirectToAction("Cart", "BanHang");
+        //}
 
-        [Route("/banhang/removecart/{id}")]
-        public IActionResult RemoveCart(Guid id)
-        {
+        //[Route("/banhang/removecart/{id}")]
+        //public IActionResult RemoveCart(Guid id)
+        //{
 
-            List<ItemViewModel> cart = SessionHelper.GetObjectFromJson<List<ItemViewModel>>(HttpContext.Session, "cart");
-            int index = IsExist(id);
-            if (index != -1)
-            {
-                cart.RemoveAt(index);
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-                TempData["Message"] = "Xóa thành công";
-            }
-            else
-            {
-                TempData["Message"] = "Xóa thất bại";
-            }
-            return RedirectToAction("Cart");
-        }
+        //    List<ItemViewModel> cart = SessionHelper.GetObjectFromJson<List<ItemViewModel>>(HttpContext.Session, "cart");
+        //    int index = IsExist(id);
+        //    if (index != -1)
+        //    {
+        //        cart.RemoveAt(index);
+        //        SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+        //        TempData["Message"] = "Xóa thành công";
+        //    }
+        //    else
+        //    {
+        //        TempData["Message"] = "Xóa thất bại";
+        //    }
+        //    return RedirectToAction("Cart");
+        //}
     }
 }
