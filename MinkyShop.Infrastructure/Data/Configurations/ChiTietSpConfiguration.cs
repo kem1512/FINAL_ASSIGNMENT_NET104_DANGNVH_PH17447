@@ -6,7 +6,7 @@
         {
             builder.HasKey(t => t.Id);
 
-            builder.Property(c => c.Id).HasDefaultValueSql("(newid())");
+            builder.Property(c => c.Id).HasDefaultValueSql("(NEWID())");
 
             builder.Property(c => c.MoTa).HasMaxLength(50);
 

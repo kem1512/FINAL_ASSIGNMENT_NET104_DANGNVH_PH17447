@@ -26,7 +26,7 @@
 
             builder.Property(c => c.QuocGia).HasMaxLength(50).HasDefaultValue(null);
 
-            builder.Property(c => c.MatKhau).HasColumnType("VARCHAR(MAX)").HasDefaultValue(null);
+            builder.Property(c => c.MatKhau).HasColumnType("VARCHAR(20)").HasDefaultValue(null);
 
         }
     }

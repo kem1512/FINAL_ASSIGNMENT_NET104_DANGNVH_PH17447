@@ -18,6 +18,8 @@
 
             builder.Property(c => c.NgayNhan).HasColumnType("DATE").HasDefaultValue(null);
 
+            builder.Property(c => c.TongTien).HasColumnType("DECIMAL(20,0)").HasDefaultValue(0);
+
             builder.Property(c => c.TinhTrang).HasDefaultValue(0);
 
             builder.Property(c => c.TenNguoiNhan).HasMaxLength(50).HasDefaultValue(null);

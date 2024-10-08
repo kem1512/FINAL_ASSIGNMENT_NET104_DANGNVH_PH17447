@@ -6,7 +6,7 @@
         {
             builder.HasKey(c => c.Id);
 
-            builder.Property(c => c.Id).HasDefaultValueSql("(newid())");
+            builder.Property(c => c.Id).HasDefaultValueSql("(NEWID())");
 
             builder.Property(c => c.Ma).HasColumnType("VARCHAR(20)");
 
