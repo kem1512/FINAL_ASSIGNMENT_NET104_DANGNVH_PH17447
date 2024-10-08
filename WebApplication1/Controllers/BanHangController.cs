@@ -39,11 +39,11 @@
         [NonAction]
         private int IsExist(Guid id)
         {
-            var cart = SessionHelper.GetObjectFromJson<GioHang>(HttpContext.Session, "cart");
+            var cart = SessionHelper.GetObjectFromJson<HoaDon>(HttpContext.Session, "cart");
 
-            for (int i = 0; i < cart.GioHangChiTiets.Count(); i++)
+            for (int i = 0; i < cart.HoaDonChiTiets.Count(); i++)
             {
-                if (cart.GioHangChiTiets[i].IdChiTietSp.Equals(id))
+                if (cart.HoaDonChiTiets[i].IdChiTietSp.Equals(id))
                 {
                     return i;
                 }
@@ -61,15 +61,14 @@
             {
                 if (HttpContext.Session.GetObjectFromJson<List<SanPham>>("cart") == null)
                 {
-                    var cart = new GioHang()
+                    var cart = new HoaDon()
                     {
-                        GioHangChiTiets = new List<GioHangChiTiet>()
+                        HoaDonChiTiets = new List<HoaDonChiTiet>()
                         {
-                            new GioHangChiTiet()
+                            new HoaDonChiTiet()
                             {
                                 IdChiTietSp = chiTietSp.Id,
                                 DonGia = chiTietSp.GiaNhap,
-                                DonGiaKhiGiam = chiTietSp.GiaBan,
                                 SoLuong = 1,
                             }
                         }
@@ -79,26 +78,25 @@
                 }
                 else
                 {
-                    var cart = SessionHelper.GetObjectFromJson<GioHang>(HttpContext.Session, "cart");
+                    var cart = SessionHelper.GetObjectFromJson<HoaDon>(HttpContext.Session, "cart");
 
                     // Kiểm tra sản phẩm trên session
                     int index = IsExist(id);
 
                     if (index != -1)
                     {
-                        cart.GioHangChiTiets[index].SoLuong++;
+                        cart.HoaDonChiTiets[index].SoLuong++;
                     }
                     else
                     {
-                        cart = new GioHang()
+                        cart = new HoaDon()
                         {
-                            GioHangChiTiets = new List<GioHangChiTiet>()
+                            HoaDonChiTiets = new List<HoaDonChiTiet>()
                             {
-                                new GioHangChiTiet()
+                                new HoaDonChiTiet()
                                 {
                                     IdChiTietSp = chiTietSp.Id,
                                     DonGia = chiTietSp.GiaNhap,
-                                    DonGiaKhiGiam = chiTietSp.GiaBan,
                                     SoLuong = 1,
                                 }
                             }
@@ -121,11 +119,11 @@
                 ViewBag.Message = TempData["Message"];
             }
 
-            var cart = SessionHelper.GetObjectFromJson<GioHang>(HttpContext.Session, "cart");
+            var cart = SessionHelper.GetObjectFromJson<HoaDon>(HttpContext.Session, "cart");
 
             if (cart != null)
             {
-                var total = cart.GioHangChiTiets.Sum(c => c.DonGiaKhiGiam * c.SoLuong);
+                var total = cart.HoaDonChiTiets.Sum(c => c.DonGia * c.SoLuong);
                 return View(cart);
             }
 

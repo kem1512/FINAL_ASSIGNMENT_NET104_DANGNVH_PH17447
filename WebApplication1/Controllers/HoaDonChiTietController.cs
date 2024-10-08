@@ -2,15 +2,15 @@
 {
     public class HoaDonChiTietController : Controller
     {
-        private IChiTietSpService _iChiTietSpService;
-        private IHoaDonService _iHoaDonService;
-        private IHoaDonChiTietService _iHoaDonChiTietService;
+        private readonly ChiTietSpRepository _chiTietSpRepository;
+        private readonly HoaDonRepository _hoaDonRepository;
+        private readonly HoaDonChiTietRepository _hoaDonChiTietRepository;
 
-        public HoaDonChiTietController(ApplicationDbContext context)
+        public HoaDonChiTietController(ChiTietSpRepository chiTietSpRepository, HoaDonRepository hoaDonRepository, HoaDonChiTietRepository hoaDonChiTietRepository)
         {
-            _iChiTietSpService = new ChiTietSpService(context);
-            _iHoaDonService = new HoaDonService(context);
-            _iHoaDonChiTietService = new HoaDonChiTietService(context);
+            _chiTietSpRepository = chiTietSpRepository;
+            _hoaDonRepository = hoaDonRepository;
+            _hoaDonChiTietRepository = hoaDonChiTietRepository;
         }
 
         [Route("/hoadonchitiet/{id}")]

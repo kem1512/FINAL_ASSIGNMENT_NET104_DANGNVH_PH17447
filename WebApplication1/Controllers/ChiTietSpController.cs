@@ -2,19 +2,19 @@
 {
     public class ChiTietSpController : Controller
     {
-        private IChiTietSpService _iChiTietSpService;
-        private ISanPhamService _iSanPhamService;
-        private IMauSacService _iMauSacService;
-        private IDongSpService _iDongSpService;
-        private INsxService _iNsxService;
+        private readonly ChiTietSpRepository _chiTietSpRepository;
+        private readonly SanPhamRepository _sanPhamService;
+        private readonly MauSacRepository _mauSacService;
+        private readonly DongSpRepository _dongSpService;
+        private readonly NsxRepository _nsxService;
 
-        public ChiTietSpController(ApplicationDbContext context)
+        public ChiTietSpController(ChiTietSpRepository chiTietSpRepository, SanPhamRepository sanPhamService, MauSacRepository mauSacService, DongSpRepository dongSpService, NsxRepository nsxService)
         {
-            _iChiTietSpService = new ChiTietSpService(context);
-            _iSanPhamService = new SanPhamService(context);
-            _iMauSacService = new MauSacService(context);
-            _iDongSpService = new DongSpService(context);
-            _iNsxService = new NsxService(context);
+            _chiTietSpRepository = chiTietSpRepository;
+            _sanPhamService = sanPhamService;
+            _mauSacService = mauSacService;
+            _dongSpService = dongSpService;
+            _nsxService = nsxService;
         }
 
         public IActionResult Index()
@@ -23,19 +23,19 @@
             {
                 ViewBag.Message = TempData["Message"];
             }
-            ViewBag.SanPhamViewModel = _iChiTietSpService.GetSanPhamViewModel();
-            ViewBag.SanPham = _iSanPhamService.GetAll();
-            ViewBag.MauSac = _iMauSacService.GetAll();
-            ViewBag.DongSp = _iDongSpService.GetAll();
-            ViewBag.Nsx = _iNsxService.GetAll();
+
+            ViewBag.SanPham = _sanPhamService.Fetch();
+            ViewBag.MauSac = _mauSacService.Fetch();
+            ViewBag.DongSp = _dongSpService.Fetch();
+            ViewBag.Nsx = _nsxService.Fetch();
             return View();
         }
 
         [HttpPost]
-        [Route("/chitietsp/create")]
+        [Route("/chiTietSp/create")]
         public IActionResult Add(ChiTietSp obj)
         {
-            foreach (var x in _iChiTietSpService.GetAll())
+            foreach (var x in _chiTietSpRepository.Fetch())
             {
                 if (obj.IdDongSp == x.IdDongSp && obj.IdMauSac == x.IdMauSac &&
                     obj.IdSp == x.IdSp && obj.IdNsx == x.IdNsx)
@@ -44,32 +44,33 @@
                     return RedirectToAction("Index");
                 }
             }
-            TempData["Message"] = _iChiTietSpService.Add(obj) ? "Thêm thành công" : "Thêm thất bại";
+            TempData["Message"] = _chiTietSpRepository.Add(obj) ? "Thêm thành công" : "Thêm thất bại";
             return RedirectToAction("Index", "ChiTietSp");
         }
 
-        [Route("/chitietsp/remove/{id}")]
+        [Route("/chiTietSp/remove/{id}")]
         public IActionResult Delete(Guid id)
         {
-            TempData["Message"] = _iChiTietSpService.Remove(_iChiTietSpService.GetById(id)) ? "Xóa thành công" : "Xóa thất bại";
+            TempData["Message"] = _chiTietSpRepository.Remove(id) ? "Xóa thành công" : "Xóa thất bại";
             return RedirectToAction("Index", "ChiTietSp");
         }
 
-        [Route("/chitietsp/detail/{id}")]
+        [Route("/chiTietSp/detail/{id}")]
         public IActionResult Update(Guid id)
         {
-            ViewBag.SanPham = _iSanPhamService.GetAll();
-            ViewBag.MauSac = _iMauSacService.GetAll();
-            ViewBag.DongSp = _iDongSpService.GetAll();
-            ViewBag.Nsx = _iNsxService.GetAll();
-            return View(_iChiTietSpService.GetById(id));
+            ViewBag.SanPham = _sanPhamService.Fetch();
+            ViewBag.MauSac = _mauSacService.Fetch();
+            ViewBag.DongSp = _dongSpService.Fetch();
+            ViewBag.Nsx = _nsxService.Fetch();
+
+            return View(_chiTietSpRepository.Fetch(id));
         }
 
         [HttpPost]
-        [Route("/chitietsp/update")]
+        [Route("/chiTietSp/update")]
         public IActionResult Update(ChiTietSp obj)
         {
-            TempData["Message"] = _iChiTietSpService.Update(obj) ? "Sửa thành công" : "Sửa thất bại";
+            TempData["Message"] = _chiTietSpRepository.Update(obj) ? "Sửa thành công" : "Sửa thất bại";
             return RedirectToAction("Index", "ChiTietSp");
         }
     }
