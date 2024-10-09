@@ -1,7 +1,4 @@
-﻿@using MinkyShop.Data.DomainClass
-@using MINKY_STORE_WEB_APPLICATION.Models
-@model MinkyShop.Data.DomainClass.ChiTietSp
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@model ChiTietSp
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -56,7 +53,7 @@
                                 <option value="">Nhà sản xuất</option>
                                 @foreach (Nsx x in ViewBag.Nsx)
                                 {
-                                    <!option value="@x.Id">@x.Ten</!option>
+                                    <option value="@x.Id">@x.Ten</option>
                                 }
                             </select>
                         </div>
@@ -69,7 +66,7 @@
                                 <option value="">Chọn màu sắc</option>
                                 @foreach (MauSac x in ViewBag.MauSac)
                                 {
-                                    <!option value="@x.Id">@x.Ten</!option>
+                                    <option value="@x.Id">@x.Ten</option>
                                 }
                             </select>
                         </div>
@@ -82,13 +79,13 @@
                                 <option value="">Chọn dòng sản phẩm </option>
                                 @foreach (DongSp x in ViewBag.DongSp)
                                 {
-                                    <!option value="@x.Id">@x.Ten</!option>
+                                    <option value="@x.Id">@x.Ten</option>
                                 }
                             </select>
                         </div>
                         <div class="form-group col-6">
                             <div class="d-flex justify-content-between">
-                                <label>Ảnh sản phẩm</label> <br/>
+                                <label>Ảnh sản phẩm</label> <br />
                                 <span asp-validation-for="Anh" class="text-warning font-weight-bold"></span>
                             </div>
                             <input type="text" class="form-control" asp-for="Anh" placeholder="Nhập link ảnh sản phẩm">
@@ -106,37 +103,40 @@
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Tên sản phẩm</th>
-                            <th>Màu sắc</th>
-                            <th>Nhà sản xuất</th>
-                            <th>Giá nhập</th>
-                            <th>Giá bán</th>
-                            <th>Tồn kho</th>
-                            <th>Thao tác</th>
-                        </tr>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Màu sắc</th>
+                                <th>Nhà sản xuất</th>
+                                <th>Giá nhập</th>
+                                <th>Giá bán</th>
+                                <th>Tồn kho</th>
+                                <th>Thao tác</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @{
-                            List<SanPhamViewModel> SanPhamViewModel = ViewBag.SanPhamViewModel;
-                            for (int i = 0; i < SanPhamViewModel.Count(); i++)
-                            {
-                                <tr>
-                                    <td>@(i + 1)</td>
-                                    <td>@SanPhamViewModel[i].SanPham.Ten</td>
-                                    <td>@SanPhamViewModel[i].MauSac.Ten</td>
-                                    <td>@SanPhamViewModel[i].Nsx.Ten</td>
-                                    <td>@string.Format("{0:0,0}", SanPhamViewModel[i].ChiTietSp.GiaNhap)</td>
-                                    <td>@string.Format("{0:0,0}", SanPhamViewModel[i].ChiTietSp.GiaBan)</td>
-                                    <td>@SanPhamViewModel[i].ChiTietSp.SoLuongTon</td>
-                                    <td>
-                                        <a href="/chitietsp/detail/@SanPhamViewModel[i].ChiTietSp.Id" class="btn btn-success">Sửa</a>
-                                        <a href="/chitietsp/remove/@SanPhamViewModel[i].ChiTietSp.Id" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</a>
-                                    </td>
-                                </tr>
+                            @{
+                                foreach (ChiTietSp x in ViewBag.ChiTietSp)
+                                {
+                                    <tr>
+                                        <td>1</td>
+                                        <td>@x.SanPham.Ten</td>
+                                        <td>@x.MauSac.Ten</td>
+                                        <td>@x.Nsx.Ten</td>
+                                        <td>@string.Format("{0:0,0}", x.GiaNhap)</td>
+                                        <td>@string.Format("{0:0,0}", x.GiaBan)</td>
+                                        <td>@x.SoLuongTon</td>
+                                        <td>
+                                            <a href="/chitietsp/detail/@x.Id" class="btn btn-success">Sửa</a>
+                                            <a href="/chitietsp/remove/@x.Id"
+                                               class="btn btn-danger"
+                                               onclick="return confirm('Bạn có chắc muốn xóa?')">
+                                                Xóa
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
                             }
-                        }
                         </tbody>
                     </table>
                 </div>
@@ -145,5 +145,7 @@
     </div>
 </div>
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

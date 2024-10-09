@@ -14,8 +14,6 @@
 
             builder.Property(c => c.GiaBan).HasDefaultValue(0);
 
-            builder.Property(c => c.NamBh).HasDefaultValue(null);
-
             builder.Property(c => c.MoTa).HasMaxLength(50).HasDefaultValue(null);
 
             builder.Property(c => c.GiaNhap).HasColumnType("DECIMAL(20,0)").HasDefaultValue(0);

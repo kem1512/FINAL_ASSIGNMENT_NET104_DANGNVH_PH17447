@@ -6,6 +6,6 @@
 
         public string Ten { get; set; } = default!;
 
-        public virtual ICollection<ChiTietSp> ChiTietSps { get; set; } = new List<ChiTietSp>();
+        public virtual List<ChiTietSp> ChiTietSps { get; set; } = default!;
     }
 }

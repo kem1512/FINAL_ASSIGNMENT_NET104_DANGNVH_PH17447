@@ -1,8 +1,8 @@
-﻿@model List<MINKY_STORE_WEB_APPLICATION.Models.SanPhamViewModel>
-@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <link rel="stylesheet" href="assets/css/sell.css" />
 <div class="row mt-3">
     <div class="col-lg-12">
@@ -11,19 +11,23 @@
                 <div class="card-title">Danh sách sản phẩm</div>
                 <hr>
                 <div class="row">
-                    @foreach (var x in @Model)
+                    @foreach (DongSp x in Model)
                     {
                         <div class="col-lg-3">
                             <div class="product">
                                 <div class="product-img">
-                                    <img src="@x.ChiTietSp.Anh" alt="">
+                                    <img src="@x.ChiTietSps.First().Anh" alt="">
                                     <div class="add-to-cart">
-                                        <a href="/banhang/addcart/@x.ChiTietSp.Id"><button class="add-to-cart-btn"> add to cart <i class="fa fa-shopping-cart"></i></button></a>
+                                        <a href="/banhang/addcart/@x.Id">
+                                            <button class="add-to-cart-btn"> add to cart <i class="fa fa-shopping-cart"></i></button>
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="product-body">
-                                    <h3 class="product-name"><a href="#" class="text-danger">@x.SanPham.Ten (@x.MauSac.Ten)</a></h3>
-                                    <h4 class="product-price"> @string.Format("{0:0,0}", @x.ChiTietSp.GiaBan) VNĐ <del class="product-old-price">@string.Format("{0:0,0}", @x.ChiTietSp.GiaNhap) VNĐ</del></h4>
+                                    <h3 class="product-name"><a href="#" class="text-danger">@x.Ten</a></h3>
+                                    <h4 class="product-price"> @string.Format("{0:0,0}", @x.ChiTietSps.First().GiaBan) VNĐ
+                                        <del class="product-old-price">@string.Format("{0:0,0}", @x.ChiTietSps.First().GiaNhap) VNĐ</del>
+                                    </h4>
                                 </div>
                             </div>
                         </div>
@@ -32,7 +36,7 @@
                 <div class="store-filter clearfix">
                     <ul class="store-pagination">
                         @{
-                            <li><a href="/banhang/page=@(ViewBag.CurrentPageIndex <= 1 ? ViewBag.PageCount : ViewBag.CurrentPageIndex - 1)"><i class="fa fa-angle-left"></i></a></li> 
+                            <li><a href="/banhang/page=@(ViewBag.CurrentPageIndex <= 1 ? ViewBag.PageCount : ViewBag.CurrentPageIndex - 1)"><i class="fa fa-angle-left"></i></a></li>
                             for (int i = 0; i < ViewBag.PageCount; i++)
                             {
                                 <li><a href="/banhang/page=@(i + 1)">@(i + 1)</a></li>

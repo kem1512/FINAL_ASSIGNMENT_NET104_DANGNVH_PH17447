@@ -4,12 +4,6 @@
     {
         public void Configure(EntityTypeBuilder<NguoiDung> builder)
         {
-            builder.HasKey(c => c.Id);
-
-            builder.Property(c => c.Id).HasDefaultValueSql("(NEWID())");
-
-            builder.Property(c => c.Ma).HasColumnType("VARCHAR(20)");
-
             builder.Property(c => c.Ten).HasMaxLength(30).HasDefaultValue(null);
 
             builder.Property(c => c.TenDem).HasMaxLength(30).HasDefaultValue(null);

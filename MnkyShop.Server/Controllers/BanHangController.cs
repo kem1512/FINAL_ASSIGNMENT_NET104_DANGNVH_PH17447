@@ -2,20 +2,21 @@
 {
     public class BanHangController : Controller
     {
-        private readonly DongSpRepository _dongSpRepository;
+        private readonly ApplicationDbContext _context;
 
-        public BanHangController(DongSpRepository dongSpRepository)
+        public BanHangController(ApplicationDbContext context)
         {
-            _dongSpRepository = dongSpRepository;
+            _context = context;
         }
 
         private IEnumerable<DongSp> ProductPaging(int currentPage, int maxRows = 4)
         {
-            var dongSps = _dongSpRepository.Fetch();
-            var productPaging = _dongSpRepository.Fetch().Skip((currentPage - 1) * maxRows).Take(maxRows).ToList();
+            var dongSps = _context.DongSp.Include(c => c.ChiTietSps).ToList();
 
             ViewBag.PageCount = (int)Math.Ceiling(dongSps.Count() / (decimal)maxRows);
             ViewBag.CurrentPageIndex = currentPage;
+
+            dongSps = dongSps.Skip((currentPage - 1) * maxRows).Take(maxRows).ToList();
 
             return dongSps;
         }
@@ -55,7 +56,7 @@
         [Route("/banHang/addCart/{id}")]
         public IActionResult AddCart(Guid id)
         {
-            var chiTietSp = _dongSpRepository.Fetch().SelectMany(c => c.ChiTietSps).FirstOrDefault(c => c.Id == id);
+            var chiTietSp = _context.DongSp.SelectMany(c => c.ChiTietSps).FirstOrDefault(c => c.Id == id);
 
             if(chiTietSp != null)
             {

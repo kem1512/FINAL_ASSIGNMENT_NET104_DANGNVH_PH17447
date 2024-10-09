@@ -6,8 +6,6 @@
         {
             builder.Property(c => c.Id).HasDefaultValueSql("(NEWID())");
 
-            builder.Property(c => c.Ma).HasColumnType("VARCHAR(20)");
-
             builder.Property(c => c.Ten).HasMaxLength(30).HasDefaultValue(null);
         }
     }

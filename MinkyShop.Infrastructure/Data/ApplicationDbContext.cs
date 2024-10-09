@@ -20,8 +20,6 @@ namespace MinkyShop.Infrastructure.Data
 
         public DbSet<HoaDon> HoaDon { get; set; }
 
-        public DbSet<GioHang> GioHang { get; set; }
-
         public DbSet<SanPham> SanPham { get; set; }
 
         public DbSet<Nsx> Nsx { get; set; }
@@ -33,7 +31,5 @@ namespace MinkyShop.Infrastructure.Data
         public DbSet<ChiTietSp> ChiTietSp { get; set; }
 
         public DbSet<HoaDonChiTiet> HoaDonChiTiet { get; set; }
-
-        public DbSet<GioHangChiTiet> GioHangChiTiet { get; set; }
     }
 }

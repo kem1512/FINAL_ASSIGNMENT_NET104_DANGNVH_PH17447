@@ -20,6 +20,6 @@
 
         public string MatKhau { get; set; } = default!;
 
-        public virtual ICollection<HoaDon> HoaDons { get; set; } = new List<HoaDon>();
+        public virtual List<HoaDon> HoaDons { get; set; } = new List<HoaDon>();
     }
 }

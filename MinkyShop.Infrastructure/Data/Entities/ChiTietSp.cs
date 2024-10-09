@@ -35,6 +35,6 @@
 
         public virtual DongSp DongSp { get; set; } = default!;
 
-        public virtual ICollection<HoaDonChiTiet> HoaDonChiTiets { get; set; } = new List<HoaDonChiTiet>();
+        public virtual List<HoaDonChiTiet> HoaDonChiTiets { get; set; } = default!;
     }
 }
