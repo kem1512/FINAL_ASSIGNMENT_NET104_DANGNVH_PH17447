@@ -1,4 +1,4 @@
-﻿namespace MinkyShop.Infrastructure.Common.Extensions
+﻿namespace MinkyShop.Extensions
 {
     public static class SessionHelper
     {
@@ -14,6 +14,12 @@
         {
             var value = session.GetString(key);
             return value == null ? default : JsonConvert.DeserializeObject<T>(value);
+        }
+
+        // Hàm để xóa một mục khỏi session theo khóa
+        public static void RemoveObject(this ISession session, string key)
+        {
+            session.Remove(key);
         }
     }
 }

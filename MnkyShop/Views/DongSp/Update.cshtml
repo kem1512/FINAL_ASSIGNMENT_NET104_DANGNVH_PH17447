@@ -1,4 +1,5 @@
-﻿@{
+﻿@model DongSp
+@{
     ViewData["Title"] = "Update";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -14,12 +15,22 @@
                     {
                         <div class="row">
                             <div class="form-group col-6">
-                                <label>Mã dòng dòng sản phẩm</label>
-                                <input type="text" class="form-control" value="@Model.Ma" name="Ma" placeholder="Nhập mã dòng dòng sản phẩm">
-                            </div>
-                            <div class="form-group col-6">
                                 <label>Tên dòng dòng sản phẩm</label>
                                 <input type="text" class="form-control" value="@Model.Ten" name="Ten" placeholder="Nhập tên dòng dòng sản phẩm">
+                            </div>
+                            <div class="form-group col-6">
+                                <div class="d-flex justify-content-between">
+                                    <label>Nhà sản xuất</label>
+                                    <span asp-validation-for="IdNsx" class="text-warning font-weight-bold"></span>
+                                </div>
+                                <select class="custom-select" asp-for="IdNsx">
+                                    <!option value="">Nhà sản xuất</!option>
+                                    @foreach (Nsx x in ViewBag.Nsx)
+                                    {
+                                        var isSelected = x.Id == Model.IdNsx ? "selected" : "";
+                                        <!option @isSelected value="@x.Id">@x.Ten</!option>
+                                    }
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">

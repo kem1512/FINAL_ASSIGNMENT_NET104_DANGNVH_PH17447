@@ -3,17 +3,15 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <div class="row mt-3">
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
                 <div class="card-title">
                     Quản lý sản phẩm
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 </div>
-                <h1>@ViewBag.Error</h1>
-                <hr>
-                <form asp-action="Add" method="post">
+                <form asp-action="Create">
                     <div class="row">
                         <div class="form-group col-6">
                             <div class="d-flex justify-content-between">
@@ -29,33 +27,16 @@
                             </select>
                         </div>
                         <div class="form-group col-6">
-                            <label>Năm bảo hành</label>
-                            <input type="number" class="form-control" name="NamBh" placeholder="Nhập năm bảo hành">
-                        </div>
-                        <div class="form-group col-3">
                             <label>Giá nhập</label>
                             <input type="number" class="form-control" name="GiaNhap" placeholder="Nhập tên giá nhập">
                         </div>
-                        <div class="form-group col-3">
+                        <div class="form-group col-6">
                             <label>Giá bán </label>
                             <input type="number" class="form-control" name="GiaBan" placeholder="Nhập giá bán">
                         </div>
                         <div class="form-group col-6">
                             <label>Số lượng tồn kho </label>
                             <input type="number" class="form-control" name="SoLuongTon" placeholder="Nhập số lượng tồn kho">
-                        </div>
-                        <div class="form-group col-6">
-                            <div class="d-flex justify-content-between">
-                                <label>Nhà sản xuất</label>
-                                <span asp-validation-for="IdNsx" class="text-warning font-weight-bold"></span>
-                            </div>
-                            <select class="custom-select" asp-for="IdNsx">
-                                <option value="">Nhà sản xuất</option>
-                                @foreach (Nsx x in ViewBag.Nsx)
-                                {
-                                    <option value="@x.Id">@x.Ten</option>
-                                }
-                            </select>
                         </div>
                         <div class="form-group col-6">
                             <div class="d-flex justify-content-between">
@@ -72,19 +53,6 @@
                         </div>
                         <div class="form-group col-6">
                             <div class="d-flex justify-content-between">
-                                <label>Dòng sản phẩm</label>
-                                <span asp-validation-for="IdDongSp" class="text-warning font-weight-bold"></span>
-                            </div>
-                            <select class="custom-select" asp-for="IdDongSp">
-                                <option value="">Chọn dòng sản phẩm </option>
-                                @foreach (DongSp x in ViewBag.DongSp)
-                                {
-                                    <option value="@x.Id">@x.Ten</option>
-                                }
-                            </select>
-                        </div>
-                        <div class="form-group col-6">
-                            <div class="d-flex justify-content-between">
                                 <label>Ảnh sản phẩm</label> <br />
                                 <span asp-validation-for="Anh" class="text-warning font-weight-bold"></span>
                             </div>
@@ -93,8 +61,6 @@
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-success px-5">Thêm ct sản phẩm</button>
-                        <a href="/dongsp" class="btn btn-warning px-5">Thêm dòng sản phẩm</a>
-                        <a href="/nsx" class="btn btn-info px-5">Thêm nhà sản xuất </a>
                         <a href="/mausac" class="btn btn-danger px-5">Thêm màu sắc </a>
                         <a href="/sanpham" class="btn btn-dark px-5">Thêm sản phẩm </a>
                     </div>
@@ -104,10 +70,9 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>STT</th>
+                                <th>Id</th>
                                 <th>Tên sản phẩm</th>
                                 <th>Màu sắc</th>
-                                <th>Nhà sản xuất</th>
                                 <th>Giá nhập</th>
                                 <th>Giá bán</th>
                                 <th>Tồn kho</th>
@@ -119,10 +84,9 @@
                                 foreach (ChiTietSp x in ViewBag.ChiTietSp)
                                 {
                                     <tr>
-                                        <td>1</td>
+                                        <td>@x.Id</td>
                                         <td>@x.SanPham.Ten</td>
                                         <td>@x.MauSac.Ten</td>
-                                        <td>@x.Nsx.Ten</td>
                                         <td>@string.Format("{0:0,0}", x.GiaNhap)</td>
                                         <td>@string.Format("{0:0,0}", x.GiaBan)</td>
                                         <td>@x.SoLuongTon</td>
@@ -144,6 +108,7 @@
         </div>
     </div>
 </div>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

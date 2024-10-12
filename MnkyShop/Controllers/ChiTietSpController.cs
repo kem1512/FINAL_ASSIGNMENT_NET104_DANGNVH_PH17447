@@ -16,23 +16,22 @@
                 ViewBag.Message = TempData["Message"];
             }
 
-            ViewBag.SanPham = _context.SanPham.AsNoTracking();
-            ViewBag.MauSac = _context.MauSac.AsNoTracking();
-            ViewBag.DongSp = _context.DongSp.AsNoTracking();
-            ViewBag.Nsx = _context.Nsx.AsNoTracking();
+            ViewBag.SanPham = _context.SanPham;
+            ViewBag.MauSac = _context.MauSac;
+            ViewBag.DongSp = _context.DongSp;
+            ViewBag.Nsx = _context.Nsx;
             ViewBag.ChiTietSp = _context.ChiTietSp;
 
             return View();
         }
 
         [HttpPost]
-        [Route("/chiTietSp/create")]
-        public IActionResult Add(ChiTietSp obj)
+        public IActionResult Create(ChiTietSp obj)
         {
             foreach (var x in _context.ChiTietSp)
             {
-                if (obj.IdDongSp == x.IdDongSp && obj.IdMauSac == x.IdMauSac &&
-                    obj.IdSp == x.IdSp && obj.IdNsx == x.IdNsx)
+                // Nếu sản phẩm có màu sắc đó rồi thì không cho tạo nữa
+                if (obj.IdMauSac == x.IdMauSac && obj.IdSp == x.IdSp)
                 {
                     TempData["Message"] = "Sản phẩm đã tồn tại";
                     return RedirectToAction("Index");
@@ -65,7 +64,6 @@
             return RedirectToAction("Index", "ChiTietSp");
         }
 
-        [Route("/chiTietSp/detail/{id}")]
         public IActionResult Update(Guid id)
         {
             ViewBag.SanPham = _context.SanPham;
@@ -77,7 +75,6 @@
         }
 
         [HttpPost]
-        [Route("/chiTietSp/update")]
         public IActionResult Update(Guid id, ChiTietSp obj)
         {
             var chiTietSp = _context.ChiTietSp.Find(id);

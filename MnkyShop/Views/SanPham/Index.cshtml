@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SanPham
+@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -9,51 +10,79 @@
             <div class="card-body">
                 <div class="card-title">Quản lý sản phẩm</div>
                 <hr>
-                <form action="/sanpham/create" method="post">
+                <form asp-action="Create" method="post">
                     <div class="row">
                         <div class="form-group col-6">
-                            <label>Mã sản phẩm</label>
-                            <input type="text" class="form-control" name="Ma" placeholder="Nhập mã sản phẩm">
+                            <div class="form-group">
+                                <label>Tên sản phẩm</label>
+                                <input type="text" class="form-control" name="Ten" placeholder="Nhập tên sản phẩm">
+                            </div>
                         </div>
                         <div class="form-group col-6">
-                            <label>Tên sản phẩm</label>
-                            <input type="text" class="form-control" name="Ten" placeholder="Nhập tên sản phẩm">
+                            <div class="d-flex justify-content-between">
+                                <label>Dòng sản phẩm</label>
+                                <span asp-validation-for="IdDongSp" class="text-warning font-weight-bold"></span>
+                            </div>
+                            <select class="custom-select" asp-for="IdDongSp">
+                                <option value="">Chọn dòng sản phẩm </option>
+                                @foreach (DongSp x in ViewBag.DongSp)
+                                {
+                                    <option value="@x.Id">@x.Ten</option>
+                                }
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-light px-5 mr-2">Thêm sản phẩm</button>
-                        <button type="submit" class="btn btn-success px-5">Sửa sản phẩm</button>
+                        <button class="btn btn-success px-5" type="submit">Thêm sản phẩm</button>
+                        <a href="/dongsp" class="btn btn-warning px-5">Thêm dòng sản phẩm</a>
                     </div>
                 </form>
-                <h5 class="card-title">Danh sách sản phẩm</h5>
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th style="width: 20%">STT</th>
-                                <th style="width: 25%">Mã sản phẩm</th>
-                                <th style="width: 25%">Tên sản phẩm</th>
-                                <th style="width: 30%">Thao tác</th>
+                                <th>Mã sản phẩm</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Dòng sản phẩm</th>
+                                <th>Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @for (int i = 0; i < Model.Count; i++)
+                            @foreach (SanPham x in ViewBag.SanPham)
                             {
                                 <tr>
-                                    <th>@i</th>
-                                    <td>@Model[i].Ma</td>
-                                    <td>@Model[i].Ten</td>
+                                    <td>@x.Id</td>
+                                    <td>@x.Ten</td>
+                                    <td>@x.DongSp.Ten</td>
                                     <td>
-                                        <a href="/sanpham/detail/@Model[i].Id" class="btn btn-success px-5">Sửa sản phẩm</a>
-                                        <a href="/sanpham/remove/@Model[i].Id" class="btn btn-danger px-5" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa sản phẩm</a>
+                                        @Html.ActionLink("Sửa sản phẩm", "Update", "SanPham", new { id = x.Id }, new { @class = "btn btn-success" })
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Sửa sản phẩm", "Update", "SanPham", new { id = x.Id }, new { @class = "btn btn-success" })
+                                    </td>
+                                    <td>
+                                        <form asp-action="Remove" method="post" onsubmit="return confirm('Bạn có chắc muốn xóa sản phẩm này?')">
+                                            <button class="btn btn-danger" type="submit" name="id" value="@x.Id">Xóa sản phẩm</button>
+                                        </form>
                                     </td>
                                 </tr>
                             }
                         </tbody>
                     </table>
                 </div>
+                @await Html.PartialAsync("Pagination", new PaginationViewModel
+                {
+                    CurrentPageIndex = ViewBag.CurrentPageIndex,
+                    PageCount = ViewBag.PageCount,
+                    PageName = "SanPham"
+                })
             </div>
         </div>
     </div>
 </div>
 
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

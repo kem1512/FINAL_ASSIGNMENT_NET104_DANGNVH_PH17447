@@ -1,0 +1,22 @@
+﻿@model PaginationViewModel
+
+<div class="store-filter clearfix">
+    <ul class="store-pagination">
+        <li>
+            <a href="/@Model.PageName?page=@(Model.CurrentPageIndex <= 1 ? Model.PageCount : Model.CurrentPageIndex - 1)">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        </li>
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            <li class="@(Model.CurrentPageIndex == i ? "active" : "")">
+                <a href="/@Model.PageName?page=@i">@i</a>
+            </li>
+        }
+        <li>
+            <a href="/@Model.PageName?page=@(Model.CurrentPageIndex < Model.PageCount ? Model.CurrentPageIndex + 1 : 1)">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+    </ul>
+</div>

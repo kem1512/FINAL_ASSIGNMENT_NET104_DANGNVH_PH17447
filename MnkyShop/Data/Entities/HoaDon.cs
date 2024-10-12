@@ -1,13 +1,9 @@
 ﻿namespace MinkyShop.Data.Entities
 {
-    public enum TrangThaiHoaDon
-    {
-        GioHang, ChoXacNhan, DangChuanBiHang, DangShip, ChuaHoanThanh, DaHoanThanh
-    }
-
     public class HoaDon
     {
-        public Guid Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
         public DateTime NgayTao { get; set; }
 
@@ -31,8 +27,9 @@
 
         public string? IdKh { get; set; }
 
+        [ForeignKey(nameof(IdKh))]
         public virtual NguoiDung KhachHang { get; set; } = default!;
 
-        public virtual List<HoaDonChiTiet> HoaDonChiTiets { get; set; } = new List<HoaDonChiTiet>();
+        public virtual List<HoaDonChiTiet> HoaDonChiTiets { get; set; } = default!;
     }
 }

@@ -2,10 +2,11 @@
 {
     public class MauSac
     {
-        public Guid Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
         public string Ten { get; set; } = default!;
 
-        public virtual List<ChiTietSp> ChiTietSps { get; set; } = new List<ChiTietSp>();
+        public virtual List<ChiTietSp> ChiTietSps { get; set; } = default!;
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace MinkyShop.Data
+﻿using MinkyShop.Data.Entities;
+
+namespace MinkyShop.Data
 {
     public class ApplicationDbContext : DbContext
     {

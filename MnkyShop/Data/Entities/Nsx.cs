@@ -2,10 +2,11 @@
 {
     public class Nsx
     {
-        public Guid Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
         public string Ten { get; set; } = default!;
 
-        public virtual List<ChiTietSp> ChiTietSps { get; set; } = default!;
+        public virtual List<DongSp> DongSps { get; set; } = default!;
     }
 }

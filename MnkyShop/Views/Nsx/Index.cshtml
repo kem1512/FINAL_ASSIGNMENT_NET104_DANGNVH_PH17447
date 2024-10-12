@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Nsx
+@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -12,17 +13,12 @@
                 <form action="/nsx/create" method="post">
                     <div class="row">
                         <div class="form-group col-6">
-                            <label>Mã nhà sản xuất</label>
-                            <input type="text" class="form-control" name="Ma" placeholder="Nhập mã nhà sản xuất">
-                        </div>
-                        <div class="form-group col-6">
                             <label>Tên nhà sản xuất</label>
                             <input type="text" class="form-control" name="Ten" placeholder="Nhập tên nhà sản xuất">
                         </div>
                     </div>
                     <div class="form-group">
                         <button class="btn btn-light px-5 mr-2">Thêm nhà sản xuất</button>
-                        <button type="submit" class="btn btn-success px-5">Sửa nhà sản xuất</button>
                     </div>
                 </form>
                 <h5 class="card-title">Danh sách Nhà sản xuất</h5>
@@ -31,21 +27,23 @@
                         <thead>
                             <tr>
                                 <th style="width: 20%">STT</th>
-                                <th style="width: 25%">Mã nhà sản xuất</th>
                                 <th style="width: 25%">Tên nhà sản xuất</th>
                                 <th style="width: 30%">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @for (int i = 0; i < Model.Count; i++)
+                            @foreach (Nsx x in ViewBag.Nsx)
                             {
                                 <tr>
-                                    <th>@i</th>
-                                    <td>@Model[i].Ma</td>
-                                    <td>@Model[i].Ten</td>
+                                    <th>@x.Id</th>
+                                    <td>@x.Ten</td>
                                     <td>
-                                        <a href="/nsx/detail/@Model[i].Id" class="btn btn-success px-5">Sửa nhà sản xuất</a>
-                                        <a href="/nsx/remove/@Model[i].Id" class="btn btn-danger px-5" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa nhà sản xuất</a>
+                                        @Html.ActionLink("Sửa nhà sản xuất", "Update", "Nsx", new { id = x.Id }, new { @class = "btn btn-success" })
+                                    </td>
+                                    <td>
+                                        <form asp-action="Remove" method="post" onsubmit="return confirm('Bạn có chắc muốn xóa nhà sản xuất này?')">
+                                            <button class="btn btn-danger" type="submit" name="id" value="@x.Id">Xóa nhà sản xuất</button>
+                                        </form>
                                     </td>
                                 </tr>
                             }
@@ -56,4 +54,10 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
 

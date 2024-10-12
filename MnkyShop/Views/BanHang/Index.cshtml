@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<SanPham>
+@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -11,17 +12,15 @@
                 <div class="card-title">Danh sách sản phẩm</div>
                 <hr>
                 <div class="row">
-                    @foreach (DongSp x in Model)
+                    @foreach (SanPham x in Model)
                     {
                         <div class="col-lg-3">
                             <div class="product">
                                 <div class="product-img">
                                     <img src="@x.ChiTietSps.First().Anh" alt="">
-                                    <div class="add-to-cart">
-                                        <a href="/banhang/addcart/@x.Id">
-                                            <button class="add-to-cart-btn"> add to cart <i class="fa fa-shopping-cart"></i></button>
-                                        </a>
-                                    </div>
+                                    <form asp-action="AddCart" class="add-to-cart">
+                                        <button type="submit" name="idChiTietSp" value="@x.ChiTietSps.First().Id" class="add-to-cart-btn"> add to cart <i class="fa fa-shopping-cart"></i></button>
+                                    </form>
                                 </div>
                                 <div class="product-body">
                                     <h3 class="product-name"><a href="#" class="text-danger">@x.Ten</a></h3>
@@ -33,18 +32,12 @@
                         </div>
                     }
                 </div>
-                <div class="store-filter clearfix">
-                    <ul class="store-pagination">
-                        @{
-                            <li><a href="/banhang/page=@(ViewBag.CurrentPageIndex <= 1 ? ViewBag.PageCount : ViewBag.CurrentPageIndex - 1)"><i class="fa fa-angle-left"></i></a></li>
-                            for (int i = 0; i < ViewBag.PageCount; i++)
-                            {
-                                <li><a href="/banhang/page=@(i + 1)">@(i + 1)</a></li>
-                            }
-                            <li><a href="/banhang/page=@(ViewBag.CurrentPageIndex < ViewBag.PageCount ? ViewBag.CurrentPageIndex + 1  : 1)"><i class="fa fa-angle-right"></i></a></li>
-                        }
-                    </ul>
-                </div>
+                @await Html.PartialAsync("Pagination", new PaginationViewModel
+                {
+                   CurrentPageIndex = ViewBag.CurrentPageIndex,
+                   PageCount = ViewBag.PageCount,
+                   PageName = "SanPham"
+                })
             </div>
         </div>
     </div>
