@@ -253,8 +253,8 @@
 }
 
 .store-pagination li.active {
-    background-color: #D10024;
-    border-color: #D10024;
+    background-color: #8d99ae;
+    border-color: #8d99ae;
     color: #FFF;
     font-weight: 500;
     cursor: default;
@@ -275,4 +275,15 @@
 .store-filter {
     margin-bottom: 15px;
     margin-top: 15px;
+}
+
+@media print {
+    .btn-print {
+        display: none;
+    }
+
+    .content-wrapper {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
 }

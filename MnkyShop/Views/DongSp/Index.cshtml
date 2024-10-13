@@ -9,11 +9,14 @@
             <div class="card-body">
                 <div class="card-title">Quản lý dòng sản phẩm</div>
                 <hr>
-                <form asp-action="Create" method="post">
+                <form asp-action="Create">
                     <div class="row">
                         <div class="form-group col-6">
-                            <label>Tên dòng sản phẩm</label>
-                            <input type="text" class="form-control" name="Ten" placeholder="Nhập tên dòng sản phẩm">
+                            <div class="d-flex justify-content-between">
+                                <label>Tên dòng sản phẩm</label>
+                                <span asp-validation-for="Ten" class="text-warning font-weight-bold"></span>
+                            </div>
+                            <input class="form-control" asp-for="Ten" placeholder="Nhập tên dòng sản phẩm">
                         </div>
                         <div class="form-group col-6">
                             <div class="d-flex justify-content-between">
@@ -51,10 +54,8 @@
                                     <th>@x.Id</th>
                                     <td>@x.Ten</td>
                                     <td>@x.Nsx.Ten</td>
-                                    <td>
+                                    <td style="display: flex; gap: 10px">
                                         @Html.ActionLink("Sửa sản phẩm", "Update", "DongSp", new { id = x.Id }, new { @class = "btn btn-success" })
-                                    </td>
-                                    <td>
                                         <form asp-action="Remove" method="post" onsubmit="return confirm('Bạn có chắc muốn xóa sản phẩm này?')">
                                             <button class="btn btn-danger" type="submit" name="id" value="@x.Id">Xóa sản phẩm</button>
                                         </form>

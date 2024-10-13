@@ -1,33 +1,60 @@
-﻿@* @{
-    ViewData["Title"] = "Index";
+﻿@model List<HoaDon>
+@{
+    ViewData["Title"] = "Quản lý hóa đơn";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <div class="row mt-3">
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <div class="card-title d-flex justify-content-between">
-                    Quản lý hóa đơn
-                    <div class="d-flex">
-                        <form class="search-bar mr-3">
-                            <input type="text" onkeyup="myFunction()" class="form-control" id="myInput" placeholder="Nhập từ khóa">
-                            <a href="#">
-                                <i class="icon-magnifier"></i>
-                            </a>
-                        </form>
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Lọc hóa đơn
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="/hoadon">Tất cả hóa đơn</a>
-                                <a class="dropdown-item" href="/hoadon/status=1">Hóa đơn hoàn thành</a>
-                                <a class="dropdown-item" href="/hoadon/status=0">Hóa đơn chưa hoàn thành</a>
+                <div class="card-title">
+                    <h5>Quản lý hóa đơn</h5>
+                </div>
+
+                <!-- Row to hold the form for searching, filtering by date and status -->
+                <div class="row mb-3">
+                    <div class="col-lg-12">
+                        <form class="form-inline" method="get" action="@Url.Action("Index")" id="searchForm">
+                            <div class="form-row w-100">
+                                <!-- Input for invoice code or customer name -->
+                                <div class="col-md-3 mb-2">
+                                    <input type="text" class="form-control w-100" name="input" placeholder="Nhập mã hóa đơn hoặc tên khách hàng" value="@ViewContext.HttpContext.Request.Query["input"]">
+                                </div>
+
+                                <!-- Date range filters -->
+                                <div class="col-md-3 mb-2">
+                                    <input type="date" class="form-control w-100" name="startDate" value="@ViewContext.HttpContext.Request.Query["startDate"]">
+                                </div>
+
+                                <div class="col-md-3 mb-2">
+                                    <input type="date" class="form-control w-100" name="endDate" value="@ViewContext.HttpContext.Request.Query["endDate"]">
+                                </div>
+
+                                <!-- Status filter dropdown -->
+                                <div class="col-md-2 mb-2">
+                                    <select class="form-control w-100" name="tinhTrang">
+                                        <option value="">Tất cả trạng thái</option>
+                                        <!option value="1" @(ViewContext.HttpContext.Request.Query["tinhTrang"] == "1" ? "selected" : "")>Hoàn thành</!option>
+                                        <!option value="0" @(ViewContext.HttpContext.Request.Query["tinhTrang"] == "0" ? "selected" : "")>Chưa hoàn thành</!option>
+                                    </select>
+                                </div>
+
+                                <!-- Search and Clear buttons -->
+                                <div class="col-md-1 mb-2">
+                                    <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>
+                                </div>
+
+                                <!-- Clear button to reset filters -->
+                                <div class="col-md-1 mb-2">
+                                    <a href="@Url.Action("Index")" class="btn btn-danger w-100">Clear</a>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
 
+                <!-- Invoice Table -->
                 <div class="table-responsive">
                     <table class="table" id="myTable">
                         <thead>
@@ -37,49 +64,41 @@
                             <th>Địa chỉ</th>
                             <th>Tổng tiền</th>
                             <th>Trạng thái</th>
+                            <th>Ngày tạo</th>
                             <th>Thao tác</th>
                         </tr>
                         </thead>
                         <tbody>
-                            @{
-                                if (Model == null || !Model.Any())
-                                {
-                                    <tr>
-                                        <td colspan="6" class="text-center">Không có gì ở đây cả</td>
-                                    </tr>
-                                }
-                                else
-                                {
-                                    foreach (var item in Model.GroupBy(c => c.HoaDon.Id).Select((group, index) => new { group, index }))
+                        @foreach (var x in Model)
+                        {
+                            <tr>
+                                <td>@x.Id</td>
+                                <td>@x.TenNguoiNhan</td>
+                                <td>@x.DiaChi</td>
+                                <td>@Helper.FormatVietNamDong(x.TongTien)</td>
+                                <td>@(x.TinhTrang == 0 ? "Chưa hoàn thành" : "Hoàn thành")</td>
+                                <td>@x.NgayTao</td>
+                                <td>
+                                    <a class="btn btn-primary" href="@Url.ActionLink("Detail", "HoaDon", new { x.Id })">Xem chi tiết</a>
+                                    @if (x.TinhTrang == 0)
                                     {
-                                        <tr>
-                                            <td>@(item.index + 1)</td>
-                                            <td>@item.group.First().HoaDon.TenNguoiNhan</td>
-                                            <td>@item.group.First().HoaDon.DiaChi</td>
-                                            <td>@(string.Format("{0:0,0}", item.group.Sum(c => c.HoaDonChiTiet.DonGia * c.HoaDonChiTiet.SoLuong))) VNĐ</td>
-                                            <td>
-                                                @{
-                                                    var tinhtrang = item.group.First().HoaDon.TinhTrang == 0 ? "Chưa hoàn thành" : "Hoàn thành";
-                                                }
-                                                @tinhtrang
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-primary" href="/hoadonchitiet/@item.group.First().HoaDon.Id">Xem chi tiết</a>
-                                                @if (item.group.First().HoaDon.TinhTrang == 0)
-                                                {
-                                                    <a onclick="return confirm('Bạn có chắc muốn thanh toán?')" class="btn btn-danger" href="/hoadon/thanhtoan/@item.group.First().HoaDon.Id">Thanh toán</a>
-                                                }
-                                            </td>
-                                        </tr>
+                                        <a onclick="return confirm('Bạn có chắc muốn thanh toán?')" class="btn btn-danger" href="@Url.ActionLink("CompleteOrder", "HoaDon", new { x.Id })">Hoàn Thành</a>
                                     }
-                                }
-                            }
+                                </td>
+                            </tr>
+                        }
                         </tbody>
                     </table>
+
+                    <!-- Pagination Partial View -->
+                    @await Html.PartialAsync("Pagination", new PaginationViewModel
+                    {
+                        CurrentPageIndex = ViewBag.CurrentPageIndex,
+                        PageCount = ViewBag.PageCount,
+                        PageName = "HoaDon"
+                    })
                 </div>
             </div>
         </div>
     </div>
 </div>
-
- *@

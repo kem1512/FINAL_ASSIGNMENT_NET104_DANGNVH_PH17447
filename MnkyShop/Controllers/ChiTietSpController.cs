@@ -9,18 +9,30 @@
             _context = context;
         }
 
-        public IActionResult Index()
+        [Route("ChiTietSp/{idSp?}")]
+        public IActionResult Index(int? idSp, int page = 1, int maxRows = 5)
         {
             if (TempData["Message"] != null)
             {
                 ViewBag.Message = TempData["Message"];
             }
 
-            ViewBag.SanPham = _context.SanPham;
+            var chiTietSps = _context.ChiTietSp.Include(c => c.SanPham).Include(c => c.MauSac).ToList();
+
+            if (idSp != null)
+            {
+                chiTietSps = chiTietSps.Where(c => c.IdSp == idSp).ToList();
+            }
+
+            ViewBag.PageCount = (int)Math.Ceiling(chiTietSps.Count() / (decimal)maxRows);
+            ViewBag.CurrentPageIndex = page;
+
+            chiTietSps = chiTietSps.Skip((page - 1) * maxRows).Take(maxRows).ToList();
+
             ViewBag.MauSac = _context.MauSac;
-            ViewBag.DongSp = _context.DongSp;
-            ViewBag.Nsx = _context.Nsx;
-            ViewBag.ChiTietSp = _context.ChiTietSp;
+            ViewBag.ChiTietSp = chiTietSps;
+            ViewBag.SanPham = _context.SanPham;
+            ViewBag.IdSp = idSp;
 
             return View();
         }
@@ -47,8 +59,8 @@
             return RedirectToAction("Index", "ChiTietSp");
         }
 
-        [Route("/chiTietSp/remove/{id}")]
-        public IActionResult Delete(Guid id)
+        [HttpPost]
+        public IActionResult Remove(int id)
         {
             var chiTietSp = _context.ChiTietSp.Find(id);
 
@@ -64,24 +76,38 @@
             return RedirectToAction("Index", "ChiTietSp");
         }
 
-        public IActionResult Update(Guid id)
+        public IActionResult Update(int id)
         {
-            ViewBag.SanPham = _context.SanPham;
+            if (TempData["Message"] != null)
+            {
+                ViewBag.Message = TempData["Message"];
+            }
+
             ViewBag.MauSac = _context.MauSac;
-            ViewBag.DongSp = _context.DongSp;
-            ViewBag.Nsx = _context.Nsx;
+            ViewBag.SanPham = _context.SanPham;
 
             return View(_context.ChiTietSp.Find(id));
         }
 
         [HttpPost]
-        public IActionResult Update(Guid id, ChiTietSp obj)
+        public IActionResult Update(int id, ChiTietSp obj)
         {
             var chiTietSp = _context.ChiTietSp.Find(id);
 
-            if(chiTietSp != null)
+            if(_context.ChiTietSp.Any(c => c.IdMauSac == obj.IdMauSac && c.IdSp == obj.IdSp))
             {
-                _context.ChiTietSp.Update(obj);
+                TempData["Message"] = "Chi tiết sản phẩm đã tồn tại";
+                return RedirectToAction("Update", "ChiTietSp", new { id });
+            }
+
+            if (chiTietSp != null)
+            {
+                chiTietSp.IdSp = obj.IdSp;
+                chiTietSp.IdMauSac = obj.IdMauSac;
+                chiTietSp.MoTa = obj.MoTa;
+                chiTietSp.GiaBan = obj.GiaBan;
+                chiTietSp.GiaNhap = obj.GiaNhap;
+                chiTietSp.SoLuongTon = obj.SoLuongTon;
             }
 
             var result = _context.SaveChanges();

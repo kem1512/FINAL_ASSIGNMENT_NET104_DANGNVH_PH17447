@@ -9,7 +9,7 @@
             _context = context;
         }
 
-        public IActionResult Index(int currentPage, int maxRows = 4)
+        public IActionResult Index(int page, int maxRows = 4)
         {
             if (TempData["Message"] != null)
             {
@@ -19,11 +19,29 @@
             var sanPhams = _context.SanPham.Include(c => c.ChiTietSps).Where(c => c.ChiTietSps.Count > 0).ToList();
 
             ViewBag.PageCount = (int)Math.Ceiling(sanPhams.Count() / (decimal)maxRows);
-            ViewBag.CurrentPageIndex = currentPage;
+            ViewBag.CurrentPageIndex = page;
 
-            sanPhams = sanPhams.Skip((currentPage - 1) * maxRows).Take(maxRows).ToList();
+            sanPhams = sanPhams.Skip((page - 1) * maxRows).Take(maxRows).ToList();
 
             return View(sanPhams);
+        }
+
+        [Route("BanHang/Detail/{idSp}")]
+        public IActionResult Detail(int idSp, int page, int maxRows = 4)
+        {
+            if (TempData["Message"] != null)
+            {
+                ViewBag.Message = TempData["Message"];
+            }
+
+            var chiTietSps = _context.ChiTietSp.Include(c => c.SanPham).Include(c => c.MauSac).Where(c => c.IdSp == idSp).ToList();
+
+            ViewBag.PageCount = (int)Math.Ceiling(chiTietSps.Count() / (decimal)maxRows);
+            ViewBag.CurrentPageIndex = page;
+
+            chiTietSps = chiTietSps.Skip((page - 1) * maxRows).Take(maxRows).ToList();
+
+            return View(chiTietSps);
         }
 
         [NonAction]
@@ -100,7 +118,8 @@
                 TempData["Message"] = "Thêm Thất Bại";
             }
 
-            return RedirectToAction("Index");
+            string refererUrl = Request.Headers["Referer"].ToString();
+            return Redirect(refererUrl);
         }
 
 
@@ -127,9 +146,16 @@
 
             if (index != -1)
             {
-                cart.HoaDonChiTiets[index].SoLuong = soLuong;
-                cart.TongTien = cart.HoaDonChiTiets.Sum(c => c.DonGia * c.SoLuong);
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                if(soLuong <= 0)
+                {
+                    RemoveCart(index);
+                }
+                else
+                {
+                    cart.HoaDonChiTiets[index].SoLuong = soLuong;
+                    cart.TongTien = cart.HoaDonChiTiets.Sum(c => c.DonGia * c.SoLuong);
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                }
             }
 
             TempData["Message"] = index != -1 ? "Sửa thành công" : "Sửa thất bại";
@@ -151,6 +177,7 @@
             }
             else
             {
+                cart.TongTien = cart.HoaDonChiTiets.Sum(c => c.DonGia * c.SoLuong);
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
 

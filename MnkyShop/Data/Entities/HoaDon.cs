@@ -7,12 +7,6 @@
 
         public DateTime NgayTao { get; set; }
 
-        public DateTime NgayThanhToan { get; set; }
-
-        public DateTime NgayShip { get; set; }
-
-        public DateTime NgayNhan { get; set; }
-
         public int TinhTrang { get; set; }
 
         public string TenNguoiNhan { get; set; } = default!;

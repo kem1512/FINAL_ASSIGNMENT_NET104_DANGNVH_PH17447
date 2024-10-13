@@ -10,23 +10,23 @@
             <div class="card-body">
                 <div class="card-title">Quản lý nhà sản xuất</div>
                 <hr>
-                <form action="/nsx/create" method="post">
-                    <div class="row">
-                        <div class="form-group col-6">
+                <form asp-action="Create">
+                    <div class="form-group">
+                        <div class="d-flex justify-content-between">
                             <label>Tên nhà sản xuất</label>
-                            <input type="text" class="form-control" name="Ten" placeholder="Nhập tên nhà sản xuất">
+                            <span asp-validation-for="Ten" class="text-warning font-weight-bold"></span>
                         </div>
+                        <input type="text" class="form-control" asp-for="Ten" placeholder="Nhập tên nhà sản xuất">
                     </div>
                     <div class="form-group">
                         <button class="btn btn-light px-5 mr-2">Thêm nhà sản xuất</button>
                     </div>
                 </form>
-                <h5 class="card-title">Danh sách Nhà sản xuất</h5>
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th style="width: 20%">STT</th>
+                                <th style="width: 20%">Mã</th>
                                 <th style="width: 25%">Tên nhà sản xuất</th>
                                 <th style="width: 30%">Thao tác</th>
                             </tr>
@@ -37,10 +37,8 @@
                                 <tr>
                                     <th>@x.Id</th>
                                     <td>@x.Ten</td>
-                                    <td>
+                                    <td style="display: flex; gap: 10px">
                                         @Html.ActionLink("Sửa nhà sản xuất", "Update", "Nsx", new { id = x.Id }, new { @class = "btn btn-success" })
-                                    </td>
-                                    <td>
                                         <form asp-action="Remove" method="post" onsubmit="return confirm('Bạn có chắc muốn xóa nhà sản xuất này?')">
                                             <button class="btn btn-danger" type="submit" name="id" value="@x.Id">Xóa nhà sản xuất</button>
                                         </form>
@@ -50,6 +48,12 @@
                         </tbody>
                     </table>
                 </div>
+                @await Html.PartialAsync("Pagination", new PaginationViewModel
+                {
+                    CurrentPageIndex = ViewBag.CurrentPageIndex,
+                    PageCount = ViewBag.PageCount,
+                    PageName = "Nsx"
+                })
             </div>
         </div>
     </div>

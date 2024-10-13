@@ -1,22 +1,48 @@
 ﻿@model PaginationViewModel
+@if (Model.PageCount > 1)
+{
+    <div class="store-filter clearfix">
+        <!-- Pagination -->
+        <ul class="store-pagination">
+            @{
+                // Gán mặc định CurrentPageIndex = 1 nếu chưa có giá trị hợp lệ
+                var currentPageIndex = Model.CurrentPageIndex > 0 ? Model.CurrentPageIndex : 1;
+                var pageCount = Model.PageCount > 0 ? Model.PageCount : 1;
 
-<div class="store-filter clearfix">
-    <ul class="store-pagination">
-        <li>
-            <a href="/@Model.PageName?page=@(Model.CurrentPageIndex <= 1 ? Model.PageCount : Model.CurrentPageIndex - 1)">
-                <i class="fa fa-angle-left"></i>
-            </a>
-        </li>
-        @for (int i = 1; i <= Model.PageCount; i++)
-        {
-            <li class="@(Model.CurrentPageIndex == i ? "active" : "")">
-                <a href="/@Model.PageName?page=@i">@i</a>
+                // Lấy query string hiện tại và bỏ tham số "page" nếu có
+                var query = ViewContext.HttpContext.Request.QueryString.Value;
+                var queryWithoutPage = string.Join("&",
+                ViewContext.HttpContext.Request.Query
+                .Where(q => !q.Key.Equals("page", StringComparison.OrdinalIgnoreCase))
+                .Select(q => $"{q.Key}={q.Value}")
+                );
+                var baseUrl = $"/{Model.PageName}";
+            }
+
+            <!-- Previous page button -->
+            <li>
+                <a href="@($"{baseUrl}?{queryWithoutPage}&page={(currentPageIndex > 1 ? currentPageIndex - 1 : pageCount)}")">
+                    <i class="fa fa-angle-left"></i>
+                </a>
             </li>
-        }
-        <li>
-            <a href="/@Model.PageName?page=@(Model.CurrentPageIndex < Model.PageCount ? Model.CurrentPageIndex + 1 : 1)">
-                <i class="fa fa-angle-right"></i>
-            </a>
-        </li>
-    </ul>
-</div>
+
+            <!-- Page number links -->
+            @if (pageCount > 1)
+            {
+                @for (int i = 1; i <= pageCount; i++)
+                {
+                    <li class=" @(currentPageIndex == i ? "active" : "")">
+                        <a href="@($"{baseUrl}?{queryWithoutPage}&page={i}")">@i</a>
+                    </li>
+                }
+            }
+
+            <!-- Next page button -->
+            <li>
+                <a href="@($"{baseUrl}?{queryWithoutPage}&page={(currentPageIndex < pageCount ? currentPageIndex + 1 : 1)}")">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+}

@@ -1,48 +1,96 @@
-﻿//namespace MinkyShop.Controllers
-//{
-//    public class MauSacController : Controller
-//    {
-//        private IMauSacService _iMauSacService;
+﻿namespace MinkyShop.Controllers
+{
+    public class MauSacController : Controller
+    {
+        private readonly ApplicationDbContext _context;
 
-//        public MauSacController(ApplicationDbContext context)
-//        {
-//            _iMauSacService = new MauSacService(context);
-//        }
+        public MauSacController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
-//        public IActionResult Index()
-//        {
-//            if (TempData["Message"] != null)
-//            {
-//                ViewBag.Message = TempData["Message"];
-//            }
-//            return View(_iMauSacService.GetAll());
-//        }
+        public IActionResult Index(int page = 1, int maxRows = 5)
+        {
+            if (TempData["Message"] != null)
+            {
+                ViewBag.Message = TempData["Message"];
+            }
 
-//        [Route("/mausac/create")]
-//        public IActionResult Add(MauSac obj)
-//        {
-//            TempData["Message"] = _iMauSacService.Add(obj) ? "Thêm thành công" : "Thêm thất bại";
-//            return RedirectToAction("Index", "MauSac");
-//        }
+            var mauSacs = _context.MauSac.Include(c => c.ChiTietSps).ToList();
 
-//        [Route("/mausac/remove/{id}")]
-//        public IActionResult Remove(Guid id)
-//        {
-//            TempData["Message"] = _iMauSacService.Remove(_iMauSacService.GetById(id)) ? "Xóa thành công" : "Xóa thất bại";
-//            return RedirectToAction("Index", "MauSac");
-//        }
+            ViewBag.PageCount = (int)Math.Ceiling(mauSacs.Count() / (decimal)maxRows);
+            ViewBag.CurrentPageIndex = page;
 
-//        [Route("/mausac/detail/{id}")]
-//        public IActionResult Update(Guid id)
-//        {
-//            return View(_iMauSacService.GetById(id));
-//        }
+            mauSacs = mauSacs.Skip((page - 1) * maxRows).Take(maxRows).ToList();
 
-//        [Route("/mausac/update")]
-//        public IActionResult Update(MauSac obj)
-//        {
-//            TempData["Message"] = _iMauSacService.Update(obj) ? "Sửa thành công" : "Sửa thất bại";
-//            return RedirectToAction("Index", "MauSac");
-//        }
-//    }
-//}
+            ViewBag.MauSacs = mauSacs;
+
+            return View();
+        }
+
+        public IActionResult Create(MauSac obj)
+        {
+            _context.MauSac.Add(obj);
+
+            var result = _context.SaveChanges();
+
+            TempData["Message"] = result > 0 ? "Thêm thành công" : "Thêm thất bại";
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Remove(int id)
+        {
+            var sanPham = _context.MauSac.Find(id);
+
+            if (sanPham == null)
+            {
+                TempData["Message"] = "Không Tìm Thấy Màu Sắc";
+            }
+            else
+            {
+                _context.MauSac.Remove(sanPham);
+
+                var result = _context.SaveChanges();
+
+                TempData["Message"] = result > 0 ? "Xóa thành công" : "Xóa thất bại";
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Update(int id)
+        {
+            ViewBag.DongSp = _context.DongSp;
+
+            return View(_context.MauSac.Find(id));
+        }
+
+        [HttpPost]
+        public IActionResult Update(int id, MauSac obj)
+        {
+            var sanPham = _context.MauSac.Find(id);
+
+            if (sanPham != null)
+            {
+                if (sanPham.Id != id)
+                {
+                    TempData["Message"] = "Dữ Liệu Không Đồng Nhất";
+                }
+                else
+                {
+                    sanPham.Ten = obj.Ten;
+                    var result = _context.SaveChanges();
+                    TempData["Message"] = result > 0 ? "Xóa thành công" : "Xóa thất bại";
+                }
+            }
+            else
+            {
+                TempData["Message"] = "Không Tìm Thấy Màu Sắc";
+            }
+
+            return RedirectToAction("Index");
+        }
+    }
+}

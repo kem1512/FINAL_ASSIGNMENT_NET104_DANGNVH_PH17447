@@ -5,7 +5,7 @@
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public string MoTa { get; set; } = default!;
+        public string? MoTa { get; set; } = default!;
 
         public int SoLuongTon { get; set; }
 

@@ -1,4 +1,5 @@
-﻿@* @{
+﻿@model ChiTietSp
+@{
     ViewData["Title"] = "Update";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -7,7 +8,8 @@
         <div class="card">
             <div class="card-body">
                 <div class="card-title">Quản lý sản phẩm</div>
-                <form action="/chitietsp/update" method="post">
+                <hr />
+                <form asp-action="Update">
                     <div class="row">
                         <div class="form-group col-6">
                             <div class="d-flex justify-content-between">
@@ -15,8 +17,8 @@
                                 <span asp-validation-for="IdSp" class="text-warning font-weight-bold"></span>
                             </div>
                             <select class="custom-select" asp-for="IdSp">
-                                <!option value="">Chọn sản phẩm</!option>
-                                @foreach (SanPham x in ViewBag.SanPham)
+                                <option value="">Chọn sản phẩm</option>
+                                @foreach (var x in ViewBag.SanPham)
                                 {
                                     var isSelected = x.Id == Model.IdSp ? "selected" : ""; 
                                     <!option @isSelected value="@x.Id">@x.Ten</!option> 
@@ -24,59 +26,27 @@
                             </select>
                         </div>
                         <div class="form-group col-6">
-                            <label>Nhập năm bảo hành</label>
-                            <input type="text" class="form-control" asp-for="NamBh" placeholder="Nhập năm bảo hành">
-                        </div>
-                        <div class="form-group col-6">
-                            <label>Nhập giá nhập</label>
-                            <input type="text" class="form-control" asp-for="GiaNhap" placeholder="Nhập tên giá nhập">
+                            <label>Nhập giá nhập </label>
+                            <input class="form-control" asp-for="GiaNhap" placeholder="Nhập giá nhập">
                         </div>
                         <div class="form-group col-6">
                             <label>Nhập giá bán </label>
-                            <input type="text" class="form-control" asp-for="GiaBan" placeholder="Nhập giá bán">
+                            <input class="form-control" asp-for="GiaBan" placeholder="Nhập giá bán">
                         </div>
                         <div class="form-group col-6">
                             <label>Nhập số lượng tồn kho </label>
-                            <input type="text" class="form-control" asp-for="SoLuongTon" placeholder="Nhập số lượng tồn kho">
+                            <input class="form-control" asp-for="SoLuongTon" placeholder="Nhập số lượng tồn kho">
                         </div>
                         <div class="form-group col-6">
-                            <div class="d-flex justify-content-between">
-                                <label>Nhà sản xuất</label>
-                                <span asp-validation-for="IdNsx" class="text-warning font-weight-bold"></span>
-                            </div>
-                            <select class="custom-select" asp-for="IdNsx">\
-                                <!option value="">Nhà sản xuất</!option>
-                                @foreach (Nsx x in ViewBag.Nsx)
-                                {
-                                    var isSelected = x.Id == Model.IdNsx ? "selected" : "";
-                                    <!option @isSelected value="@x.Id">@x.Ten</!option>
-                                }
-                            </select>
-                        </div>
-                        <div class="form-group col-3">
                             <div class="d-flex justify-content-between">
                                 <label>Màu sắc</label>
                                 <span asp-validation-for="IdMauSac" class="text-warning font-weight-bold"></span>
                             </div>
                             <select class="custom-select" name="IdMauSac">
-                                <!option value="">Màu sắc</!option>
-                                @foreach (MauSac x in ViewBag.MauSac)
+                                <option value="">Màu sắc</option>
+                                @foreach (var x in ViewBag.MauSac)
                                 {
                                     var isSelected = x.Id == Model.IdMauSac ? "selected" : "";
-                                    <!option @isSelected value="@x.Id">@x.Ten</!option>
-                                }
-                            </select>
-                        </div>
-                        <div class="form-group col-3">
-                            <div class="d-flex justify-content-between">
-                                <label>Dòng sản phẩm</label>
-                                <span asp-validation-for="IdDongSp" class="text-warning font-weight-bold"></span>
-                            </div>
-                            <select class="custom-select" name="IdDongSp">
-                                <!option value="">Chọn dòng sản phẩm</!option>
-                                @foreach (DongSp x in ViewBag.DongSp)
-                                {
-                                    var isSelected = x.Id == Model.IdDongSp ? "selected" : "";
                                     <!option @isSelected value="@x.Id">@x.Ten</!option>
                                 }
                             </select>
@@ -86,19 +56,19 @@
                                 <label>Ảnh sản phẩm</label>
                                 <span asp-validation-for="Anh" class="text-warning font-weight-bold"></span>
                             </div>
-                            <input type="text" class="form-control" asp-for="Anh" placeholder="Nhập link ảnh sản phẩm">
+                            <input class="form-control" asp-for="Anh" placeholder="Nhập link ảnh sản phẩm">
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="submit" name="Id" value="@Model.Id" class="btn btn-warning px-5">Sửa sản phẩm</button>
+                        <button name="Id" value="@Model.Id" class="btn btn-warning px-5">Sửa chi tiết sản phẩm</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 
- *@

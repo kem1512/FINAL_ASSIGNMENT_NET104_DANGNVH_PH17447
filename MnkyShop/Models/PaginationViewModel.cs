@@ -6,7 +6,6 @@
 
         public int PageCount { get; set; }
 
-
         public string PageName { get; set; } = default!;
     }
 }

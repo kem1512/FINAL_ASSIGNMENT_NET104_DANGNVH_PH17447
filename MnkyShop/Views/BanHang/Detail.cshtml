@@ -1,4 +1,4 @@
-﻿@model List<SanPham>
+﻿@model List<ChiTietSp>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,7 +9,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body px-5">
-                <div class="card-title text-uppercase">Danh sách sản phẩm</div>
+                <div class="card-title text-uppercase">Danh sách các sản phẩm của @Model.First().SanPham.Ten</div>
                 <hr>
                 <div class="row">
                     @foreach (var x in Model)
@@ -17,17 +17,16 @@
                         <div class="col-lg-3">
                             <div class="product">
                                 <div class="product-img">
-                                    <img src="@x.ChiTietSps.First().Anh" alt="">
+                                    <img src="@x.Anh" alt="">
                                     <form asp-action="AddCart" class="add-to-cart">
-                                        <button type="submit" name="idChiTietSp" value="@x.ChiTietSps.First().Id" class="add-to-cart-btn"> add to cart <i class="fa fa-shopping-cart"></i></button>
+                                        <button type="submit" name="idChiTietSp" value="@x.Id" class="add-to-cart-btn"> add to cart <i class="fa fa-shopping-cart"></i></button>
                                     </form>
                                 </div>
                                 <div class="product-body">
-                                    <h3 class="product-name">
-                                        <a href="@Url.ActionLink("Detail", "BanHang", new { idSp = x.Id })" class="text-danger">@x.Ten</a>
-                                    </h3>
-                                    <h4 class="product-price">@Helper.FormatVietNamDong(x.ChiTietSps.First().GiaBan)
-                                        <del class="product-old-price">@Helper.FormatVietNamDong(@x.ChiTietSps.First().GiaNhap)</del>
+                                    <h3 class="product-name"><a href="javascript:void(0)" class="text-danger">@x.SanPham.Ten (@x.MauSac.Ten)</a></h3>
+                                    <h4 class="product-price">
+                                        @string.Format("{0:0,0}", @x.GiaBan) VNĐ
+                                        <del class="product-old-price">@string.Format("{0:0,0}", @x.GiaNhap) VNĐ</del>
                                     </h4>
                                 </div>
                             </div>
@@ -36,9 +35,9 @@
                 </div>
                 @await Html.PartialAsync("Pagination", new PaginationViewModel
                 {
-                   CurrentPageIndex = ViewBag.CurrentPageIndex,
-                   PageCount = ViewBag.PageCount,
-                   PageName = "SanPham"
+                    CurrentPageIndex = ViewBag.CurrentPageIndex,
+                    PageCount = ViewBag.PageCount,
+                    PageName = $"BanHang/Detail/{Model.First().SanPham.Id}"
                 })
             </div>
         </div>
