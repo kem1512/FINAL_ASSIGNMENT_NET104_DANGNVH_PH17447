@@ -1,5 +1,6 @@
 ﻿namespace MinkyShop.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class SanPhamController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -16,7 +17,7 @@
                 ViewBag.Message = TempData["Message"];
             }
 
-            var sanPhams = _context.SanPham.Include(c => c.ChiTietSps).ToList();
+            var sanPhams = _context.SanPham.Include(c => c.ChiTietSps).Include(c => c.DongSp).ThenInclude(c => c.Nsx).ToList();
 
             ViewBag.PageCount = (int)Math.Ceiling(sanPhams.Count() / (decimal)maxRows);
             ViewBag.CurrentPageIndex = page;

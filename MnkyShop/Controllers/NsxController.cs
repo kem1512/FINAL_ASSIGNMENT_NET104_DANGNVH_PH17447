@@ -1,5 +1,6 @@
 ﻿namespace MinkyShop.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class NsxController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -83,7 +84,7 @@
                 {
                     sanPham.Ten = obj.Ten;
                     var result = _context.SaveChanges();
-                    TempData["Message"] = result > 0 ? "Xóa thành công" : "Xóa thất bại";
+                    TempData["Message"] = result > 0 ? "Sửa thành công" : "Sửa thất bại";
                 }
             }
             else

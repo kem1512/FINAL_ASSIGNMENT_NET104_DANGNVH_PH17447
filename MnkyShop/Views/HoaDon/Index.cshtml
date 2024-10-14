@@ -12,17 +12,17 @@
                     <h5>Quản lý hóa đơn</h5>
                 </div>
 
-                <!-- Row to hold the form for searching, filtering by date and status -->
+                @* Lọc *@
                 <div class="row mb-3">
                     <div class="col-lg-12">
                         <form class="form-inline" method="get" action="@Url.Action("Index")" id="searchForm">
                             <div class="form-row w-100">
-                                <!-- Input for invoice code or customer name -->
+                                <!-- Mã hóa đơn hoặc tên-->
                                 <div class="col-md-3 mb-2">
                                     <input type="text" class="form-control w-100" name="input" placeholder="Nhập mã hóa đơn hoặc tên khách hàng" value="@ViewContext.HttpContext.Request.Query["input"]">
                                 </div>
 
-                                <!-- Date range filters -->
+                                <!-- Ngày bắt đầu và kết thúc -->
                                 <div class="col-md-3 mb-2">
                                     <input type="date" class="form-control w-100" name="startDate" value="@ViewContext.HttpContext.Request.Query["startDate"]">
                                 </div>
@@ -31,7 +31,7 @@
                                     <input type="date" class="form-control w-100" name="endDate" value="@ViewContext.HttpContext.Request.Query["endDate"]">
                                 </div>
 
-                                <!-- Status filter dropdown -->
+                                <!-- Trạng thái hóa đơn -->
                                 <div class="col-md-2 mb-2">
                                     <select class="form-control w-100" name="tinhTrang">
                                         <option value="">Tất cả trạng thái</option>
@@ -40,12 +40,12 @@
                                     </select>
                                 </div>
 
-                                <!-- Search and Clear buttons -->
+                                <!-- Nút tìm kiếm -->
                                 <div class="col-md-1 mb-2">
                                     <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>
                                 </div>
 
-                                <!-- Clear button to reset filters -->
+                                <!-- Clear bỏ query -->
                                 <div class="col-md-1 mb-2">
                                     <a href="@Url.Action("Index")" class="btn btn-danger w-100">Clear</a>
                                 </div>
@@ -54,7 +54,6 @@
                     </div>
                 </div>
 
-                <!-- Invoice Table -->
                 <div class="table-responsive">
                     <table class="table" id="myTable">
                         <thead>
@@ -90,7 +89,7 @@
                         </tbody>
                     </table>
 
-                    <!-- Pagination Partial View -->
+                    @* Phân trang *@
                     @await Html.PartialAsync("Pagination", new PaginationViewModel
                     {
                         CurrentPageIndex = ViewBag.CurrentPageIndex,

@@ -3,27 +3,53 @@
     public class BanHangController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly SignInManager<NguoiDung> _signInManager;
 
-        public BanHangController(ApplicationDbContext context)
+        public BanHangController(ApplicationDbContext context, SignInManager<NguoiDung> signInManager)
         {
             _context = context;
+            _signInManager = signInManager;
         }
 
-        public IActionResult Index(int page, int maxRows = 4)
+        public IActionResult Index(int? idNsx, int? idMauSac, string? tenSp, int page = 1, int maxRows = 8)
         {
             if (TempData["Message"] != null)
             {
                 ViewBag.Message = TempData["Message"];
             }
 
-            var sanPhams = _context.SanPham.Include(c => c.ChiTietSps).Where(c => c.ChiTietSps.Count > 0).ToList();
+            // Truy vấn sản phẩm và bao gồm các chi tiết liên quan
+            var sanPhams = _context.SanPham
+                .Include(c => c.ChiTietSps)
+                .Where(c => c.ChiTietSps.Count > 0);
 
+            // Áp dụng điều kiện lọc nếu có
+            if (idNsx.HasValue)
+            {
+                sanPhams = sanPhams.Where(c => c.DongSp.Nsx.Id == idNsx.Value);
+            }
+            if (idMauSac.HasValue)
+            {
+                sanPhams = sanPhams.Where(c => c.ChiTietSps.Any(ct => ct.IdMauSac == idMauSac.Value));
+            }
+            if (!string.IsNullOrEmpty(tenSp))
+            {
+                sanPhams = sanPhams.Where(c => c.Ten.Contains(tenSp));
+            }
+
+            // Sắp xếp theo ngày ra mắt
+            sanPhams = sanPhams.OrderByDescending(c => c.NgayRaMat);
+
+            // Tính tổng số trang
             ViewBag.PageCount = (int)Math.Ceiling(sanPhams.Count() / (decimal)maxRows);
             ViewBag.CurrentPageIndex = page;
+            ViewBag.MauSac = _context.MauSac.ToList();
+            ViewBag.Nsx = _context.Nsx.ToList();
 
-            sanPhams = sanPhams.Skip((page - 1) * maxRows).Take(maxRows).ToList();
+            // Phân trang
+            sanPhams = sanPhams.Skip((page - 1) * maxRows).Take(maxRows);
 
-            return View(sanPhams);
+            return View(sanPhams.ToList());
         }
 
         [Route("BanHang/Detail/{idSp}")]
@@ -186,14 +212,11 @@
             return Json(new { success = true, redirectUrl = Url.Action("Cart") });
         }
 
-        //[Route("/banhang/filter")]
-        //public IActionResult Filter(string name)
-        //{
-        //    if (string.IsNullOrEmpty(name))
-        //    {
-        //        return View("Index", _iChiTietSpService.GetSanPhamViewModel());
-        //    }
-        //    return View("Index", _iChiTietSpService.GetSanPhamViewModel().Where(c => c.SanPham.Ten.ToUpper().Contains(name.ToUpper().Trim())).ToList());
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "BanHang");
+        }
     }
 }

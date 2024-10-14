@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Minky Store</title>
+    <title>Minky Shop</title>
     <!--favicon-->
     <link rel="icon" href="~/assets/images/favicon.ico" type="image/x-icon">
     <!-- Bootstrap core CSS-->
@@ -31,7 +31,7 @@
             <div class="brand-logo">
                 <a href="/banhang">
                     <img src="/assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
-                    <h5 class="logo-text">Minky Store</h5>
+                    <h5 class="logo-text">Minky Shop</h5>
                 </a>
             </div>
             <ul class="sidebar-menu do-nicescrol">
@@ -90,7 +90,7 @@
                     </li>
                     <li class="nav-item">
                         <form class="search-bar" action="/banhang/filter">
-                            <input type="text" class="form-control" name="name" placeholder="Nhập từ khóa">
+                            <input type="text" class="form-control" name="name" placeholder="Nhập mã hóa đơn">
                             <a href="#">
                                 <i class="icon-magnifier"></i>
                             </a>
@@ -110,11 +110,22 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span class="user-profile">
-                                <img src="/assets/images/user.png" />
-                            </span>
-                        </a>
+                        @if (User?.Identity?.IsAuthenticated == true)
+                        {
+                            <a class="nav-link" href="/Identity/Account/Manage">
+                                <span class="user-profile">
+                                    <img src="/assets/images/user.png" />
+                                </span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="nav-link" href="/Identity/Account/Login">
+                                <span class="user-profile">
+                                    <img src="/assets/images/user.png" />
+                                </span>
+                            </a>
+                        }
                     </li>
                 </ul>
             </nav>

@@ -249,20 +249,24 @@
 }
 
 .store-pagination li:hover {
-    background-color: #8d99ae;
+    background-color: #04b962;
 }
 
 .store-pagination li.active {
-    background-color: #8d99ae;
-    border-color: #8d99ae;
-    color: #FFF;
+    background-color: #04b962;
+    border-color: #04b962;
+    color: #FFF; /* Màu văn bản cho li.active */
     font-weight: 500;
     cursor: default;
 }
 
+.store-pagination li.active a {
+    color: #FFF; /* Màu chữ của thẻ a khi li.active */
+}
+
 .store-pagination li a {
     display: block;
-    color: #1e1f29;
+    color: #000000; /* Màu chữ mặc định cho thẻ a */
 }
 
 .store-qty {

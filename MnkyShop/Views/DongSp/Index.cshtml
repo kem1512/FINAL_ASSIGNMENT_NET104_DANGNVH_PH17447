@@ -65,6 +65,12 @@
                         </tbody>
                     </table>
                 </div>
+                @await Html.PartialAsync("Pagination", new PaginationViewModel
+                {
+                    CurrentPageIndex = ViewBag.CurrentPageIndex,
+                    PageCount = ViewBag.PageCount,
+                    PageName = "DongSp"
+                })
             </div>
         </div>
     </div>

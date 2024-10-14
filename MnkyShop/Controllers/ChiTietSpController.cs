@@ -1,5 +1,6 @@
 ﻿namespace MinkyShop.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class ChiTietSpController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -38,40 +39,47 @@
         }
 
         [HttpPost]
-        public IActionResult Create(ChiTietSp obj)
+        [Route("ChiTietSp/Create")]
+        public IActionResult Create(ChiTietSp obj, IFormFile image)
         {
-            foreach (var x in _context.ChiTietSp)
+            // Kiểm tra nếu sản phẩm với màu sắc đã tồn tại
+            if (_context.ChiTietSp.Any(x => x.IdMauSac == obj.IdMauSac && x.IdSp == obj.IdSp))
             {
-                // Nếu sản phẩm có màu sắc đó rồi thì không cho tạo nữa
-                if (obj.IdMauSac == x.IdMauSac && obj.IdSp == x.IdSp)
+                TempData["Message"] = "Sản phẩm đã tồn tại";
+                return RedirectToAction("Index", new { obj.IdSp });
+            }
+
+            // Nếu có ảnh được upload
+            if (image != null && image.Length > 0)
+            {
+                var fileName = $"{Guid.NewGuid()}{Path.GetExtension(image.FileName)}";
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    TempData["Message"] = "Sản phẩm đã tồn tại";
-                    return RedirectToAction("Index");
+                    image.CopyTo(stream);
                 }
+
+                obj.Anh = $"/images/{fileName}";
             }
 
             _context.ChiTietSp.Add(obj);
+            TempData["Message"] = _context.SaveChanges() > 0 ? "Thêm thành công" : "Thêm thất bại";
 
-            var result = _context.SaveChanges();
-
-            TempData["Message"] = result > 0 ? "Thêm thành công" : "Thêm thất bại";
-
-            return RedirectToAction("Index", "ChiTietSp");
+            return RedirectToAction("Index", "ChiTietSp", new { idSp = obj.IdSp });
         }
 
         [HttpPost]
+        [Route("ChiTietSp/Remove/{id}")]
         public IActionResult Remove(int id)
         {
             var chiTietSp = _context.ChiTietSp.Find(id);
 
-            if(chiTietSp != null)
+            if (chiTietSp != null)
             {
                 _context.ChiTietSp.Remove(chiTietSp);
+                TempData["Message"] = _context.SaveChanges() > 0 ? "Xóa thành công" : "Xóa thất bại";
             }
-
-            var result = _context.SaveChanges();
-
-            TempData["Message"] = result > 0 ? "Xóa thành công" : "Xóa thất bại";
 
             return RedirectToAction("Index", "ChiTietSp");
         }
@@ -90,31 +98,60 @@
         }
 
         [HttpPost]
-        public IActionResult Update(int id, ChiTietSp obj)
+        [Route("ChiTietSp/Update/{id}")]
+        public IActionResult Update(int id, ChiTietSp obj, IFormFile image)
         {
-            var chiTietSp = _context.ChiTietSp.Find(id);
+            var chiTietSp = _context.ChiTietSp.Include(c => c.SanPham).FirstOrDefault(c => c.Id == id);
 
-            if(_context.ChiTietSp.Any(c => c.IdMauSac == obj.IdMauSac && c.IdSp == obj.IdSp))
+            if (chiTietSp == null)
+            {
+                TempData["Message"] = "Sản phẩm không tồn tại";
+                return RedirectToAction("Index", "ChiTietSp");
+            }
+
+            // Kiểm tra nếu chi tiết sản phẩm với màu sắc đã tồn tại và khác ID hiện tại
+            if (_context.ChiTietSp.Any(c => c.IdMauSac == obj.IdMauSac && c.IdSp == obj.IdSp && c.Id != id))
             {
                 TempData["Message"] = "Chi tiết sản phẩm đã tồn tại";
-                return RedirectToAction("Update", "ChiTietSp", new { id });
+                return RedirectToAction("Update", new { id });
             }
 
-            if (chiTietSp != null)
+            // Cập nhật các trường khác
+            chiTietSp.IdSp = obj.IdSp;
+            chiTietSp.IdMauSac = obj.IdMauSac;
+            chiTietSp.MoTa = obj.MoTa;
+            chiTietSp.GiaBan = obj.GiaBan;
+            chiTietSp.GiaNhap = obj.GiaNhap;
+            chiTietSp.SoLuongTon = obj.SoLuongTon;
+
+            // Nếu có ảnh mới được upload
+            if (image != null && image.Length > 0)
             {
-                chiTietSp.IdSp = obj.IdSp;
-                chiTietSp.IdMauSac = obj.IdMauSac;
-                chiTietSp.MoTa = obj.MoTa;
-                chiTietSp.GiaBan = obj.GiaBan;
-                chiTietSp.GiaNhap = obj.GiaNhap;
-                chiTietSp.SoLuongTon = obj.SoLuongTon;
+                if(chiTietSp.Anh != null)
+                {
+                    var oldImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", chiTietSp.Anh.TrimStart('/'));
+
+                    // Xóa ảnh cũ nếu tồn tại
+                    if (!string.IsNullOrEmpty(chiTietSp.Anh) && System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+
+                var fileName = $"{Guid.NewGuid()}{Path.GetExtension(image.FileName)}";
+                var newImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+
+                using (var stream = new FileStream(newImagePath, FileMode.Create))
+                {
+                    image.CopyTo(stream);
+                }
+
+                chiTietSp.Anh = $"/images/{fileName}";
             }
 
-            var result = _context.SaveChanges();
+            TempData["Message"] = _context.SaveChanges() > 0 ? "Sửa thành công" : "Sửa thất bại";
 
-            TempData["Message"] = result > 0 ? "Sửa thành công" : "Sửa thất bại";
-
-            return RedirectToAction("Index", "ChiTietSp");
+            return RedirectToAction("Index", "ChiTietSp", new { idSp = chiTietSp.SanPham.Id });
         }
     }
 }

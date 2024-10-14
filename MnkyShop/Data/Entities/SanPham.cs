@@ -10,6 +10,8 @@
 
         public string Ten { get; set; } = default!;
 
+        public DateTime NgayRaMat { get; set; }
+
         [ForeignKey(nameof(IdDongSp))]
         public virtual DongSp DongSp { get; set; } = default!;
 

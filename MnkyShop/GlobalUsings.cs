@@ -8,3 +8,7 @@ global using Newtonsoft.Json;
 global using MinkyShop.Data.Entities;
 global using MinkyShop.Data;
 global using MinkyShop.Extensions;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Authentication.Cookies;
+global using Microsoft.AspNetCore.Authentication.Google;
+global using Microsoft.AspNetCore.Authorization;

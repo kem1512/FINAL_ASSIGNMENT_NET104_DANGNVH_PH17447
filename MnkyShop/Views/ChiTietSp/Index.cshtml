@@ -12,7 +12,7 @@
                     Quản lý chi tiết sản phẩm
                 </div>
                 <hr />
-                <form asp-action="Create">
+                <form asp-action="Create" enctype="multipart/form-data">
                     <div class="row">
                         <div class="form-group col-6">
                             <div class="d-flex justify-content-between">
@@ -46,7 +46,7 @@
                                 <label>Số lượng tồn kho </label>
                                 <span asp-validation-for="SoLuongTon" class="text-warning font-weight-bold"></span>
                             </div>
-                            <input type="number" class="form-control" name="SoLuongTon" placeholder="Nhập số lượng tồn kho">
+                            <input type="number" class="form-control" asp-for="SoLuongTon" placeholder="Nhập số lượng tồn kho">
                         </div>
                         <div class="form-group col-6">
                             <div class="d-flex justify-content-between">
@@ -62,11 +62,8 @@
                             </select>
                         </div>
                         <div class="form-group col-6">
-                            <div class="d-flex justify-content-between">
-                                <label>Ảnh sản phẩm</label> <br />
-                                <span asp-validation-for="Anh" class="text-warning font-weight-bold"></span>
-                            </div>
-                            <input type="text" class="form-control" asp-for="Anh" placeholder="Nhập link ảnh sản phẩm">
+                            <label>Ảnh sản phẩm</label>
+                            <input type="file" class="form-control" name="image">
                         </div>
                     </div>
                     <div class="form-group">
@@ -101,7 +98,7 @@
                                         <td style="display: flex; gap: 10px">
                                             @Html.ActionLink("Sửa", "Update", "ChiTietSp", new { id = x.Id }, new { @class = "btn btn-success" })
                                             <form asp-action="Remove" onsubmit="return confirm('Bạn có chắc muốn xóa sản phẩm này?')">
-                                                <button class="btn btn-danger" type="submit" name="id" value="@x.Id">Xóa</button>
+                                                <button class="btn btn-danger" name="id" value="@x.Id">Xóa</button>
                                             </form>
                                         </td>
                                     </tr>

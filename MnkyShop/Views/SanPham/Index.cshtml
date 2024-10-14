@@ -47,6 +47,8 @@
                                 <th>Mã sản phẩm</th>
                                 <th>Tên sản phẩm</th>
                                 <th>Dòng sản phẩm</th>
+                                <th>Hãng</th>
+                                <th>Số lượng</th>
                                 <th>Thao tác</th>
                             </tr>
                         </thead>
@@ -57,8 +59,10 @@
                                     <td>@x.Id</td>
                                     <td>@x.Ten</td>
                                     <td>@x.DongSp.Ten</td>
+                                    <td>@x.DongSp.Nsx.Ten</td>
+                                    <td>@x.ChiTietSps.Sum(c => c.SoLuongTon)</td>
                                     <td style="display: flex; gap: 10px">
-                                        @Html.ActionLink("Xem", "Index", "ChiTietSp", new { idSp = x.Id }, new { @class = "btn btn-primary" })
+                                        @Html.ActionLink($"Xem {x.ChiTietSps.Count} Màu", "Index", "ChiTietSp", new { idSp = x.Id }, new { @class = "btn btn-primary" })
                                         @Html.ActionLink("Sửa", "Update", "SanPham", new { id = x.Id }, new { @class = "btn btn-success" })
                                         <form asp-action="Remove" method="post" onsubmit="return confirm('Bạn có chắc muốn xóa sản phẩm này?')">
                                             <button class="btn btn-danger" name="id" value="@x.Id">Xóa</button>

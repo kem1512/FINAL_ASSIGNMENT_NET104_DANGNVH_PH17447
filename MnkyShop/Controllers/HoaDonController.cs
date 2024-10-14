@@ -1,5 +1,6 @@
 ﻿namespace MinkyShop.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class HoaDonController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -57,6 +58,8 @@
                     .Include(c => c.HoaDonChiTiets)
                         .ThenInclude(c => c.ChiTietSp)
                             .ThenInclude(c => c.SanPham)
+                                .ThenInclude(c => c.DongSp)
+                                    .ThenInclude(c => c.Nsx)
                      .FirstOrDefault(c => c.Id == id);
 
             return View(result);

@@ -1,5 +1,6 @@
 ﻿namespace MinkyShop.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class MauSacController : Controller
     {
         private readonly ApplicationDbContext _context;

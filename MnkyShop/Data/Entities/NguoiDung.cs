@@ -18,8 +18,6 @@
 
         public string? QuocGia { get; set; }
 
-        public string MatKhau { get; set; } = default!;
-
         public virtual List<HoaDon> HoaDons { get; set; } = default!;
     }
 }
