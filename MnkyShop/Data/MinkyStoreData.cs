@@ -4,23 +4,23 @@
     {
         public static void SeedData(this ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole() { Id = "1", Name = "Administrator" });
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole() { Id = "1", Name = "Administrator" });
 
 
-            //modelBuilder.Entity<NguoiDung>().HasData(new NguoiDung()
-            //{
-            //    Id = "1",
-            //    UserName = "admin@minky.shop",
-            //    Email = "admin@minky.shop",
-            //    NormalizedUserName = "ADMIN@MINKY.SHOP",
-            //    NormalizedEmail = "ADMIN@MINKY.SHOP",
-            //    EmailConfirmed = true,
-            //    PasswordHash = new PasswordHasher<NguoiDung>().HashPassword(null, "Padaoks_1512"),
-            //    SecurityStamp = Guid.NewGuid().ToString(),
-            //    ConcurrencyStamp = Guid.NewGuid().ToString()
-            //});
+            modelBuilder.Entity<NguoiDung>().HasData(new NguoiDung()
+            {
+                Id = "1",
+                UserName = "admin@minky.shop",
+                Email = "admin@minky.shop",
+                NormalizedUserName = "ADMIN@MINKY.SHOP",
+                NormalizedEmail = "ADMIN@MINKY.SHOP",
+                EmailConfirmed = true,
+                PasswordHash = new PasswordHasher<NguoiDung>().HashPassword(null, "Padaoks_1512"),
+                SecurityStamp = Guid.NewGuid().ToString(),
+                ConcurrencyStamp = Guid.NewGuid().ToString()
+            });
 
-            //modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>() { RoleId = "1", UserId = "1" });
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>() { RoleId = "1", UserId = "1" });
 
             modelBuilder.Entity<MauSac>().HasData(
                 new MauSac { Id = 1, Ten = "Đỏ" },

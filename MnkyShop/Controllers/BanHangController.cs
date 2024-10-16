@@ -151,6 +151,11 @@
 
         public IActionResult Cart()
         {
+            if (TempData["Message"] != null)
+            {
+                ViewBag.Message = TempData["Message"];
+            }
+
             var cart = SessionHelper.GetObjectFromJson<HoaDon>(HttpContext.Session, "cart");
 
             if (cart != null)
@@ -178,6 +183,13 @@
                 }
                 else
                 {
+                    if(_context.ChiTietSp.First(c => c.Id == idChiTietSp).SoLuongTon < soLuong)
+                    {
+                        TempData["Message"] = "Số lượng sản phẩm không đủ";
+
+                        return RedirectToAction("Cart", "BanHang");
+                    }
+
                     cart.HoaDonChiTiets[index].SoLuong = soLuong;
                     cart.TongTien = cart.HoaDonChiTiets.Sum(c => c.DonGia * c.SoLuong);
                     SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);

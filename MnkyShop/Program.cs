@@ -17,17 +17,17 @@ builder.Services.AddSession(options =>
 });
 builder.Services.AddDistributedMemoryCache();
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-})
-    .AddCookie()
-    .AddGoogle(options =>
-    {
-        options.ClientId = "YOUR_CLIENT_ID";
-        options.ClientSecret = "YOUR_CLIENT_SECRET";
-    });
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+//})
+//    .AddCookie()
+//    .AddGoogle(options =>
+//    {
+//        options.ClientId = "YOUR_CLIENT_ID";
+//        options.ClientSecret = "YOUR_CLIENT_SECRET";
+//    });
 
 builder.Services
     .AddDefaultIdentity<NguoiDung>(c => c.SignIn.RequireConfirmedAccount = false)
